@@ -1,0 +1,40 @@
+<mxfile host="65bd71144e">
+    <diagram id="Mdx-qdsFN2dOWLTDlhPh" name="Page-1">
+        <mxGraphModel dx="1093" dy="1075" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="Professor" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontFamily=&quot;Times New Roman&quot;, SimSun, sans-serif;" parent="1" vertex="1">
+                    <mxGeometry x="180" y="160" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="发布项目" style="ellipse;shape=umlControl;whiteSpace=wrap;html=1;fontFamily=&quot;Times New Roman&quot;, SimSun, sans-serif;" parent="1" vertex="1">
+                    <mxGeometry x="510" y="150" width="70" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="项目" style="ellipse;shape=umlEntity;whiteSpace=wrap;html=1;fontFamily=&quot;Times New Roman&quot;, SimSun, sans-serif;" vertex="1" parent="1">
+                    <mxGeometry x="680" y="155" width="70" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="教授控制页" style="shape=umlBoundary;whiteSpace=wrap;html=1;fontFamily=&quot;Times New Roman&quot;, SimSun, sans-serif;" vertex="1" parent="1">
+                    <mxGeometry x="334" y="155" width="80" height="70" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="" style="endArrow=none;html=1;fontFamily=&quot;Times New Roman&quot;, SimSun, sans-serif;" edge="1" parent="1" source="2" target="8">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="220" y="360" as="sourcePoint"/>
+                        <mxPoint x="270" y="310" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="10" value="" style="endArrow=none;html=1;fontFamily=&quot;Times New Roman&quot;, SimSun, sans-serif;" edge="1" parent="1" source="8" target="5">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="310" y="350" as="sourcePoint"/>
+                        <mxPoint x="360" y="300" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="11" value="" style="endArrow=none;html=1;fontFamily=&quot;Times New Roman&quot;, SimSun, sans-serif;" edge="1" parent="1" source="6" target="5">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="420" y="350" as="sourcePoint"/>
+                        <mxPoint x="470" y="300" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
