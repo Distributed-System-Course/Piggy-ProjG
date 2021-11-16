@@ -28,46 +28,46 @@
 
 ```SQL
 create table teacher( 
-teacher_id char(7) primary key NOT NULL,
-teacher_name char(20) NOT NULL,
-teacher_email char(30),
-teacher_key char(18) NOT NULL,
-teacher_tele char(11)
- );
+    teacher_id char(7) primary key NOT NULL,
+    teacher_name char(20) NOT NULL,
+    teacher_email char(30),
+    teacher_key char(18) NOT NULL,
+    teacher_tele char(11)
+);
  
 create table student(
-student_id char(8) primary key NOT NULL,
-student_name char(20) NOT NULL,
-student_key char(18) NOT NULL,
-student_score float NOT NULL
- );
+    student_id char(8) primary key NOT NULL,
+    student_name char(20) NOT NULL,
+    student_key char(18) NOT NULL,
+    student_score float NOT NULL
+);
  
 create table project_batch( 
-batch_id char(8) primary key NOT NULL,
-batch_name char(20) NOT NULL,
-batch_teacher_id char(7) NOT NULL, 
-foreign key (batch_teacher_id) references teacher(teacher_id)
- );
+    batch_id char(8) primary key NOT NULL,
+    batch_name char(20) NOT NULL,
+    batch_teacher_id char(7) NOT NULL, 
+    foreign key (batch_teacher_id) references teacher(teacher_id)
+);
  
 create table project( 
-project_id char(8) primary key NOT NULL,
-project_batch char(8) NOT NULL, 
-project_name char(20) NOT NULL,
-project_min int ,
-project_max int ,
-project_discription char(255),
-foreign key (project_batch) references project_batch(batch_id)
- );
+    project_id char(8) primary key NOT NULL,
+    project_batch char(8) NOT NULL, 
+    project_name char(20) NOT NULL,
+    project_min int ,
+    project_max int ,
+    project_discription char(255),
+    foreign key (project_batch) references project_batch(batch_id)
+);
  
- create table team(
- team_whatever char(8) primary key,
- team_id char(8)  NOT NULL,
- team_member char(8) NOT NULL,
- team_volunteer1 char(8) NOT NULL,
- team_volunteer2 char(8) NOT NULL,
- team_volunteer3 char(8) NOT NULL,
- foreign key (team_member) references student(student_id)
- );
+create table team(
+    team_whatever char(8) primary key,
+    team_id char(8)  NOT NULL,
+    team_member char(8) NOT NULL,
+    team_volunteer1 char(8) NOT NULL,
+    team_volunteer2 char(8) NOT NULL,
+    team_volunteer3 char(8) NOT NULL,
+    foreign key (team_member) references student(student_id)
+);
 ```
 
 
