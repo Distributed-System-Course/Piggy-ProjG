@@ -88,10 +88,6 @@
 		<path d="M 702.83 39.97 L 717.14 140" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
 		<path d="M 728.89 140 L 751.25 89.69" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
 		<path d="M 656.7 88.85 L 702.22 140" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
-		<path d="M 224 360 L 284 390 L 224 420 L 164 390 Z" fill="#fff2cc" stroke="#d6b656" stroke-miterlimit="10" pointer-events="all" />
-		<g transform="translate(-0.5 -0.5)">
-			<text x="224" y="394" fill="#000000" text-anchor="middle">志愿选择</text>
-		</g>
 		<path d="M 290 270 L 350 300 L 290 330 L 230 300 Z" fill="#fff2cc" stroke="#d6b656" stroke-miterlimit="10" pointer-events="all" />
 		<g transform="translate(-0.5 -0.5)">
 			<text x="290" y="304" fill="#000000" text-anchor="middle">选择</text>
@@ -108,14 +104,6 @@
 		<path d="M 267.33 281.33 L 144.29 180" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
 		<g transform="translate(-0.5 -0.5)">
 			<text x="144" y="178" fill="#000000" text-anchor="end">1</text>
-		</g>
-		<path d="M 212.94 365.53 L 129.04 180" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
-		<g transform="translate(-0.5 -0.5)">
-			<text x="128" y="178" fill="#000000" text-anchor="end">N</text>
-		</g>
-		<path d="M 266.61 398.7 L 370 419.8" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
-		<g transform="translate(-0.5 -0.5)">
-			<text x="369" y="418" fill="#000000" text-anchor="end">1</text>
 		</g>
 		<path d="M 540 300 L 600 330 L 540 360 L 480 330 Z" fill="#fff2cc" stroke="#d6b656" stroke-miterlimit="10" pointer-events="all" />
 		<g transform="translate(-0.5 -0.5)">
@@ -149,14 +137,6 @@
 		<g transform="translate(-0.5 -0.5)">
 			<text x="680" y="254" fill="#333333" text-anchor="middle">能力指标</text>
 		</g>
-		<path d="M 420 310 L 420 410" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
-		<g transform="translate(-0.5 -0.5)">	
-			<text x="419" y="408" fill="#000000" text-anchor="end">1</text>
-		</g>
-		<path d="M 420 250 L 420 180" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
-		<g transform="translate(-0.5 -0.5)">
-			<text x="419" y="178" fill="#000000" text-anchor="end">1</text>
-		</g>
         <path d="M 640.85 351.82 L 666.67 330" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
 		<path d="M 673.81 390.06 L 686 330" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
 		<path d="M 729.38 351.28 L 709 330" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
@@ -170,17 +150,22 @@
 		</g>
         <path d="M 375.93 481.04 L 402.86 450" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
 		<path d="M 464.07 481.04 L 437.14 450" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
-		<path d="M 420 250 L 480 280 L 420 310 L 360 280 Z" fill="#fff2cc" stroke="#d6b656" stroke-miterlimit="10" pointer-events="all" />
+		<rect x="170" y="380" width="100" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" />
 		<g transform="translate(-0.5 -0.5)">
-			<text x="420" y="284" fill="#000000" text-anchor="middle">属于</text>
+			<text x="220" y="404" fill="#000000" text-anchor="middle">志愿选择</text>
 		</g>
-		<path d="M 420 310 L 420 410" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<ellipse cx="160" cy="470" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
 		<g transform="translate(-0.5 -0.5)">
-			<text x="419" y="408" fill="#000000" text-anchor="end">1</text>
+			<text x="160" y="474" fill="#333333" text-anchor="middle">优先级</text>
 		</g>
-		<path d="M 420 250 L 420 180" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 175.93 451.04 L 202.86 420" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 211.67 380 L 128.33 180" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
 		<g transform="translate(-0.5 -0.5)">
-			<text x="419" y="178" fill="#000000" text-anchor="end">1</text>
+			<text x="127" y="178" fill="#000000" text-anchor="end">1</text>
+		</g>
+		<path d="M 270 407.5 L 370 422.5" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="369" y="420" fill="#000000" text-anchor="end">1</text>
 		</g>
 	</g>
 </svg>
