@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="688px" height="332px" viewBox="-0.5 -0.5 688 332">
+	<defs />
+	<style>
+		text {
+			font-family: "Times New Roman", SimSun, sans-serif;
+			font-size: 12px;
+		}
+	</style>
+	<g>
+		<ellipse cx="22" cy="77.5" rx="7.5" ry="7.5" fill="#ffffff" stroke="#000000" pointer-events="all" />
+		<path d="M 22 85 L 22 110 M 22 90 L 7 90 M 22 90 L 37 90 M 22 110 L 7 130 M 22 110 L 37 130" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="22" y="149" fill="#000000" text-anchor="middle">
+				Professor
+			</text>
+		</g>
+		<ellipse cx="22" cy="257.5" rx="7.5" ry="7.5" fill="#ffffff" stroke="#000000" pointer-events="all" />
+		<path d="M 22 265 L 22 290 M 22 270 L 7 270 M 22 270 L 37 270 M 22 290 L 7 310 M 22 290 L 37 310" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="22" y="329" fill="#000000" text-anchor="middle">
+				Student
+			</text>
+		</g>
+		<path d="M 157 80 L 157 120" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<path d="M 157 100 L 173.67 100" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<ellipse cx="215.33" cy="100" rx="41.666666666666664" ry="40" fill="#ffffff" stroke="#000000" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="216" y="104" fill="#000000" text-anchor="middle">
+				教授端界面
+			</text>
+		</g>
+		<path d="M 157 260 L 157 300" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<path d="M 157 280 L 173.67 280" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<ellipse cx="215.33" cy="280" rx="41.666666666666664" ry="40" fill="#ffffff" stroke="#000000" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="216" y="284" fill="#000000" text-anchor="middle">
+				学生端界面
+			</text>
+		</g>
+		<path d="M 363.25 251 L 380.75 240" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<ellipse cx="372" cy="285" rx="35" ry="35" fill="#ffffff" stroke="#000000" pointer-events="all" />
+		<path d="M 363.25 251 L 380.75 260" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="372" y="289" fill="#000000" text-anchor="middle">
+				填写意愿
+			</text>
+		</g>
+		<path d="M 363.25 11 L 380.75 0" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<ellipse cx="372" cy="45" rx="35" ry="35" fill="#ffffff" stroke="#000000" pointer-events="all" />
+		<path d="M 363.25 11 L 380.75 20" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="372" y="49" fill="#000000" text-anchor="middle">
+				停止填报
+			</text>
+		</g>
+		<path d="M 363.25 121 L 380.75 110" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<ellipse cx="372" cy="155" rx="35" ry="35" fill="#ffffff" stroke="#000000" pointer-events="all" />
+		<path d="M 363.25 121 L 380.75 130" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="372" y="159" fill="#000000" text-anchor="middle">
+				修改
+				分配结果
+			</text>
+		</g>
+		<path d="M 257 81.82 L 338.65 52.13" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 257 115.15 L 338.17 139.75" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 257 280 L 337 280" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 37 100 L 157 100" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 37 280 L 157 280" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<ellipse cx="647" cy="150" rx="40" ry="40" fill="#ffffff" stroke="#000000" pointer-events="all" />
+		<path d="M 617 190 L 677 190" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="647" y="154" fill="#000000" text-anchor="middle">
+				分组情况
+			</text>
+		</g>
+		<ellipse cx="647" cy="280" rx="40" ry="40" fill="#ffffff" stroke="#000000" pointer-events="all" />
+		<path d="M 617 320 L 677 320" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="647" y="284" fill="#000000" text-anchor="middle">
+				意愿情况
+			</text>
+		</g>
+		<ellipse cx="647" cy="40" rx="40" ry="40" fill="#ffffff" stroke="#000000" pointer-events="all" />
+		<path d="M 617 80 L 677 80" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="647" y="44" fill="#000000" text-anchor="middle">
+				分配结果
+			</text>
+		</g>
+		<path d="M 483.25 11 L 500.75 0" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<ellipse cx="492" cy="45" rx="35" ry="35" fill="#ffffff" stroke="#000000" pointer-events="all" />
+		<path d="M 483.25 11 L 500.75 20" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="492" y="49" fill="#000000" text-anchor="middle">
+				自动分配
+			</text>
+		</g>
+		<path d="M 407 40 L 457 40" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 512.78 72.19 L 625.3 246.4" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 527 40 L 607 40" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 521.79 61 L 614.38 126.85" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 405.03 136.76 L 609.86 54.86" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 407 280 L 607 280" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+	</g>
+</svg>
