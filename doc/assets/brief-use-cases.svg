@@ -1,36 +1,42 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="411px" height="211px" viewBox="-0.5 -0.5 411 211">
 	<defs />
+	<style>
+		text {
+			font-family: "Times New Roman", SimSun, sans-serif;
+			font-size: 12px;
+		}
+	</style>
 	<g>
 		<rect x="92" y="0" width="230" height="210" rx="31.5" ry="31.5" fill="#ffffff" stroke="#000000" pointer-events="all" />
 		<ellipse cx="22" cy="87.5" rx="7.5" ry="7.5" fill="#ffffff" stroke="#000000" pointer-events="all" />
 		<path d="M 22 95 L 22 120 M 22 100 L 7 100 M 22 100 L 37 100 M 22 120 L 7 140 M 22 120 L 37 140" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
 		<g transform="translate(-0.5 -0.5)">
-			<text x="22" y="159" fill="#000000" font-family="&quot;Times New Roman&quot;, SimSun, sans-serif" font-size="12px" text-anchor="middle">
+			<text x="22" y="159" fill="#000000" text-anchor="middle">
 				Professor
 			</text>
 		</g>
 		<ellipse cx="392" cy="87.5" rx="7.5" ry="7.5" fill="#ffffff" stroke="#000000" pointer-events="all" />
 		<path d="M 392 95 L 392 120 M 392 100 L 377 100 M 392 100 L 407 100 M 392 120 L 377 140 M 392 120 L 407 140" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
 		<g transform="translate(-0.5 -0.5)">
-			<text x="392" y="159" fill="#000000" font-family="&quot;Times New Roman&quot;, SimSun, sans-serif" font-size="12px" text-anchor="middle">
+			<text x="392" y="159" fill="#000000" text-anchor="middle">
 				Student
 			</text>
 		</g>
 		<ellipse cx="207" cy="45" rx="70" ry="25" fill="#ffffff" stroke="#000000" pointer-events="all" />
 		<g transform="translate(-0.5 -0.5)">
-			<text x="207" y="49" fill="#000000" font-family="&quot;Times New Roman&quot;, SimSun, sans-serif" font-size="12px" text-anchor="middle">
+			<text x="207" y="49" fill="#000000" text-anchor="middle">
 				Publish project details
 			</text>
 		</g>
 		<ellipse cx="207" cy="110" rx="70" ry="20" fill="#ffffff" stroke="#000000" pointer-events="all" />
 		<g transform="translate(-0.5 -0.5)">
-			<text x="207" y="114" fill="#000000" font-family="&quot;Times New Roman&quot;, SimSun, sans-serif" font-size="12px" text-anchor="middle">
+			<text x="207" y="114" fill="#000000" text-anchor="middle">
 				View result
 			</text>
 		</g>
 		<ellipse cx="207" cy="170" rx="70" ry="20" fill="#ffffff" stroke="#000000" pointer-events="all" />
 		<g transform="translate(-0.5 -0.5)">
-			<text x="207" y="174" fill="#000000" font-family="&quot;Times New Roman&quot;, SimSun, sans-serif" font-size="12px" text-anchor="middle">
+			<text x="207" y="174" fill="#000000" text-anchor="middle">
 				Choose projects to participate
 			</text>
 		</g>
