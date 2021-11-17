@@ -10,7 +10,7 @@ def index(request):
         {
             'title' : "Hello Django",
             'message' : "Hello Django!",
-            'content' : " on " + timezone.now().strftime(("%Y/%m/%d, %H:%M:%S"))
+            'content' : " on " + timezone.localtime().strftime(("%Y/%m/%d, %H:%M:%S"))
         },
         request
     ))
