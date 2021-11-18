@@ -21,16 +21,21 @@ class Student(models.Model):
         return "{}".format(self.name, self.username)
 
 
-class ProjectGroup(models.Model):
+class Plan(models.Model):
+    """
+    A plan may contain several projects, and is owned by a teacher.
+    While a plan is not expired, team in this plan can modify their wishes.
+    """
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
+    is_expired = models.BooleanField(default=False)
 
     def __str__(self):
         return "{} ({})".format(self.name, self.teacher)
 
 
 class Project(models.Model):
-    project_group = models.ForeignKey(ProjectGroup, on_delete=models.CASCADE)
+    project_group = models.ForeignKey(Plan, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
     description = models.CharField(max_length=500)
     max_group_num = models.IntegerField(default=5)
@@ -41,7 +46,7 @@ class Project(models.Model):
 
 
 class Team(models.Model):
-    project_group = models.ForeignKey(ProjectGroup, on_delete=models.CASCADE)
+    project_group = models.ForeignKey(Plan, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     members = models.ManyToManyField(Student)
