@@ -87,17 +87,28 @@ def teachers(request):
 
 def teacher_detail(request, teacher_id):
     teacher = get_object_or_404(Teacher, pk=teacher_id)
+    all_plans = Plan.objects.filter(teacher_id=teacher_id)
     return render(
         request,
         'piggy/teacher_detail.html',
         {
             'teacher': teacher,
+            'all_plans': all_plans
         }
     )
 
 
 def team(request, team_id):
-    pass
+    team = get_object_or_404(Team, pk=team_id)
+    # members = Team.members_set.all()
+    return render(
+        request,
+        'piggy/team.html',
+        {
+            'team': team,
+            # 'members': members,
+        }
+    )
 
 
 def team_wish(request, team_id):
