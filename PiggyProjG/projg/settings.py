@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'crispy_forms',
     'hello.apps.HelloConfig',
     'piggy.apps.PiggyConfig',
     'django.contrib.admin',
@@ -132,3 +133,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

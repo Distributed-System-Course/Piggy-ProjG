@@ -1,8 +1,12 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django.template import loader
 from django.utils import timezone
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from .forms import NewUserForm
+from django.contrib.auth import login
+from django.contrib import messages
+
 
 from .models import *
 
@@ -92,5 +96,31 @@ def teacher_detail(request, teacher_id):
         'piggy/teacher_detail.html',
         {
             'teacher': teacher,
+        }
+    )
+
+def register(request):
+    print('jb1')
+    if request.method == "POST":
+        print("jb")
+        form = NewUserForm(request.POST)
+        # print(form)
+        if form.is_valid():
+            print('jbdx')
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Registration successful." )
+            return redirect("piggy:index")
+        else:
+            messages.error(request, "Unsuccessful registration. Invalid information.")
+    else:
+        pass
+    form = NewUserForm()
+    print('jb2')
+    return render(
+        request,
+        'piggy/register.html',
+        {
+            "register_form": form,
         }
     )
