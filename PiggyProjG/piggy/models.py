@@ -22,8 +22,13 @@ class Student(models.Model):
 
 
 class Plan(models.Model):
+    """
+    A plan may contain several projects, and is owned by a teacher.
+    While a plan is not expired, team in this plan can modify their wishes.
+    """
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
+    is_expired = models.BooleanField(default=False)
 
     def __str__(self):
         return "{} ({})".format(self.name, self.teacher)
