@@ -102,11 +102,17 @@ def team(request, team_id):
 def team_wish(request, team_id):
     # all projects avalaible for current team
     team = get_object_or_404(Team, pk=team_id)
-    wish = team.project_group.project_set.all()
+    wish_set = team.project_group.project_set.all()
     return render(
         request,
-        "piggy/wish.html",
+        "piggy/team_wish.html",
         {
-            'wish_set': wish,
+            'team': team,
+            'wish_set': wish_set,
         },
     )
+
+
+def team_post_wish(request, team_id):
+    for i in range(1,3+1):
+        print('id', request.POST['wish'+str(i)])

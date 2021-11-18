@@ -1,0 +1,35 @@
+{% block title %}
+    <title>Team '{{team.name}}''s Wishes</title>
+{% endblock title %}
+
+{% block content %}
+    <h1>Team '{{team.name}}''s Wishes</h1>
+    <p>We're happy to know you wishes.</p>
+    <form action="{% url 'piggy:team_post_wish' team.id %}" method="POST">
+        {% csrf_token %}
+        <fieldset>
+        <legend>选择志愿</legend>
+        <label>请选择第一志愿：</label>
+        <select name="wish1">
+            <!-- Wish is a project. -->
+            {% for wish in wish_set.all %}
+                <option value="{{wish.id}}">{{ wish.name }}</option>
+            {% endfor %}
+        </select><br/>
+        <label>请选择第二志愿：</label>
+        <select name="wish2">
+            {% for wish in wish_set.all %}
+                <option value="{{wish.id}}">{{ wish.name }}</option>
+            {% endfor %}
+        </select>
+        <br/>
+        <label>请选择第三志愿：</label>
+        <select name="wish3">
+            {% for wish in wish_set.all %}
+                <option value="{{wish.id}}">{{ wish.name }}</option>
+            {% endfor %}
+        </select><br/>
+        <input type="submit" value="Submit">
+        </fieldset>
+    </form>
+{% endblock content %}
