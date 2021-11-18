@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.utils import timezone
 from django.http import HttpResponse
@@ -47,5 +47,6 @@ def projects(request):
 
 
 def project_detail(request, project_id):
-    pass
+    project_detail = get_object_or_404(Project, pk=project_id)
+    return render(request, 'piggy/project_detail.html', {'project_detail' : project_detail})
 
