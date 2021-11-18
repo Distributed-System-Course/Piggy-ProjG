@@ -12,24 +12,43 @@ def index(request):
         request,
         'piggy/index.html',  # Relative path from the 'templates' folder to the template file
         {
-            'title' : "Welcome",
+            'title'  : "Welcome",
             'heading': "Welcome!",
-            'message' : "Welcome to Piggy.",
-            'content' : "Now is " + timezone.localtime().strftime(("%Y/%m/%d, %H:%M:%S")) + "."
-        },
+            'message': "Welcome to Piggy.",
+            'content': "Now is " + timezone.localtime().strftime(("%Y/%m/%d, %H:%M:%S")) + ".",
+        }
     )
 
 
 def plans(request):
-    pass
+    return render(
+        request, 
+        'piggy/plans.html', 
+        {
+            
+        }
+    )
 
 
 def plan_detail(request, plan_id):
-    pass
+    # plan_detail = get_object_or_404()
+    return render(
+        request,
+        'piggy/plan_detail.html',
+        {
+            
+        }
+    )
 
 
 def join_plan(request, plan_id):
-    pass
+        return render(
+        request,
+        'piggy/join_plan.html',
+        {
+            
+        }
+    )
 
 
 def projects(request):
@@ -41,12 +60,20 @@ def projects(request):
         {
             'title': 'All Projects',
             'heading': 'All Projects',
-            'all_plans': all_plans,
+            'all_plans': all_plans, 
         }
     )
 
 
 def project_detail(request, project_id):
     project_detail = get_object_or_404(Project, pk=project_id)
-    return render(request, 'piggy/project_detail.html', {'project_detail' : project_detail})
+    return render(
+        request, 
+        'piggy/project_detail.html', 
+        {
+            'project_detail' : project_detail,
+            'title': project_detail.name,
+            'heading': project_detail.name,
+        }
+    )
 
