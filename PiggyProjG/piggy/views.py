@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.utils import timezone
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from .models import *
 
@@ -38,7 +39,7 @@ def plan_detail(request, plan_id):
         }
     )
 
-
+@login_required
 def join_plan(request, plan_id):
         return render(
         request,

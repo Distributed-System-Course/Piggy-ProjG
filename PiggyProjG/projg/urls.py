@@ -25,3 +25,6 @@ urlpatterns += [
     path('hello/', include('hello.urls')),
 ]
 
+urlpatterns += [
+    path('accounts/', include('django.contrib.auth.urls')),
+]
