@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.utils import timezone
 from django.http import HttpResponse
@@ -115,4 +115,9 @@ def team_wish(request, team_id):
 
 def team_post_wish(request, team_id):
     for i in range(1,3+1):
-        print('id', request.POST['wish'+str(i)])
+        project_id = int(request.POST['wish'+str(i)])
+        teamwish = TeamWish.objects.get_or_create(team_id=team_id, project_id=project_id)[0]
+        teamwish.priority = i
+        teamwish.save()
+    return HttpResponse(redirect('piggy:index',))
+
