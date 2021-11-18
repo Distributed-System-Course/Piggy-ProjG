@@ -100,4 +100,13 @@ def team(request, team_id):
 
 
 def team_wish(request, team_id):
-    pass
+    # all projects avalaible for current team
+    team = get_object_or_404(Team, pk=team_id)
+    wish = team.project_group.project_set.all()
+    return render(
+        request,
+        "piggy/wish.html",
+        {
+            'wish_set': wish,
+        },
+    )
