@@ -1,12 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>title</title>
-</head>
-<body>
-    Here is teachers.html
-</body>
-</html>
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title> All Teachers - Piggy </title>
+{% endblock title %}
+
+{% block content %}
+    <h1> All teachers </h1>
+    {% if teachers %}
+        {% for teacher in teachers %}
+        <h2><a href="{% url 'piggy:teacher_detail' teacher.id %}">{{ teacher.name }}</a></h2>
+        {% endfor %}
+    {% else %}
+        <p>No teachers</p>
+    {% endif %}
+{% endblock content %}

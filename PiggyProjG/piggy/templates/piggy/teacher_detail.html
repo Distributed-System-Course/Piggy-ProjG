@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>title</title>
-</head>
-<body>
-    Here is teacher_detail.html
-</body>
-</html>
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title> {{ teacher.name }} - 详情 </title>
+{% endblock title %}
+
+{% block content %}
+    <h1> {{ teacher.name }} </h1>
+    <p> Here is teacher.html </p>
+{% endblock content %}
