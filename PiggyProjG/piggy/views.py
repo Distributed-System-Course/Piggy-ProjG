@@ -93,3 +93,11 @@ def teacher_detail(request, teacher_id):
             'teacher': teacher,
         }
     )
+
+
+def team(request, team_id):
+    pass
+
+
+def team_wish(request, team_id):
+    pass
