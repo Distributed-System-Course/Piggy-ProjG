@@ -21,7 +21,7 @@ class Student(models.Model):
         return "{}".format(self.name, self.username)
 
 
-class ProjectGroup(models.Model):
+class Plan(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
 
@@ -30,7 +30,7 @@ class ProjectGroup(models.Model):
 
 
 class Project(models.Model):
-    project_group = models.ForeignKey(ProjectGroup, on_delete=models.CASCADE)
+    project_group = models.ForeignKey(Plan, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
     description = models.CharField(max_length=500)
     max_group_num = models.IntegerField(default=5)
@@ -41,7 +41,7 @@ class Project(models.Model):
 
 
 class Team(models.Model):
-    project_group = models.ForeignKey(ProjectGroup, on_delete=models.CASCADE)
+    project_group = models.ForeignKey(Plan, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     members = models.ManyToManyField(Student)
