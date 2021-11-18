@@ -1,26 +1,22 @@
-<!DOCTYPE html>
-<html lang="zh-Hans">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> {{ title }} </title>
-</head>
-<body>
-    {% load static %}
-    <h1> {{ heading }} </h1>
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title> All Projects - Piggy </title>
+{% endblock %}
+
+{% block content %}
+    <h1> All Projects </h1>
     <!-- Organized by 'plan's -->
     {% if all_plans %}
         {% for plan in all_plans %}
-        <h2><a href="{% url 'plan_detail' plan.id %}">{{ plan.name }}<a></h2>
+        <h2><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}<a></h2>
         <ul>
             {% for project in plan.project_set.all %}
-                <li><a href="{% url 'project_detail' project.id %}">{{ project.name }}</a></li>
+                <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
             {% endfor %}
         </ul>
         {% endfor %}
     {% else %}
         <p>No projects are available.</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}

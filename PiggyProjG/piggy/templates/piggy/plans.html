@@ -1,13 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> {{ title }} </title>
-</head>
-<body>
-    <h1> {{ heading }} </h1>
-    Here is plans.html
-</body>
-</html>
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title> All Plans - Piggy </title>
+{% endblock %}
+
+{% block content %}
+    <h1> All Projects </h1>
+    <!-- Organized by 'teacher's -->
+    {% if all_plans %}
+        <ul>
+            {% for plan in all_plans %}
+            <li>
+                <a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}</a>
+                From
+                <a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher.name }}<a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No plans are available.</p>
+    {% endif %}
+{% endblock %}

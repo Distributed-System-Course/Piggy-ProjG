@@ -1,18 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> {{ title }} </title>
-</head>
-<body>
-    {% load static %}
-    <h1> {{ heading }} </h1>
-    <p> {{ project_detail.description }} </p>
-    <p> max_group_num is {{ project_detail.max_group_num }} </p>
-    <p> max_team_member_num {{ project_detail.max_team_member_num }} </p>
-    
-    <p><a href="{% url 'projects' %}">Back</a></p>
-</body>
-</html>
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title> {{ project.name }} - 详情 </title>
+{% endblock %}
+
+{% block content %}
+    <h1> {{ project.name }} </h1>
+    <table>
+        <tbody>
+            <tr>
+                <th>所属项目组</th>
+                <td><a href="{% url 'piggy:plan_detail' project.project_group.id %}">{{ project.project_group.name }}</a></td>
+            </tr>
+            <tr>
+                <th>指导教师</th>
+                <td><a href="{% url 'piggy:teacher_detail' project.project_group.teacher.id %}">{{ project.project_group.teacher.name }}</a></td>
+            </tr>
+            <tr>
+                <th>项目介绍</th>
+                <td>{{ project.description }}</td>
+            </tr>
+            <tr>
+                <th>最大组数</th>
+                <td>{{ project.max_group_num }}</td>
+            </tr>
+            <tr>
+                <th>每组最大人数</th>
+                <td>{{ project.max_team_member_num }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

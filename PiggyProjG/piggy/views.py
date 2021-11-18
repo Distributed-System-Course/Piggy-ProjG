@@ -12,31 +12,29 @@ def index(request):
         request,
         'piggy/index.html',  # Relative path from the 'templates' folder to the template file
         {
-            'title'  : "Welcome",
-            'heading': "Welcome!",
-            'message': "Welcome to Piggy.",
             'content': "Now is " + timezone.localtime().strftime(("%Y/%m/%d, %H:%M:%S")) + ".",
         }
     )
 
 
 def plans(request):
+    all_plans = ProjectGroup.objects.all()
     return render(
         request, 
         'piggy/plans.html', 
         {
-            
+            'all_plans': all_plans,
         }
     )
 
 
 def plan_detail(request, plan_id):
-    # plan_detail = get_object_or_404()
+    plan = get_object_or_404(ProjectGroup, pk=plan_id)
     return render(
         request,
         'piggy/plan_detail.html',
         {
-            
+            'plan': plan
         }
     )
 
@@ -53,27 +51,31 @@ def join_plan(request, plan_id):
 
 def projects(request):
     all_plans = ProjectGroup.objects.all()
-    latest_project_list = Project.objects.all()
     return render(
         request,
         'piggy/projects.html',
         {
-            'title': 'All Projects',
-            'heading': 'All Projects',
             'all_plans': all_plans, 
         }
     )
 
 
 def project_detail(request, project_id):
-    project_detail = get_object_or_404(Project, pk=project_id)
+    project = get_object_or_404(Project, pk=project_id)
     return render(
         request, 
         'piggy/project_detail.html', 
         {
-            'project_detail' : project_detail,
-            'title': project_detail.name,
-            'heading': project_detail.name,
+            'project': project,
+            'max_group_num': project.max_group_num,
+            'max_team_member_num': project.max_team_member_num,
         }
     )
 
+
+def teachers(request):
+    pass
+
+
+def teacher_detail(request, teacher_id):
+    pass

@@ -1,12 +1,11 @@
-<html>
-    <head>
-        <title>{{ title }}</title>
-    </head>
-    <body>
-        <h1> {{heading}} </h1>
-        <p><strong> {{ message }} </strong></p>
-        <p> {{ content }} </p>
-        <p><a href="{% url 'projects' %}">projects page.</a></p>
-        <p><a href="{% url 'plans' %}">plans page.</a></p>
-    </body>
-</html>
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title>Home - Piggy</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Home</h1>
+    <p>Thanks for choosing Piggy!</p>
+    <p> {{ content }} </p>
+{% endblock %}

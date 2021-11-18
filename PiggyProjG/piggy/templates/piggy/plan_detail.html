@@ -1,13 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> {{ title }} </title>
-</head>
-<body>
-    <h1> {{ heading }} </h1>
-    Here is plan_detail.html
-</body>
-</html>
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title> {{ plan.name }} - 详情 </title>
+{% endblock %}
+
+{% block content %}
+    <h1> {{ plan.name }} </h1>
+    <p>
+        <strong>指导教师：</strong>
+        <a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher }}</a>
+    </p>
+    <p>计划所含项目：</p>
+    <ul>
+        {% for project in plan.project_set.all %}
+            <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}
