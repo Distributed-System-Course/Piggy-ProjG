@@ -69,6 +69,3 @@ create table team(
     foreign key (team_member) references student(student_id)
 );
 ```
-
-
-
