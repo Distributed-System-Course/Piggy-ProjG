@@ -4,32 +4,28 @@
 
 {% block content %}
     <h1>Team '{{team.name}}''s Wishes</h1>
+    <p>Your current choices:</p>
+    <ol style="type: '1';">
+    {% for wish in wishlist %}
+        <li>{{wish}}</li>
+    {% endfor %}
+    </ol>
     <p>We're happy to know you wishes.</p>
-    <form action="{% url 'piggy:team_post_wish' team.id %}" method="POST">
+    <form action="{% url 'piggy:team_wish' team.id %}" method="POST">
         {% csrf_token %}
         <fieldset>
-        <legend>选择志愿</legend>
-        <label>请选择第一志愿：</label>
-        <select name="wish1">
-            <!-- Wish is a project. -->
-            {% for wish in wish_set.all %}
-                <option value="{{wish.id}}">{{ wish.name }}</option>
+            <legend>选择志愿</legend>
+        {% for i in num_range %}
+            <label>志愿 #{{i}}：</label>
+            <select name="wish{{i}}">
+            {% for choice in choices.all %}
+                <option value="{{choice.id}}">{{choice.name}}</option>
             {% endfor %}
-        </select><br/>
-        <label>请选择第二志愿：</label>
-        <select name="wish2">
-            {% for wish in wish_set.all %}
-                <option value="{{wish.id}}">{{ wish.name }}</option>
-            {% endfor %}
-        </select>
-        <br/>
-        <label>请选择第三志愿：</label>
-        <select name="wish3">
-            {% for wish in wish_set.all %}
-                <option value="{{wish.id}}">{{ wish.name }}</option>
-            {% endfor %}
-        </select><br/>
-        <input type="submit" value="Submit">
+            </select>
+            <br/>
+        {% endfor %}
+            <p><em>注：数字越小，优先级越大</em></p>
+            <input type="submit" value="Submit">
         </fieldset>
     </form>
 {% endblock content %}

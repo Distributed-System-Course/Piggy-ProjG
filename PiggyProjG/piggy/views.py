@@ -1,3 +1,4 @@
+from django.core.checks import messages
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.utils import timezone
@@ -18,7 +19,7 @@ def index(request):
 
 
 def plans(request):
-    all_plans = ProjectGroup.objects.all()
+    all_plans = Plan.objects.all()
     return render(
         request, 
         'piggy/plans.html', 
@@ -29,7 +30,7 @@ def plans(request):
 
 
 def plan_detail(request, plan_id):
-    plan = get_object_or_404(ProjectGroup, pk=plan_id)
+    plan = get_object_or_404(Plan, pk=plan_id)
     return render(
         request,
         'piggy/plan_detail.html',
@@ -50,7 +51,7 @@ def join_plan(request, plan_id):
 
 
 def projects(request):
-    all_plans = ProjectGroup.objects.all()
+    all_plans = Plan.objects.all()
     return render(
         request,
         'piggy/projects.html',
@@ -100,24 +101,42 @@ def team(request, team_id):
 
 
 def team_wish(request, team_id):
+    MAX_WISH_NUM = 3
     # all projects avalaible for current team
+
     team = get_object_or_404(Team, pk=team_id)
-    wish_set = team.project_group.project_set.all()
+    if request.method == "POST":
+        # TO-DO: permission check
+        # check if the project is expired
+        if team.project_group.is_expired:
+            messages.Error('Your plan no longer allow wish modification.')
+
+        for i in range(1, MAX_WISH_NUM + 1):
+            key_name = 'wish' + str(i)
+            project_id = int(request.POST[key_name])
+            teamwish = TeamWish.objects.get_or_create(team_id=team_id, priority=i)[0]
+            teamwish.project = Project.objects.get(id=project_id)
+            teamwish.save()
+        
+        return HttpResponse(redirect('piggy:team_wish', team_id))
+    
+    choices = team.project_group.project_set.all()
+
+    team_wishes = TeamWish.objects.filter(team_id=team_id)
+
+    wishlist = [""] * MAX_WISH_NUM
+
+    for wish in team_wishes:
+        if wish.priority <= MAX_WISH_NUM:
+            wishlist[wish.priority - 1] = wish.project.name
+
     return render(
         request,
         "piggy/team_wish.html",
         {
             'team': team,
-            'wish_set': wish_set,
+            'choices': choices,
+            'num_range': range(1, MAX_WISH_NUM + 1),
+            'wishlist': wishlist,
         },
     )
-
-
-def team_post_wish(request, team_id):
-    for i in range(1,3+1):
-        project_id = int(request.POST['wish'+str(i)])
-        teamwish = TeamWish.objects.get_or_create(team_id=team_id, project_id=project_id)[0]
-        teamwish.priority = i
-        teamwish.save()
-    return HttpResponse(redirect('piggy:index',))
-
