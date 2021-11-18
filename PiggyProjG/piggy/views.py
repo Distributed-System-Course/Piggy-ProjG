@@ -74,8 +74,22 @@ def project_detail(request, project_id):
 
 
 def teachers(request):
-    pass
+    teachers = Teacher.objects.all()
+    return render(
+        request,
+        'piggy/teachers.html',
+        {
+            'teachers': teachers,
+        }
+    )
 
 
 def teacher_detail(request, teacher_id):
-    pass
+    teacher = get_object_or_404(Teacher, pk=teacher_id)
+    return render(
+        request,
+        'piggy/teacher_detail.html',
+        {
+            'teacher': teacher,
+        }
+    )
