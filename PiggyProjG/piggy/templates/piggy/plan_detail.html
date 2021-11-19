@@ -10,6 +10,14 @@
         <strong>指导教师：</strong>
         <a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher }}</a>
     </p>
+    <p>
+        <strong>是否过期：</strong>
+        {% if is_expired %}
+        已过期
+        {% else %}
+        进行中
+        {% endif %}
+    </p>
     <p>计划所含项目：</p>
     <ul>
         {% for project in plan.project_set.all %}

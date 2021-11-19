@@ -1,4 +1,5 @@
 from django.core.checks import messages
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.utils import timezone
@@ -8,34 +9,55 @@ from .models import *
 
 # Create your views here.
 
+def get_user_context(request):
+    context = dict()
+
+    try:
+        username = request.session['username']
+        role = request.session['role']
+        if role == 'student':
+            context['uu'] = get_object_or_404(Student, username=username)
+            context['role'] = 'Student'
+        elif role == 'Professor':
+            context['uu'] = get_object_or_404(Teacher, username=username)
+            context['role'] = 'Professor'
+    except:
+        pass
+    
+    return context
+
+
 def index(request):
+    context = get_user_context(request)
+
     return render(
         request,
         'piggy/index.html',  # Relative path from the 'templates' folder to the template file
-        {
-            'content': "Now is " + timezone.localtime().strftime(("%Y/%m/%d, %H:%M:%S")) + ".",
-        }
+        context
     )
 
 
 def plans(request):
+    context = get_user_context(request)
     all_plans = Plan.objects.all()
+    context['all_plans'] = all_plans
     return render(
         request, 
         'piggy/plans.html', 
-        {
-            'all_plans': all_plans,
-        }
+        context
     )
 
 
 def plan_detail(request, plan_id):
     plan = get_object_or_404(Plan, pk=plan_id)
+    teams = Team.objects.filter(project_group_id=plan_id)
     return render(
         request,
         'piggy/plan_detail.html',
         {
-            'plan': plan
+            'plan': plan,
+            'teams': teams,
+            'is_expired': plan.is_expired,
         }
     )
 
@@ -151,3 +173,46 @@ def team_wish(request, team_id):
             'wishlist': wishlist,
         },
     )
+
+def login(request):
+    if request.method == 'POST':
+        role = request.POST['role']
+        username = request.POST['username']
+        password = request.POST['password']
+
+        if role == 'student':
+            matches = Student.objects.filter(username=username)
+        elif role == 'professor':
+            matches = Teacher.objects.filter(username=username)
+
+        if len(matches) == 0:
+            return render(
+                request, 'piggy/login.html', 
+                {'msg': 'Username doesn\'t exist.'}
+            )
+        else:
+            if password == matches[0].password:
+                request.session['role'] = role
+                request.session['username'] = matches[0].username
+                messages.Info('Log in successfully.')
+                return render(
+                    request, 'piggy/login.html', 
+                    {'msg': 'Log in successfully.'}
+                )
+            else:
+                return render(
+                    request, 'piggy/login.html', 
+                    {'msg': 'Wrong password.'}
+                )
+    else:
+        return render(
+            request, 'piggy/login.html', {}
+        )
+
+def logout(request):
+    try:
+        del request.session['username']
+        del request.session['role']
+    except KeyError:
+        return HttpResponse("You haven't logged in yet.")
+    return HttpResponse("Logged out successfully.")

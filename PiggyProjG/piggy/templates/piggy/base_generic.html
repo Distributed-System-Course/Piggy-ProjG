@@ -19,6 +19,13 @@
         <div class="col-sm-2">
             {% block sidebar %}
                 <ul class="sidebar-nav">
+                    {% if uu %}
+                    <p>Welcome, {{uu.name}}({{role}})
+                        <a href="{% url 'piggy:logout' %}">Logout</a>
+                    </p>
+                    {% else %}
+                    <li><a href="{% url 'piggy:login' %}">Login</a></li>
+                    {% endif %}
                     <li><a href="{% url 'piggy:index' %}">Home</a></li>
                     <li><a href="{% url 'piggy:plans' %}">All Plans</a></li>
                     <li><a href="{% url 'piggy:projects' %}">All Projects</a></li>

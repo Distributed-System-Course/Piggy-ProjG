@@ -1,0 +1,41 @@
+{% extends "piggy/base_generic.html" %}
+
+<!-- A simple insecure log in UI -->
+
+{% block title %}
+    <title> Login - Piggy </title>
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'piggy:login' %}" method="post">
+{% csrf_token %}
+<fieldset>
+    <legend>Login</legend>
+    {% if msg %}
+        <p><strong>{{ msg }}</strong></p>
+    {% endif %}
+    <table>
+        <tr>
+            <td>Usename</td>
+            <td><input type="text" name="username"/></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="password" name="password"/></td>
+        </tr>
+    </table> 
+    <div>
+        <input type="radio" name="role" id="studentChoice" value="student" checked/>
+        <label for="studentChoice">Student</label>
+        <input type="radio" name="role" id="professorChoice" value="professor" />
+        <label for="professorChoice">Professor</label>
+    </div>
+    
+    <div>
+        <button type="submit">Log in</button>
+    </div>
+</fieldset>
+</form>
+
+{% endblock content %}
+

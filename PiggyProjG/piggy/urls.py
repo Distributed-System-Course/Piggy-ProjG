@@ -24,4 +24,7 @@ urlpatterns = [
     # example: '/team/'
     path('team/<int:team_id>/', views.team, name='team_detail'),
     path('team/<int:team_id>/wish/', views.team_wish, name='team_wish'),
+
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
 ]
