@@ -1,31 +1,30 @@
-from django.core.checks import messages
+# from django.core.checks import messages
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.utils import timezone
 from django.http import HttpResponse
+from django.contrib import messages
 
 from .models import *
-
-# Create your views here.
 
 def get_user_context(request):
     context = dict()
 
     try:
-        username = request.session['username']
+        loggedin_user_username = request.session['username']
         role = request.session['role']
         if role == 'student':
-            context['uu'] = get_object_or_404(Student, username=username)
+            context['uu'] = get_object_or_404(Student, username=loggedin_user_username)
             context['role'] = 'Student'
-            context['is_student'] = True
-            context['is_professor'] = False
+            # context['is_student'] = True
+            # context['is_professor'] = False
 
-        elif role == 'Professor':
-            context['uu'] = get_object_or_404(Teacher, username=username)
+        elif role == 'professor':
+            context['uu'] = get_object_or_404(Teacher, username=loggedin_user_username)
             context['role'] = 'Professor'
-            context['is_student'] = False
-            context['is_professor'] = True
+            # context['is_student'] = False
+            # context['is_professor'] = True
     except:
         pass
     
@@ -161,7 +160,6 @@ def join_team(request, team_id):
         return HttpResponse(redirect('piggy:team', team_id))
     except:
         return HttpResponse('Permission denied.')
-        pass
 
 
 def team_wish(request, team_id):
@@ -205,7 +203,11 @@ def team_wish(request, team_id):
         },
     )
 
+
 def login(request):
+    context = get_user_context(request)
+    if context != {}:
+        return HttpResponseRedirect('/')
     if request.method == 'POST':
         role = request.POST['role']
         username = request.POST['username']
@@ -225,11 +227,7 @@ def login(request):
             if password == matches[0].password:
                 request.session['role'] = role
                 request.session['username'] = matches[0].username
-                messages.Info('Log in successfully.')
-                return render(
-                    request, 'piggy/login.html', 
-                    {'msg': 'Log in successfully.'}
-                )
+                return HttpResponseRedirect('/')
             else:
                 return render(
                     request, 'piggy/login.html', 
@@ -237,13 +235,175 @@ def login(request):
                 )
     else:
         return render(
-            request, 'piggy/login.html', {}
+            request, 'piggy/login.html',
         )
+
 
 def logout(request):
     try:
         del request.session['username']
         del request.session['role']
     except KeyError:
-        return HttpResponse("You haven't logged in yet.")
-    return HttpResponse("Logged out successfully.")
+        context = {"info": "You haven't logged in yet."}
+        return render(
+            request,
+            'piggy/logout.html',
+            context
+        )
+    return HttpResponseRedirect('/')
+
+
+def register(request):
+    if request.method == 'POST':
+        role = request.POST['role']
+        name = request.POST['name']
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        
+        if len(name) > 150 or len(name) == 0:
+            return render(
+                request,
+                'piggy/register.html',
+                {'msg': "Name illegal!"}
+            )
+
+        if len(username) > 150 or len(username) == 0:
+            return render(
+                request,
+                'piggy/register.html', 
+                {'msg': 'Username illegal!'}
+            )
+        
+        if role == 'student':
+            matches = Student.objects.filter(username=username)
+        elif role == 'professor':
+            matches = Teacher.objects.filter(username=username)
+
+        if len(matches) != 0:
+            return render(
+                request, 
+                'piggy/register.html', 
+                {'msg': 'Username already exist.'}
+            )
+        else:
+            if password1 == password2 and 0 < len(password1) <= 128:
+                if role == 'student':
+                    new = Student()
+                elif role == 'professor':
+                    new = Teacher()
+                new.name = name
+                new.username = username
+                new.password = password1
+                new.save()
+                context = {}
+                
+                if role == 'student':
+                    context['uu'] = get_object_or_404(Student, username=username)
+                    context['role'] = 'Student'
+                    context['is_student'] = True
+                    context['is_professor'] = False
+                elif role == 'Professor':
+                    context['uu'] = get_object_or_404(Teacher, username=username)
+                    context['role'] = 'Professor'
+                    context['is_student'] = False
+                    context['is_professor'] = True
+                
+                return render(
+                    request,
+                    'piggy/index.html',
+                    context
+                )
+            else:
+                return render(
+                    request,
+                    'piggy/register.html',
+                    {'msg': 'Password Error!'}
+                )
+    else:
+        return render(
+            request,
+            'piggy/register.html'
+        )
+        
+        
+def dashboard(request):
+    context = get_user_context(request)
+    if context == {}:
+        return HttpResponseRedirect('/')
+    
+    return render(
+        request,
+        'piggy/dashboard.html',
+        context,
+    )
+    
+def editprofile(request):
+    context = get_user_context(request)
+    if context == {}:
+        return HttpResponseRedirect('/')
+    
+    if request.method == 'POST':
+        role = context['role']
+        post_name = request.POST['name']
+        post_username = request.POST['username']
+        post_password1 = request.POST['password1']
+        post_password2 = request.POST['password2']
+        
+        if len(post_name) > 150 or len(post_name) == 0:
+            context['msg'] = 'Name illegal!'
+            return render(
+                request,
+                'piggy/editprofile.html',
+                context
+            )
+
+        if len(post_username) > 150 or len(post_username) == 0:
+            context['msg'] = 'Username illegal'
+            return render(
+                request,
+                'piggy/editprofile.html', 
+                context
+            )
+        
+        if role == 'Student':
+            matches = Student.objects.filter(username=post_username)
+        elif role == 'Professor':
+            matches = Teacher.objects.filter(username=post_username)
+
+        if len(matches) != 0 and context['uu'].username != post_username:
+            context['msg'] = 'Username already exist.'
+            return render(
+                request, 
+                'piggy/editprofile.html', 
+                context
+            )
+        else:
+            if post_password1 == post_password2 and 0 < len(post_password1) <= 128:
+                context['uu'].name = post_name
+                context['uu'].username = post_username
+                context['uu'].password = post_password1
+                request.session['username'] = post_username
+                context['uu'].save()
+                context['msg'] = 'Infomation updated!'
+                return render(
+                    request,
+                    'piggy/editprofile.html',
+                    context
+                )
+            else:
+                context['msg'] = 'Passwords don\'t match!'
+                return render(
+                    request,
+                    'piggy/editprofile.html',
+                    context
+                )
+    else:
+        return render(
+            request,
+            'piggy/editprofile.html',
+            context,
+        )
+    
+    
+    

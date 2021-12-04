@@ -28,6 +28,13 @@ urlpatterns = [
     path('team/<int:team_id>/wish/', views.team_wish, name='team_wish'),
     path('team/<int:team_id>/join/', views.join_team, name='join_team'),
 
+
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
+    
+    path('register/', views.register, name='register'),
+    
+    path('dashboard/', views.dashboard, name='dashboard'),
+
+    path('editprofile/', views.editprofile, name='editprofile'),
 ]

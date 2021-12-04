@@ -1,0 +1,33 @@
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title>Man - Piggy</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Hi, {{ uu.name }}</h1>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>{{ uu.name }}</td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td>{{ uu.username }}</td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>{{ uu.password }}</td>
+        </tr>
+        <tr>
+            <td>Role</td>
+            <td>{{ role }}</td>
+        </tr>
+    </table>
+    <form>
+        {% csrf_token %}
+        <div>
+            <a href="{% url 'piggy:editprofile' %}">Edit Profile</a>
+        </div>
+    </form>
+{% endblock %}

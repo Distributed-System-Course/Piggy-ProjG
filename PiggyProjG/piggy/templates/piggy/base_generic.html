@@ -20,11 +20,15 @@
             {% block sidebar %}
                 <ul class="sidebar-nav">
                     {% if uu %}
-                    <p>Welcome, {{uu.name}}({{role}})
+                    <p>Welcome, 
+                        <a href="{% url 'piggy:dashboard' %}">{{uu.name}}</a>({{role}})
                         <a href="{% url 'piggy:logout' %}">Logout</a>
                     </p>
                     {% else %}
-                    <li><a href="{% url 'piggy:login' %}">Login</a></li>
+                    <li>
+                        <a href="{% url 'piggy:login' %}">Login</a>/
+                        <a href=" {% url 'piggy:register' %}">Register</a>
+                    </li>
                     {% endif %}
                     <li><a href="{% url 'piggy:index' %}">Home</a></li>
                     <li><a href="{% url 'piggy:plans' %}">All Plans</a></li>
