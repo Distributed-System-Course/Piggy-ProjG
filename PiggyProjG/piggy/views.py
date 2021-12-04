@@ -17,14 +17,10 @@ def get_user_context(request):
         if role == 'student':
             context['uu'] = get_object_or_404(Student, username=loggedin_user_username)
             context['role'] = 'Student'
-            # context['is_student'] = True
-            # context['is_professor'] = False
 
         elif role == 'professor':
             context['uu'] = get_object_or_404(Teacher, username=loggedin_user_username)
             context['role'] = 'Professor'
-            # context['is_student'] = False
-            # context['is_professor'] = True
     except:
         pass
     
@@ -46,17 +42,7 @@ def start_plan(request, plan_id):
     temp.is_expired = False
     temp.save()
     
-    # plan_detail(request, plan_id)
-    context = get_user_context(request)
-    
-    context['plan'] = get_object_or_404(Plan, pk=plan_id)
-    context['teams'] = Team.objects.filter(project_group_id=plan_id)
-
-    return render(
-        request,
-        'piggy/plan_detail.html',
-        context
-    )
+    return HttpResponseRedirect('/plan/' + str(plan_id) + '/')
 
 
 def stop_plan(request, plan_id):
@@ -64,17 +50,7 @@ def stop_plan(request, plan_id):
     temp.is_expired = True
     temp.save()
     
-    # plan_detail(request, plan_id)
-    context = get_user_context(request)
-    
-    context['plan'] = get_object_or_404(Plan, pk=plan_id)
-    context['teams'] = Team.objects.filter(project_group_id=plan_id)
-
-    return render(
-        request,
-        'piggy/plan_detail.html',
-        context
-    )
+    return HttpResponseRedirect('/plan/' + str(plan_id) + '/')
 
 
 def del_project(request, plan_id, project_id):

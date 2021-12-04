@@ -6,15 +6,17 @@
 
 {% block content %}
     <h1> All Projects </h1>
-    <!-- Organized by 'plan's -->
+    <!-- Grouped by 'plan's -->
     {% if all_plans %}
         {% for plan in all_plans %}
+        <div class="plan_and_projects">
         <h2><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}<a></h2>
         <ul>
             {% for project in plan.project_set.all %}
                 <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
             {% endfor %}
         </ul>
+        </div>
         {% endfor %}
     {% else %}
         <p>No projects are available.</p>

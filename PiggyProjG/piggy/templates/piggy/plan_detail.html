@@ -1,7 +1,7 @@
 {% extends "piggy/base_generic.html" %}
 
 {% block title %}
-    <title> {{ plan.name }} - 详情 </title>
+    <title>{{ plan.name }} - Plan's details</title>
 {% endblock %}
 
 {% block content %}
@@ -12,7 +12,7 @@
     </p>
 
     <p>
-        <strong>Is expired:</strong>
+        <strong>Status:</strong>
         {% if plan.is_expired %}
             Expired
             {% if flag %}
@@ -25,13 +25,13 @@
             {% endif %}
         {% endif %}
     </p>
-    <p>Included projects:</p>
+    <p>Projects in this plan:</p>
     <ul>
         {% for project in plan.project_set.all %}
             <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
         {% endfor %}
     </ul>
-    <p>Included teams:</p>
+    <p>Teams in this plan:</p>
     <ul>
         {% for team in teams %}
             <li><a href="{% url 'piggy:team_detail' team.id %}">{{ team.name }}</a></li>

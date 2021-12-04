@@ -1,17 +1,20 @@
 {% extends "piggy/base_generic.html" %}
 
 {% block title %}
-    <title> {{ teacher.name }} - 详情 </title>
+    <title> {{ teacher.name }} - Professor's details</title>
 {% endblock title %}
 
 {% block content %}
     <h1> {{ teacher.name }} </h1>
+    <div class="teacher_resume">
     <h2> Resume </h2>
-        <p> Prof. {{ teacher.name }} always can get high rated</p>
-    <h2> Directed Plans and Projects</h2>
+        <p> Prof. {{ teacher.name }} can always get highly rated</p>
+    </div>
+    <div class="plans_from_the_teacher">
+        <h2> Directed Plans and Projects</h2>
         {% if all_plans %}
             {% for plan in all_plans %}
-                <h3><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}<a></h2>
+                <h3><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}<a></h3>
                 <ul>
                 {% for project in plan.project_set.all %}
                     <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
@@ -21,4 +24,5 @@
         {% else %}
             <p>No projects are available.</p>
         {% endif %}
+    </div>
 {% endblock content %}
