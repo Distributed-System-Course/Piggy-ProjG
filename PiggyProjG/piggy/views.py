@@ -18,9 +18,14 @@ def get_user_context(request):
         if role == 'student':
             context['uu'] = get_object_or_404(Student, username=username)
             context['role'] = 'Student'
+            context['is_student'] = True
+            context['is_professor'] = False
+
         elif role == 'Professor':
             context['uu'] = get_object_or_404(Teacher, username=username)
             context['role'] = 'Professor'
+            context['is_student'] = False
+            context['is_professor'] = True
     except:
         pass
     
@@ -37,6 +42,21 @@ def index(request):
     )
 
 
+def start_plan(request, plan_id):
+    plan = get_object_or_404(Plan, pk=plan_id)
+    try:
+        username = request.session['username']
+        if plan.teacher.username == username:
+            plan.is_expired = False
+        return HttpResponseRedirect('piggy:plan', plan_id)
+    except:
+        return HttpResponse('Permission denied.')
+        pass
+
+
+def stop_plan(request, plan_id):
+    pass
+
 def plans(request):
     context = get_user_context(request)
     all_plans = Plan.objects.all()
@@ -49,16 +69,17 @@ def plans(request):
 
 
 def plan_detail(request, plan_id):
+    context = get_user_context(request)
+    
     plan = get_object_or_404(Plan, pk=plan_id)
     teams = Team.objects.filter(project_group_id=plan_id)
+    context['plan'] = plan
+    context['teams'] = teams
+
     return render(
         request,
         'piggy/plan_detail.html',
-        {
-            'plan': plan,
-            'teams': teams,
-            'is_expired': plan.is_expired,
-        }
+        context
     )
 
 
@@ -120,17 +141,28 @@ def teacher_detail(request, teacher_id):
     )
 
 
-def team(request, team_id):
+def team_detail(request, team_id):
+    context = get_user_context(request)
     team = get_object_or_404(Team, pk=team_id)
-    # members = Team.members_set.all()
+    context['team'] = team
     return render(
         request,
-        'piggy/team.html',
-        {
-            'team': team,
-            # 'members': members,
-        }
+        'piggy/team_detail.html',
+        context
     )
+
+
+def join_team(request, team_id):
+    context = get_user_context(request)
+    team = get_object_or_404(Team, pk=team_id)
+    try:
+        if context['is_student']:
+            team.members.objects.add(context['uu'])
+            team.save()
+        return HttpResponse(redirect('piggy:team', team_id))
+    except:
+        return HttpResponse('Permission denied.')
+        pass
 
 
 def team_wish(request, team_id):

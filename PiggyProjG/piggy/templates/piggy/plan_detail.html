@@ -12,10 +12,12 @@
     </p>
     <p>
         <strong>是否过期：</strong>
-        {% if is_expired %}
-        已过期
+        {% if plan.is_expired %}
+            已过期
+            <a href="{% url 'piggy:start_plan' plan.id %}">开始计划</a>
         {% else %}
-        进行中
+            进行中
+            <a href="{% url 'piggy:stop_plan' plan.id %}">停止计划</a>
         {% endif %}
     </p>
     <p>计划所含项目：</p>
@@ -24,4 +26,11 @@
             <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
         {% endfor %}
     </ul>
+    <p>计划内小组：</p>
+    <ul>
+        {% for team in teams %}
+            <li><a href="{% url 'piggy:team_detail' team.id %}">{{ team.name }}</a></li>
+        {% endfor %}
+    </ul>
+    
 {% endblock %}
