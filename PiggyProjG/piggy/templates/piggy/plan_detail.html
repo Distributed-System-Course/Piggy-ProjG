@@ -7,30 +7,38 @@
 {% block content %}
     <h1> {{ plan.name }} </h1>
     <p>
-        <strong>指导教师：</strong>
+        <strong>Professor:</strong>
         <a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher }}</a>
     </p>
+
     <p>
-        <strong>是否过期：</strong>
+        <strong>Is expired:</strong>
         {% if plan.is_expired %}
-            已过期
-            <a href="{% url 'piggy:start_plan' plan.id %}">开始计划</a>
+            Expired
+            {% if flag %}
+                <a href="{% url 'piggy:start_plan' plan.id %}">Start plan</a>
+            {% endif %}
         {% else %}
-            进行中
-            <a href="{% url 'piggy:stop_plan' plan.id %}">停止计划</a>
+            Running
+            {% if flag %}
+                <a href="{% url 'piggy:stop_plan' plan.id %}">Stop plan</a>
+            {% endif %}
         {% endif %}
     </p>
-    <p>计划所含项目：</p>
+    <p>Included projects:</p>
     <ul>
         {% for project in plan.project_set.all %}
             <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
         {% endfor %}
     </ul>
-    <p>计划内小组：</p>
+    <p>Included teams:</p>
     <ul>
         {% for team in teams %}
             <li><a href="{% url 'piggy:team_detail' team.id %}">{{ team.name }}</a></li>
         {% endfor %}
     </ul>
+    {% if flag %}
+        <p><a href="{% url 'piggy:edit_plan' plan.id %}">Edit Plan</a></p>
+    {% endif %}
     
 {% endblock %}

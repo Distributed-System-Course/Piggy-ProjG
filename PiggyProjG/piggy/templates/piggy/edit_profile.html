@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-  <form action="{% url 'piggy:editprofile' %}" method="post">
+  <form action="{% url 'piggy:edit_profile' %}" method="post">
     {% csrf_token %}
     <fieldset>
         <legend>Edit Profile</legend>
@@ -28,6 +28,14 @@
             <tr>
                 <td>Confirm password</td>
                 <td><input type="password" name="password2"/></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="text" name="email" value="{{ uu.email }}"></td>
+            </tr>
+            <tr>
+                <td>Resume</td>
+                <td><input type="text" name="resume" value="{{ uu.resume }}"></td>
             </tr>
         </table> 
         <div>

@@ -6,6 +6,8 @@ class Teacher(models.Model):
     username = models.CharField(max_length=150)
     password = models.CharField(max_length=128)
     name = models.CharField(max_length=150)
+    email = models.CharField(max_length=150)
+    resume = models.CharField(max_length=150)
 
     def __str__(self):
         return "{}".format(self.name, self.username)
@@ -16,6 +18,8 @@ class Student(models.Model):
     password = models.CharField(max_length=128)
     name = models.CharField(max_length=150)
     rank = models.IntegerField(default=0)
+    email = models.CharField(max_length=150)
+    resume = models.CharField(max_length=150)
     
     def __str__(self):
         return "{}".format(self.name, self.username)
@@ -29,6 +33,7 @@ class Plan(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
     is_expired = models.BooleanField(default=False)
+    description = models.CharField(max_length=500)
 
     def __str__(self):
         return "{} ({})".format(self.name, self.teacher)

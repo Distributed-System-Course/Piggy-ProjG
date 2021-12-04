@@ -1,0 +1,58 @@
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title> Edit Plan - Piggy </title>
+{% endblock %}
+
+{% block content %}
+  <form action="{% url 'piggy:edit_profile' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Edit Plan</legend>
+        {% if msg %}
+            <p><strong>{{ msg }}</strong></p>
+        {% endif %}
+        <table>
+            <tr>
+                <td>Plan Name:</td>
+                <td><input type="text" name="plan_name" value="{{ plan.name }}"></td>
+            </tr>
+            <tr>
+                <td>Professor:</td>
+                <td><a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher }}</a></td>
+            </tr>
+            <tr>
+                <td>Is expired:</td>
+                <td>
+                    {% if plan.is_expired %}
+                        Expired <a href="{% url 'piggy:start_plan' plan.id %}">Start plan</a>
+                    {% else %}
+                        Running <a href="{% url 'piggy:stop_plan' plan.id %}">Stop plan</a>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>Included projects:</td>
+                <td>
+                    {% for project in plan.project_set.all %}
+                        <a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a> | 
+                        <a href="{% url 'piggy:del_project' plan.id project.id %}">Delete plan</a>
+                        <br>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>Included teams:</td>
+                <td>
+                    {% for team in teams %}
+                        <a href="{% url 'piggy:team_detail' team.id %}">{{ team.name }}</a> | 
+                        <a href="{% url 'piggy:kick_out_team' plan.id team.id %}">Kick out</a>
+                        <br>
+                    {% endfor %}
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+  </form>
+  
+{% endblock content %}

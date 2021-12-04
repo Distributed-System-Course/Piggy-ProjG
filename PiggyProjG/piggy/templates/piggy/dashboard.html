@@ -6,6 +6,7 @@
 
 {% block content %}
     <h1>Hi, {{ uu.name }}</h1>
+    <h2>Profile</h2>
     <table>
         <tr>
             <td>Name</td>
@@ -23,11 +24,37 @@
             <td>Role</td>
             <td>{{ role }}</td>
         </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ uu.email }}</td>
+        </tr>
+        <tr>
+            <td>Resume</td>
+            <td>{{ uu.resume}}</td>
+        </tr>
+
     </table>
+    
     <form>
         {% csrf_token %}
         <div>
-            <a href="{% url 'piggy:editprofile' %}">Edit Profile</a>
+            <a href="{% url 'piggy:edit_profile' %}">Edit Profile</a>
         </div>
     </form>
+
+    <h2> Directed Plans and Projects</h2>
+
+    {% if all_plans %}
+        {% for plan in all_plans %}
+            <h3><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}<a></h2>
+            <ul>
+            {% for project in plan.project_set.all %}
+                <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+    {% else %}
+        <p>No projects are available.</p>
+    {% endif %}
+
 {% endblock %}

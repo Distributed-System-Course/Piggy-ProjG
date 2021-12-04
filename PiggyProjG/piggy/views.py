@@ -42,21 +42,57 @@ def index(request):
 
 
 def start_plan(request, plan_id):
-    plan = get_object_or_404(Plan, pk=plan_id)
-    try:
-        username = request.session['username']
-        if plan.teacher.username == username:
-            plan.is_expired = False
-        return HttpResponseRedirect('piggy:plan', plan_id)
-    except:
-        return HttpResponse('Permission denied.')
+    temp = get_object_or_404(Plan, pk=plan_id)
+    temp.is_expired = False
+    temp.save()
+    
+    # plan_detail(request, plan_id)
+    context = get_user_context(request)
+    
+    context['plan'] = get_object_or_404(Plan, pk=plan_id)
+    context['teams'] = Team.objects.filter(project_group_id=plan_id)
+
+    return render(
+        request,
+        'piggy/plan_detail.html',
+        context
+    )
 
 
 def stop_plan(request, plan_id):
+    temp = get_object_or_404(Plan, pk=plan_id)
+    temp.is_expired = True
+    temp.save()
+    
+    # plan_detail(request, plan_id)
+    context = get_user_context(request)
+    
+    context['plan'] = get_object_or_404(Plan, pk=plan_id)
+    context['teams'] = Team.objects.filter(project_group_id=plan_id)
+
+    return render(
+        request,
+        'piggy/plan_detail.html',
+        context
+    )
+
+
+def del_project(request, plan_id, project_id):
+    context = get_user_context(request)
+    return render(
+        request,
+        'piggy/edit_plan.html',
+        context
+    )
+    
+
+def kick_out_team(request, plan_id, team_id):
     pass
+
 
 def plans(request):
     context = get_user_context(request)
+    
     all_plans = Plan.objects.all()
     context['all_plans'] = all_plans
     return render(
@@ -69,10 +105,10 @@ def plans(request):
 def plan_detail(request, plan_id):
     context = get_user_context(request)
     
-    plan = get_object_or_404(Plan, pk=plan_id)
-    teams = Team.objects.filter(project_group_id=plan_id)
-    context['plan'] = plan
-    context['teams'] = teams
+    context['plan'] = get_object_or_404(Plan, pk=plan_id)
+    context['teams'] = Team.objects.filter(project_group_id=plan_id)
+    if context['role'] == 'Professor' and context['plan'].teacher.id == context['uu'].id:
+        context['flag'] = True
 
     return render(
         request,
@@ -92,9 +128,9 @@ def join_plan(request, plan_id):
 
 
 def projects(request):
-    all_plans = Plan.objects.all()
     context = get_user_context(request)
-    context['all_plans'] = all_plans
+    
+    context['all_plans'] = Plan.objects.all()
     return render(
         request,
         'piggy/projects.html',
@@ -103,22 +139,25 @@ def projects(request):
 
 
 def project_detail(request, project_id):
+    context = get_user_context(request)
+    
     project = get_object_or_404(Project, pk=project_id)
+    context['project'] = project
+    context['max_group_num'] = project.max_group_num
+    context['max_team_member_num'] = project.max_team_member_num
+    
     return render(
         request, 
         'piggy/project_detail.html', 
-        {
-            'project': project,
-            'max_group_num': project.max_group_num,
-            'max_team_member_num': project.max_team_member_num,
-        }
+        context
     )
 
 
 def teachers(request):
-    teachers = Teacher.objects.all()
     context = get_user_context(request)
-    context['teachers'] = teachers
+    
+    context['teachers'] = Teacher.objects.all()
+    
     return render(
         request,
         'piggy/teachers.html',
@@ -127,15 +166,14 @@ def teachers(request):
 
 
 def teacher_detail(request, teacher_id):
-    teacher = get_object_or_404(Teacher, pk=teacher_id)
-    all_plans = Plan.objects.filter(teacher_id=teacher_id)
+    context = get_user_context(request)
+    context['teacher'] = get_object_or_404(Teacher, pk=teacher_id)
+    context['all_plans'] = Plan.objects.filter(teacher_id=teacher_id)
+    
     return render(
         request,
         'piggy/teacher_detail.html',
-        {
-            'teacher': teacher,
-            'all_plans': all_plans
-        }
+        context
     )
 
 
@@ -332,13 +370,17 @@ def dashboard(request):
     if context == {}:
         return HttpResponseRedirect('/')
     
+    if context['role'] == 'Professor':
+        context['all_plans'] = Plan.objects.filter(teacher_id=context['uu'].id)
+    
     return render(
         request,
         'piggy/dashboard.html',
         context,
     )
     
-def editprofile(request):
+    
+def edit_profile(request):
     context = get_user_context(request)
     if context == {}:
         return HttpResponseRedirect('/')
@@ -349,61 +391,70 @@ def editprofile(request):
         post_username = request.POST['username']
         post_password1 = request.POST['password1']
         post_password2 = request.POST['password2']
+        post_email = request.POST['email']
+        post_resume = request.POST['resume']
         
         if len(post_name) > 150 or len(post_name) == 0:
-            context['msg'] = 'Name illegal!'
-            return render(
-                request,
-                'piggy/editprofile.html',
-                context
-            )
-
-        if len(post_username) > 150 or len(post_username) == 0:
-            context['msg'] = 'Username illegal'
-            return render(
-                request,
-                'piggy/editprofile.html', 
-                context
-            )
-        
-        if role == 'Student':
-            matches = Student.objects.filter(username=post_username)
-        elif role == 'Professor':
-            matches = Teacher.objects.filter(username=post_username)
-
-        if len(matches) != 0 and context['uu'].username != post_username:
-            context['msg'] = 'Username already exist.'
-            return render(
-                request, 
-                'piggy/editprofile.html', 
-                context
-            )
-        else:
-            if post_password1 == post_password2 and 0 < len(post_password1) <= 128:
-                context['uu'].name = post_name
-                context['uu'].username = post_username
-                context['uu'].password = post_password1
-                request.session['username'] = post_username
-                context['uu'].save()
-                context['msg'] = 'Infomation updated!'
-                return render(
-                    request,
-                    'piggy/editprofile.html',
-                    context
-                )
+            if len(post_name) > 150:
+                context['msg'] = 'Name is too long!'
             else:
-                context['msg'] = 'Passwords don\'t match!'
-                return render(
-                    request,
-                    'piggy/editprofile.html',
-                    context
-                )
-    else:
+                context['msg'] = 'Name can\'t be empty'
+
+        elif len(post_username) > 150 or len(post_username) == 0:
+            if len(post_username) > 150:
+                context['msg'] = 'Username is too long!'
+            else:
+                context['msg'] = 'Username can\'t be empty!'
+
+        else:
+            if role == 'Student':
+                matches = Student.objects.filter(username=post_username)
+            elif role == 'Professor':
+                matches = Teacher.objects.filter(username=post_username)
+
+            if len(matches) != 0 and context['uu'].username != post_username:
+                context['msg'] = 'Username already exist.'
+
+            else:
+                if post_password1 == post_password2 and 0 < len(post_password1) <= 128:
+                    context['uu'].name = post_name
+                    context['uu'].username = post_username
+                    context['uu'].password = post_password1
+                    context['uu'].emial = post_email
+                    context['uu'].resume = post_resume
+                    context['uu'].save()
+                    request.session['username'] = post_username
+                    context['msg'] = 'Infomation updated!'
+
+                else:
+                    if len(post_password1) == 0:
+                        context['msg'] = 'Password can\'t be empty!'
+                    elif len(post_password1) > 128:
+                        context['msg'] = 'Password is too long!'
+                    else:
+                        context['msg'] = 'Passwords don\'t match!'
+
+    return render(
+        request,
+        'piggy/edit_profile.html',
+        context,
+    )
+    
+    
+def edit_plan(request, plan_id):
+    context = get_user_context(request)
+    
+    context['plan'] = get_object_or_404(Plan, pk=plan_id)
+    
+    if context['role'] == 'Professor' and context['plan'].teacher.id == context['uu'].id:
+        
+        context['teams'] = Team.objects.filter(project_group_id=plan_id)
+        
         return render(
             request,
-            'piggy/editprofile.html',
-            context,
+            'piggy/edit_plan.html',
+            context
         )
-    
-    
-    
+    else:
+        return HttpResponseRedirect('/')
+        
