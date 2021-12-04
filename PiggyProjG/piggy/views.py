@@ -51,7 +51,6 @@ def start_plan(request, plan_id):
         return HttpResponseRedirect('piggy:plan', plan_id)
     except:
         return HttpResponse('Permission denied.')
-        pass
 
 
 def stop_plan(request, plan_id):
@@ -95,12 +94,12 @@ def join_plan(request, plan_id):
 
 def projects(request):
     all_plans = Plan.objects.all()
+    context = get_user_context(request)
+    context['all_plans'] = all_plans
     return render(
         request,
         'piggy/projects.html',
-        {
-            'all_plans': all_plans, 
-        }
+        context,
     )
 
 
@@ -119,12 +118,12 @@ def project_detail(request, project_id):
 
 def teachers(request):
     teachers = Teacher.objects.all()
+    context = get_user_context(request)
+    context['teachers'] = teachers
     return render(
         request,
         'piggy/teachers.html',
-        {
-            'teachers': teachers,
-        }
+        context,
     )
 
 
