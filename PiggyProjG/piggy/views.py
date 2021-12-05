@@ -93,13 +93,44 @@ def plan_detail(request, plan_id):
     )
 
 
-def join_plan(request, plan_id):
-        return render(
+def create_team(request, plan_id):
+    context = get_user_context(request)
+    
+    context['plan'] = get_object_or_404(Plan, pk=plan_id)
+    
+    context['choices'] = context['plan'].project_set.all()
+    
+    if 'role' in context and context['role'] == 'Student':
+        # User must login first, and only student can create team
+        # By creating a team under a plan, one also joins in this plan
+        # For each plan, students can only jpin one team 
+        # So we must see whether this student is already in a team or not
+        already_exist = False
+        teams = Team.objects.filter(project_group__id=plan_id)
+        for team in teams:
+            if context['uu'] in team.members.all():
+                already_exist = True
+                context['err_msg'] = 'You are already in a team which belongs to this plan.'
+                break
+        
+        # Only when requirements(login & not existed in any team) are satisfied, do post request
+        if request.method == "POST" and not already_exist:
+            new_team = Team()
+            new_team.name = request.POST['team_name']
+            project_id = int(request.POST['default_project_id'])
+            new_team.project_group = context['plan']
+            new_team.project = Project.objects.get(id=project_id)
+            new_team.save()
+            context['msg'] = 'Team created successfully.'
+            new_team.members.add(context['uu'])
+
+    else:
+        context['err_msg'] = 'You don\'t have enough permissions.'
+
+    return render(
         request,
-        'piggy/join_plan.html',
-        {
-            
-        }
+        'piggy/create_team.html',
+        context,
     )
 
 

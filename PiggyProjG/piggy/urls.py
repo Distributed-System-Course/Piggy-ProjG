@@ -11,7 +11,7 @@ urlpatterns = [
     # example: '/plans/', a.k.a. project groups
     path('plans/', views.plans, name='plans'),
     path('plan/<int:plan_id>/', views.plan_detail, name='plan_detail'),
-    path('plan/<int:plan_id>/join/', views.join_plan, name='join_plan'),
+    path('plan/<int:plan_id>/create_team/', views.create_team, name='create_team'),
     path('plan/<int:plan_id>/start/', views.start_plan, name='start_plan'),
     path('plan/<int:plan_id>/stop/', views.stop_plan, name='stop_plan'),
     
