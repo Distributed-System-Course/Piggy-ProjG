@@ -22,6 +22,5 @@ urlpatterns = [
 
 urlpatterns += [
     path('', include('piggy.urls')),
-    path('hello/', include('hello.urls')),
 ]
 
