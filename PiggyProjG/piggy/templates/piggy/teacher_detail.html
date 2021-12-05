@@ -7,9 +7,36 @@
 {% block content %}
     <h1> {{ teacher.name }} </h1>
     <div class="teacher_resume">
-    <h2> Resume </h2>
-        <p> Prof. {{ teacher.name }} can always get highly rated</p>
-    </div>
+    <!-- <h2> Resume </h2>
+        <p> Prof. {{ teacher.name }} can always get highly rated</p> -->
+    <h2>Profile</h2>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>{{ uu.name }}</td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td>{{ uu.username }}</td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>{{ uu.password }}</td>
+        </tr>
+        <tr>
+            <td>Role</td>
+            <td>{{ role }}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ uu.email }}</td>
+        </tr>
+        <tr>
+            <td>Resume</td>
+            <td>{{ uu.resume}}</td>
+        </tr>
+    </table>
+
     <div class="plans_from_the_teacher">
         <h2> Directed Plans and Projects</h2>
         {% if all_plans %}

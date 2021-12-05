@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-  <form action="{% url 'piggy:edit_profile' %}" method="post">
+  <form action="{% url 'piggy:edit_plan' plan.id %}" method="post">
     {% csrf_token %}
     <fieldset>
         <legend>Edit Plan</legend>
@@ -22,23 +22,33 @@
                 <td><a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher }}</a></td>
             </tr>
             <tr>
-                <td>Is expired:</td>
+                <td>Status:</td>
                 <td>
-                    {% if plan.is_expired %}
-                        Expired <a href="{% url 'piggy:start_plan' plan.id %}">Start plan</a>
-                    {% else %}
-                        Running <a href="{% url 'piggy:stop_plan' plan.id %}">Stop plan</a>
-                    {% endif %}
+                    <select name="plan_status">
+                        {% if plan.is_expired %}
+                            <option value="True">Expired</option>
+                            <option value="False">Running</option>
+                        {% else %}
+                            <option value="False">Running</option>
+                            <option value="True">Expired</option>
+                        {% endif %}
+                    </select>
                 </td>
+            </tr>
+            <tr>
+                <td>Description</td>
+                <td><input type="text" name="plan_description" value="{{ plan.description }}"></td>
             </tr>
             <tr>
                 <td>Included projects:</td>
                 <td>
-                    {% for project in plan.project_set.all %}
-                        <a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a> | 
-                        <a href="{% url 'piggy:del_project' plan.id project.id %}">Delete plan</a>
-                        <br>
-                    {% endfor %}
+                    <ul>
+                        {% for project in plan.project_set.all %}
+                            <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a> <br></li>
+                            {{ project.description }} | 
+                            <a href="{% url 'piggy:del_project' plan.id project.id %}">Delete plan</a>
+                        {% endfor %}
+                    </ul>
                 </td>
             </tr>
             <tr>
@@ -52,6 +62,9 @@
                 </td>
             </tr>
         </table>
+        <div>
+            <button type="=submit">Submit</button>
+        </div>
     </fieldset>
   </form>
   

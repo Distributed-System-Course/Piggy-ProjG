@@ -22,7 +22,8 @@ def get_user_context(request):
             context['uu'] = get_object_or_404(Teacher, username=loggedin_user_username)
             context['role'] = 'Professor'
     except:
-        pass
+        context['role'] = ''
+        context['uu'] = ''
     
     return context
 
@@ -43,6 +44,7 @@ def start_plan(request, plan_id):
     temp.save()
     
     return HttpResponseRedirect('/plan/' + str(plan_id) + '/')
+    # return HttpResponseRedirect(request.path_info)
 
 
 def stop_plan(request, plan_id):
@@ -50,6 +52,7 @@ def stop_plan(request, plan_id):
     temp.is_expired = True
     temp.save()
     
+    # return HttpResponseRedirect(request.path_info)
     return HttpResponseRedirect('/plan/' + str(plan_id) + '/')
 
 
@@ -83,6 +86,7 @@ def plan_detail(request, plan_id):
     
     context['plan'] = get_object_or_404(Plan, pk=plan_id)
     context['teams'] = Team.objects.filter(project_group_id=plan_id)
+    
     if context['role'] == 'Professor' and context['plan'].teacher.id == context['uu'].id:
         context['flag'] = True
 
@@ -220,7 +224,7 @@ def team_wish(request, team_id):
 
 def login(request):
     context = get_user_context(request)
-    if context != {}:
+    if context['uu'] != '':
         return HttpResponseRedirect('/')
     if request.method == 'POST':
         role = request.POST['role']
@@ -268,82 +272,74 @@ def logout(request):
 
 
 def register(request):
+    context = get_user_context(request)
+    if context['uu'] != '':
+        return HttpResponseRedirect('/')
+    
+    context['draft'] = {}
+    context['message'] = []
+    
     if request.method == 'POST':
-        role = request.POST['role']
-        name = request.POST['name']
-        username = request.POST['username']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        
-        if len(name) > 150 or len(name) == 0:
-            return render(
-                request,
-                'piggy/register.html',
-                {'msg': "Name illegal!"}
-            )
+        context['draft']['role'] = request.POST['role']
+        context['draft']['name'] = request.POST['name']
+        context['draft']['username'] = request.POST['username']
 
-        if len(username) > 150 or len(username) == 0:
-            return render(
-                request,
-                'piggy/register.html', 
-                {'msg': 'Username illegal!'}
-            )
+        context['draft']['password1'] = request.POST['password1']
+        context['draft']['password2'] = request.POST['password2']
         
-        if role == 'student':
-            matches = Student.objects.filter(username=username)
-        elif role == 'professor':
-            matches = Teacher.objects.filter(username=username)
+        if len(context['draft']['name']) > 150 or len(context['draft']['name']) == 0:
+            if len(context['draft']['name']) > 150:
+                context['message'].append('Name is too long!')
+            else:
+                context['message'].append('Name can\'t be empty!')
+
+        if len(context['draft']['username']) > 150 or len(context['draft']['username']) == 0:
+            if len(context['draft']['username']) > 150:
+                context['message'].append('Username is too long!')
+            else:
+                context['message'].append('Username can\'t be empty!')
+        
+        if context['draft']['role'] == 'student':
+            matches = Student.objects.filter(username=context['draft']['username'])
+        elif context['draft']['role'] == 'professor':
+            matches = Teacher.objects.filter(username=context['draft']['username'])
 
         if len(matches) != 0:
-            return render(
-                request, 
-                'piggy/register.html', 
-                {'msg': 'Username already exist.'}
-            )
-        else:
-            if password1 == password2 and 0 < len(password1) <= 128:
-                if role == 'student':
-                    new = Student()
-                elif role == 'professor':
-                    new = Teacher()
-                new.name = name
-                new.username = username
-                new.password = password1
-                new.save()
-                context = {}
+            context['message'].append('Username already exist.')
+            
+        if context['draft']['password1'] != context['draft']['password2'] or \
+                len(context['draft']['password1']) > 128 or \
+                len(context['draft']['password1']) == 0:
+            context['message'].append('Password Error!')
+        
+        if len(context['message']) == 0:
+            if context['draft']['role'] == 'student':
+                new = Student()
+            elif context['draft']['role'] == 'professor':
+                new = Teacher()
+            new.name = context['draft']['name']
+            new.username = context['draft']['username']
+            new.password = context['draft']['password1']
+            new.save()
+            context = {}
+            
+            if context['draft']['role'] == 'student':
+                context['uu'] = get_object_or_404(Student, username=context['draft']['username'])
+                context['role'] = 'Student'
+            elif context['draft']['role'] == 'Professor':
+                context['uu'] = get_object_or_404(Teacher, username=context['draft']['username'])
+                context['role'] = 'Professor'
                 
-                if role == 'student':
-                    context['uu'] = get_object_or_404(Student, username=username)
-                    context['role'] = 'Student'
-                    context['is_student'] = True
-                    context['is_professor'] = False
-                elif role == 'Professor':
-                    context['uu'] = get_object_or_404(Teacher, username=username)
-                    context['role'] = 'Professor'
-                    context['is_student'] = False
-                    context['is_professor'] = True
-                
-                return render(
-                    request,
-                    'piggy/index.html',
-                    context
-                )
-            else:
-                return render(
-                    request,
-                    'piggy/register.html',
-                    {'msg': 'Password Error!'}
-                )
-    else:
-        return render(
-            request,
-            'piggy/register.html'
-        )
+    return render(
+        request,
+        'piggy/register.html',
+        context,
+    )
         
         
 def dashboard(request):
     context = get_user_context(request)
-    if context == {}:
+    if context['uu'] == '':
         return HttpResponseRedirect('/')
     
     if context['role'] == 'Professor':
@@ -358,7 +354,7 @@ def dashboard(request):
     
 def edit_profile(request):
     context = get_user_context(request)
-    if context == {}:
+    if context['uu'] == '':
         return HttpResponseRedirect('/')
     
     if request.method == 'POST':
@@ -423,14 +419,83 @@ def edit_plan(request, plan_id):
     context['plan'] = get_object_or_404(Plan, pk=plan_id)
     
     if context['role'] == 'Professor' and context['plan'].teacher.id == context['uu'].id:
-        
-        context['teams'] = Team.objects.filter(project_group_id=plan_id)
+        if request.method == 'POST':
+            post_name = request.POST['plan_name']
+            post_description = request.POST['plan_description']
+            post_status = request.POST['plan_status']
+            
+            if len(post_name) > 150 or len(post_name) == 0:
+                if len(post_name) > 150:
+                    context['msg'] = 'Name is too long!'
+                else:
+                    context['msg'] = 'Name can\'t be empty'
+            elif len(post_description) > 150 or len(post_description) == 0:
+                if len(post_description) > 150:
+                    context['msg'] = 'Description is too long!'
+                else:
+                    context['msg'] = 'Descrption can\'t be empty'
+            else:
+                context['plan'].name = post_name
+                context['plan'].description = post_description
+                context['plan'].is_expired = post_status
+                context['plan'].save()
+                del context['plan']
+                context['msg'] = 'Infomation updated!'
+        else:
+            context['teams'] = Team.objects.filter(project_group_id=plan_id)
+            
+        context['plan'] = get_object_or_404(Plan, pk=plan_id)
         
         return render(
             request,
             'piggy/edit_plan.html',
             context
         )
+            
     else:
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/plan/' + str(plan_id) + '/')
         
+        
+def add_plan(request):
+    context = get_user_context(request)
+    if context['uu'] == '' or context['role'] != 'Professor':
+        return HttpResponseRedirect('/')
+    
+    context['draft'] = {}
+    context['message'] = []
+    
+    if request.method == 'POST':
+        context['draft']['name'] = request.POST['plan_name']
+        context['draft']['description'] = request.POST['plan_description']
+        # context['draft']['max_group_num'] = request.POST['plan_max_group_num']
+        # context['draft']['max_team_member_num'] = request.POST['plan_max_team_member_num']
+        
+        if len(context['draft']['name']) > 150 or len(context['draft']['name']) == 0:
+            if len(context['draft']['name']) > 150:
+                context['message'].append('Name is too long!')
+            else:
+                context['message'].append('Name can\'t be empty!')
+            
+        if len(context['draft']['description']) > 500 or len(context['draft']['description']) == 0:
+            if len(context['draft']['description']) > 500:
+                context['message'].append('Description is too long!')
+            else:
+                context['message'].append('Description can\'t be empty!')
+        
+        if len(Plan.objects.filter(name=context['draft']['name'], teacher=context['uu'].id)) != 0:
+            context['message'].append('Plan have already exist!')
+        
+        if len(context['message']) == 0:
+            new = Plan()
+            new.teacher = context['uu']
+            new.name = context['draft']['name']
+            new.is_expired = False
+            new.description = context['draft']['description']
+            new.save()
+            context['message'].append('Add Plan Successfully!')
+    
+    return render(
+        request,
+        'piggy/add_plan.html',
+        context,
+    )

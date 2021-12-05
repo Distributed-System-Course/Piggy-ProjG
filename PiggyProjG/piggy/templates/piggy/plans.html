@@ -20,4 +20,7 @@
     {% else %}
         <p>No plans are available.</p>
     {% endif %}
+    {% if role == 'Professor' %}
+      <a href="{% url 'piggy:add_plan' %}">Add Plan</a>
+    {% endif %}
 {% endblock %}

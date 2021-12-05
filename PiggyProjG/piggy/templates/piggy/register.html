@@ -9,32 +9,41 @@
 {% csrf_token %}
 <fieldset>
     <legend>Register</legend>
-    {% if msg %}
-        <p><strong>{{ msg }}</strong></p>
+     {% if message %}
+        {% for msg in message %}
+            <p><strong>{{ msg }}</strong></p>
+        {% endfor %}
     {% endif %}
     <table>
         <tr>
             <td>Name</td>
-            <td><input type="text" name="name"/></td>
+            <td><input type="text" name="name" value="{{ draft.name }}"/></td>
         </tr>
         <tr>
             <td>Username</td>
-            <td><input type="text" name="username"/></td>
+            <td><input type="text" name="username" value="{{ draft.username }}"/></td>
         </tr>
         <tr>
             <td>Password</td>
-            <td><input type="password" name="password1"/></td>
+            <td><input type="password" name="password1" value="{{ draft.password1 }}"/></td>
         </tr>
         <tr>
             <td>Confirm password</td>
-            <td><input type="password" name="password2"/></td>
+            <td><input type="password" name="password2" value="{{ draft.password2 }}"/></td>
         </tr>
     </table> 
     <div>
-        <input type="radio" name="role" id="studentChoice" value="student" checked/>
-        <label for="studentChoice">Student</label>
-        <input type="radio" name="role" id="professorChoice" value="professor" />
-        <label for="professorChoice">Professor</label>
+        {% if draft.role == 'student' %}
+            <input type="radio" name="role" id="studentChoice" value="student" checked/>
+            <label for="studentChoice">Student</label>
+            <input type="radio" name="role" id="professorChoice" value="professor" />
+            <label for="professorChoice">Professor</label>
+        {% else %}
+            <input type="radio" name="role" id="studentChoice" value="student"/>
+            <label for="studentChoice">Student</label>
+            <input type="radio" name="role" id="professorChoice" value="professor" checked/>
+            <label for="professorChoice">Professor</label>
+        {% endif %}
     </div>
     
     <div>
