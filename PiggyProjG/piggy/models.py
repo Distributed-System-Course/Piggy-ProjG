@@ -51,8 +51,10 @@ class Project(models.Model):
 
 
 class Team(models.Model):
+    # plan to which this team belong
     project_group = models.ForeignKey(Plan, on_delete=models.CASCADE)
     name = models.CharField(max_length=150)
+    # assigned project
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     members = models.ManyToManyField(Student)
 
@@ -62,7 +64,9 @@ class Team(models.Model):
 
 class TeamWish(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    # wished project ...
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    # ... with priority
     priority = models.IntegerField()
     
     def __str__(self):
