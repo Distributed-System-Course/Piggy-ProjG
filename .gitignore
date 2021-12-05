@@ -1,7 +1,13 @@
+# IDE configurations
 .vs/
+.vscode/
 .idea/
 
 # Database
 *.sqlite3
 
+# misc
 .DS_Store
+
+# mdBook output
+book/

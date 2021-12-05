@@ -1,0 +1,10 @@
+[book]
+authors = ["Piggy ProjG Dev"]
+language = "zh-Hans"
+multilingual = false
+src = "doc"
+title = "Piggy ProjG"
+
+[output.html]
+additional-css = ["theme/css/custom-style.css", "theme/css/custom-font.css"]
+# Git 仓库链接

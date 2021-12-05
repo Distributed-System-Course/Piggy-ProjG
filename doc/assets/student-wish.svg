@@ -58,8 +58,7 @@
 		<path d="M 363.25 121 L 380.75 130" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="all" />
 		<g transform="translate(-0.5 -0.5)">
 			<text x="372" y="159" fill="#000000" text-anchor="middle">
-				修改
-				分配结果
+				修改分配结果
 			</text>
 		</g>
 		<path d="M 257 81.82 L 338.65 52.13" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
