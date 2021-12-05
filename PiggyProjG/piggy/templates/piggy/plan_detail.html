@@ -37,6 +37,9 @@
             <li><a href="{% url 'piggy:team_detail' team.id %}">{{ team.name }}</a></li>
         {% endfor %}
     </ul>
+
+    <p><a href="{% url 'piggy:create_team' plan.id %}">Create a Team</a></p>
+    
     {% if flag %}
         <p><a href="{% url 'piggy:edit_plan' plan.id %}">Edit Plan</a></p>
     {% endif %}
