@@ -11,25 +11,26 @@
     <!-- Add additional CSS in static file -->
 {% load static %}
     <link rel="stylesheet" href="{% static 'piggy/css/style.css' %}">
+    <link rel="icon" href="{% static 'piggy/favicon.svg' %}">
+    <link rel="shortcut icon" href="{% static 'piggy/favicon.png' %}">
 </head>
 
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-2">
+        <div class="col-sm-3">
             {% block sidebar %}
                 <ul class="sidebar-nav">
                     {% if uu %}
-                    <p>Welcome, 
-                        <a href="{% url 'piggy:dashboard' %}">{{uu.name}}</a>({{role}})
-                        <a href="{% url 'piggy:logout' %}">Logout</a>
-                    </p>
+                    <li>Welcome,<br/><a href="{% url 'piggy:dashboard' %}">{{uu.name}}</a> ({{role}})</li>
+                    <li><a href="{% url 'piggy:logout' %}">Logout</a></li>
                     {% else %}
                     <li>
                         <a href="{% url 'piggy:login' %}">Login</a>/
                         <a href=" {% url 'piggy:register' %}">Register</a>
                     </li>
                     {% endif %}
+                    <hr/>
                     <li><a href="{% url 'piggy:index' %}">Home</a></li>
                     <li><a href="{% url 'piggy:plans' %}">All Plans</a></li>
                     <li><a href="{% url 'piggy:projects' %}">All Projects</a></li>
@@ -38,7 +39,7 @@
                 </ul>
             {% endblock %}
         </div>
-        <div class="col-sm-10 ">
+        <div class="col-sm-9">
             {% block content %}
                 <!-- default content text (typically empty) -->
             {% endblock %}
