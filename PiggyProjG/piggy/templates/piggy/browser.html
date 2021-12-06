@@ -1,0 +1,28 @@
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title> Browser - Piggy </title>
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'piggy:browser' %}" method="post">
+{% csrf_token %}
+<fieldset>
+    <legend>Search Project</legend>
+    {% if message %}
+        {% for msg in message %}
+            <p><strong>{{ msg }}</strong></p>
+        {% endfor %}
+    {% endif %}
+    <p>
+        Keyword:<input type="text" name="keyword" value="{{ draft.keyword }}">
+        <button type="submit">Submit</button>
+    </p>
+    {% if result != '' %}
+        {% for r in result %}
+            <p><a href="{% url 'piggy:project_detail' r.id %}">Project id: {{ r.id }}, Project Name: {{ r.name }}</a></p>
+        {% endfor %}
+    {% endif %}
+</fieldset>
+</form>
+{% endblock content %}}

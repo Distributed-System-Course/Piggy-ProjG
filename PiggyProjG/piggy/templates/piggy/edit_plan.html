@@ -46,7 +46,7 @@
                         {% for project in plan.project_set.all %}
                             <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a> <br></li>
                             - {{ project.description }} | 
-                            <a href="{% url 'piggy:del_project' plan.id project.id %}">Delete project</a>
+                            <a href="{% url 'piggy:del_project' project.id %}">Delete project</a>
                         {% endfor %}
                     </ul>
                     <p><a href="{% url 'piggy:add_project' plan.id %}">Add project</a></p>
@@ -66,6 +66,8 @@
         <div>
             <button type="=submit">Submit</button>
         </div>
+        <a href="{% url 'piggy:del_plan' plan.id %}">Delete Plan</a><br>
+        <a href="{% url 'piggy:plan_detail' plan.id %}">Back to view plan</a> 
     </fieldset>
   </form>
   

@@ -5,6 +5,7 @@ from django.template import loader
 from django.utils import timezone
 from django.http import HttpResponse
 from django.contrib import messages
+import re
 
 from .models import *
 
@@ -56,14 +57,25 @@ def stop_plan(request, plan_id):
     return HttpResponseRedirect('/plan/' + str(plan_id) + '/')
 
 
-def del_project(request, plan_id, project_id):
+def del_project(request, project_id):
     context = get_user_context(request)
-    return render(
-        request,
-        'piggy/edit_plan.html',
-        context
-    )
     
+    project = get_object_or_404(Project, pk=project_id)
+    plan = get_object_or_404(Plan, pk=project.project_group.id)
+    if context['role'] == 'Professor' and plan.teacher.id == context['uu'].id:
+        project.delete()
+
+    return HttpResponseRedirect('/plan/' + str(plan.id) + '/')
+    
+    
+def del_plan(request, plan_id):
+    context = get_user_context(request)
+
+    plan = get_object_or_404(Plan, pk=plan_id)
+    if context['role'] == 'Professor' and plan.teacher.id == context['uu'].id:
+        plan.delete()
+        
+    return HttpResponseRedirect('/plans/')
 
 def kick_out_team(request, plan_id, team_id):
     pass
@@ -629,3 +641,31 @@ def add_project(request, plan_id):
         'piggy/add_project.html',
         context,
     )
+    
+    
+def browser(request):
+    context = get_user_context(request)
+    
+    context['draft'] = {}
+    context['message'] = []
+    
+    if request.method == 'POST':
+        context['draft']['keyword'] = request.POST['keyword']
+        if len(context['draft']['keyword']) == 0:
+            context['message'].append('Keyword can\'t be empty!')
+        elif len(context['draft']['keyword']) > 10:
+            context['message'].append('Keyword is too long!')
+    
+    if context['message'] == []:
+        context['result'] = []
+        matchers = Project.objects.filter(name=context['draft']['keyword'])
+        for m in matchers:
+            context['result'].append(m)
+        
+    
+    return render(
+        request,
+        'piggy/browser.html',
+        context,
+    )
+

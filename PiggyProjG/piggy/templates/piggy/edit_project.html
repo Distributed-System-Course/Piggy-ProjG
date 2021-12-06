@@ -43,6 +43,7 @@
     <div>
         <button type="submit">Submit</button>
     </div>
+    <a href="{% url 'piggy:del_project' project.id %}">Delete Project</a> 
 </fieldset>
 </form>
 {% endblock content %}

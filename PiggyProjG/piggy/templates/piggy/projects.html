@@ -11,6 +11,7 @@
         {% for plan in all_plans %}
         <div class="plan_and_projects">
         <h2><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}<a></h2>
+            <p>Teached by: {{ plan.teacher }}</p>
         <ul>
             {% for project in plan.project_set.all %}
                 <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
