@@ -31,6 +31,9 @@
             <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
         {% endfor %}
     </ul>
+    {% if flag %}
+        <p><a href="{% url 'piggy:add_project' plan.id %}">Add a project</a></p>
+    {% endif %}
     <p>Teams in this plan:</p>
     <ul>
         {% for team in teams %}

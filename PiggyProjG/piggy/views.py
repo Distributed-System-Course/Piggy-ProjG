@@ -643,7 +643,7 @@ def add_project(request, plan_id):
     )
     
     
-def browser(request):
+def search_projects(request):
     context = get_user_context(request)
     
     context['draft'] = {}
@@ -665,7 +665,7 @@ def browser(request):
     
     return render(
         request,
-        'piggy/browser.html',
+        'piggy/search_projects.html',
         context,
     )
 
