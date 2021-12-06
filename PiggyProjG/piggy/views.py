@@ -517,11 +517,11 @@ def edit_project(request, project_id):
             else:
                 context['message'].append('Descrption can\'t be empty')
                 
-        if len(post_max_group_num) == 0:
-            context['message'].append('Max Group Num can\'t be 0!')
+        if int(post_max_group_num) <= 0:
+            context['message'].append('Max Group Num Error!')
         
-        if len(post_max_team_member_num) == 0:
-            context['message'].append('Max Team Member Num can\'t be 0!')
+        if int(post_max_team_member_num) <= 0:
+            context['message'].append('Max Team Member Num Error!')
         
         if len(context['message']) == 0:
             context['project'].name = post_name
