@@ -1,11 +1,11 @@
 {% extends "piggy/base_generic.html" %}
 
 {% block title %}
-    <title> All Projects - Piggy </title>
+    <title> Projects - Piggy </title>
 {% endblock %}
 
 {% block content %}
-    <h1> All Projects </h1>
+    <h1 class="h1"> Projects </h1>
     <!-- Grouped by 'plan's -->
     {% if all_plans %}
         {% for plan in all_plans %}

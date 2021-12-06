@@ -1,15 +1,15 @@
 {% extends "piggy/base_generic.html" %}
 
 {% block title %}
-    <title> All Teachers - Piggy </title>
+    <title> Teachers - Piggy </title>
 {% endblock title %}
 
 {% block content %}
-    <h1> All teachers </h1>
+    <h1 class="h1"> Teachers </h1>
     {% if teachers %}
         {% for teacher in teachers %}
         <div class="teacher_block">
-        <h2><a href="{% url 'piggy:teacher_detail' teacher.id %}">{{ teacher.name }}</a></h2>
+        <h2 class="h2"><a href="{% url 'piggy:teacher_detail' teacher.id %}">{{ teacher.name }}</a></h2>
         </div>
         {% endfor %}
     {% else %}
