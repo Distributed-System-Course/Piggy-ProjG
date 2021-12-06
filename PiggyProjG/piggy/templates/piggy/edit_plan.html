@@ -45,10 +45,11 @@
                     <ul>
                         {% for project in plan.project_set.all %}
                             <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a> <br></li>
-                            {{ project.description }} | 
-                            <a href="{% url 'piggy:del_project' plan.id project.id %}">Delete plan</a>
+                            - {{ project.description }} | 
+                            <a href="{% url 'piggy:del_project' plan.id project.id %}">Delete project</a>
                         {% endfor %}
                     </ul>
+                    <p><a href="{% url 'piggy:add_project' plan.id %}">Add project</a></p>
                 </td>
             </tr>
             <tr>

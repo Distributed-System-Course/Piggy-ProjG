@@ -154,9 +154,12 @@ def project_detail(request, project_id):
     
     project = get_object_or_404(Project, pk=project_id)
     context['project'] = project
-    context['max_group_num'] = project.max_group_num
-    context['max_team_member_num'] = project.max_team_member_num
     
+    context['plan'] = get_object_or_404(Plan, pk=context['project'].project_group.id)
+
+    if context['role'] == 'Professor' and context['plan'].teacher.id == context['uu'].id:
+        context['flag'] = True
+            
     return render(
         request, 
         'piggy/project_detail.html', 
@@ -486,6 +489,56 @@ def edit_plan(request, plan_id):
     else:
         return HttpResponseRedirect('/plan/' + str(plan_id) + '/')
         
+def edit_project(request, project_id):
+    context = get_user_context(request)
+    
+    context['project'] = get_object_or_404(Project, pk=project_id)
+    context['plan'] = get_object_or_404(Plan, pk=context['project'].project_group.id)
+    context['message'] = []
+    
+    if context['role'] != 'Professor' or context['plan'].teacher.id != context['uu'].id:
+        return HttpResponseRedirect('/project/' + str(project_id) + '/')
+
+    if request.method == 'POST':
+        post_name = request.POST['project_name']
+        post_description = request.POST['project_description']
+        post_max_group_num = request.POST['project_max_group_num']
+        post_max_team_member_num = request.POST['project_max_team_member_num']
+        
+        if len(post_name) > 150 or len(post_name) == 0:
+            if len(post_name) > 150:
+                context['message'].append('Name is too long!')
+            else:
+                context['message'].append('Name can\'t be empty')
+                
+        if len(post_description) > 150 or len(post_description) == 0:
+            if len(post_description) > 150:
+                context['message'].append('Description is too long!')
+            else:
+                context['message'].append('Descrption can\'t be empty')
+                
+        if len(post_max_group_num) == 0:
+            context['message'].append('Max Group Num can\'t be 0!')
+        
+        if len(post_max_team_member_num) == 0:
+            context['message'].append('Max Team Member Num can\'t be 0!')
+        
+        if len(context['message']) == 0:
+            context['project'].name = post_name
+            context['project'].description = post_description
+            context['project'].max_group_num  = post_max_group_num
+            context['project'].max_team_member_num = post_max_team_member_num
+            context['project'].save()
+            del context['project']
+            context['message'].append('Infomation updated!')
+    
+    context['project'] = get_object_or_404(Project, pk=project_id)
+    
+    return render(
+        request,
+        'piggy/edit_project.html',
+        context,
+    )
         
 def add_plan(request):
     context = get_user_context(request)
@@ -498,23 +551,21 @@ def add_plan(request):
     if request.method == 'POST':
         context['draft']['name'] = request.POST['plan_name']
         context['draft']['description'] = request.POST['plan_description']
-        # context['draft']['max_group_num'] = request.POST['plan_max_group_num']
-        # context['draft']['max_team_member_num'] = request.POST['plan_max_team_member_num']
         
         if len(context['draft']['name']) > 150 or len(context['draft']['name']) == 0:
             if len(context['draft']['name']) > 150:
                 context['message'].append('Name is too long!')
             else:
                 context['message'].append('Name can\'t be empty!')
+        
+        if len(Plan.objects.filter(name=context['draft']['name'], teacher=context['uu'].id)) != 0:
+            context['message'].append('Plan have already exist!')
             
         if len(context['draft']['description']) > 500 or len(context['draft']['description']) == 0:
             if len(context['draft']['description']) > 500:
                 context['message'].append('Description is too long!')
             else:
                 context['message'].append('Description can\'t be empty!')
-        
-        if len(Plan.objects.filter(name=context['draft']['name'], teacher=context['uu'].id)) != 0:
-            context['message'].append('Plan have already exist!')
         
         if len(context['message']) == 0:
             new = Plan()
@@ -528,5 +579,53 @@ def add_plan(request):
     return render(
         request,
         'piggy/add_plan.html',
+        context,
+    )
+
+
+def add_project(request, plan_id):
+    context = get_user_context(request)
+    context['plan'] = get_object_or_404(Plan, pk=plan_id)
+    
+    if context['role'] != 'Professor' or context['plan'].teacher.id != context['uu'].id:
+        return HttpResponseRedirect('/plan/' + str(plan_id) + '/')
+
+    context['draft'] = {}
+    context['message'] = []
+    
+    if request.method == 'POST':
+        context['draft']['name'] = request.POST['project_name']
+        context['draft']['description'] = request.POST['project_description']
+        context['draft']['max_group_num'] = request.POST['project_max_group_num']
+        context['draft']['max_team_member_num'] = request.POST['project_max_team_member_num']
+
+        if len(context['draft']['name']) > 150 or len(context['draft']['name']) == 0:
+            if len(context['draft']['name']) > 150:
+                context['message'].append('Name is too long!')
+            else:
+                context['message'].append('Name can\'t be empty!')
+                
+        if len(Project.objects.filter(name=context['draft']['name'], project_group=context['plan'])) != 0:
+            context['message'].append('Project have already exist!')
+            
+        if len(context['draft']['description']) > 500 or len(context['draft']['description']) == 0:
+            if len(context['draft']['description']) > 500:
+                context['message'].append('Description is too long!')
+            else:
+                context['message'].append('Description can\'t be empty!')
+        
+        if len(context['message']) == 0:
+            new = Project()
+            new.project_group = context['plan']
+            new.name = context['draft']['name']
+            new.description = context['draft']['description']
+            new.max_group_num = context['draft']['max_group_num']
+            new.max_team_member_num = context['draft']['max_team_member_num']
+            new.save()
+            context['message'].append('Add Project Successfully!')
+            
+    return render(
+        request,
+        'piggy/add_project.html',
         context,
     )

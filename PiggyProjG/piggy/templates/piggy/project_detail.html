@@ -5,29 +5,32 @@
 {% endblock %}
 
 {% block content %}
-    <h1> {{ project.name }} </h1>
-    <table>
-        <tbody>
-            <tr>
-                <th>所属项目组</th>
-                <td><a href="{% url 'piggy:plan_detail' project.project_group.id %}">{{ project.project_group.name }}</a></td>
-            </tr>
-            <tr>
-                <th>指导教师</th>
-                <td><a href="{% url 'piggy:teacher_detail' project.project_group.teacher.id %}">{{ project.project_group.teacher.name }}</a></td>
-            </tr>
-            <tr>
-                <th>项目介绍</th>
-                <td>{{ project.description }}</td>
-            </tr>
-            <tr>
-                <th>最大组数</th>
-                <td>{{ project.max_group_num }}</td>
-            </tr>
-            <tr>
-                <th>每组最大人数</th>
-                <td>{{ project.max_team_member_num }}</td>
-            </tr>
-        </tbody>
-    </table>
+<h1> {{ project.name }} </h1>
+<table>
+    <tbody>
+        <tr>
+            <th>所属项目组</th>
+            <td><a href="{% url 'piggy:plan_detail' project.project_group.id %}">{{ project.project_group.name }}</a></td>
+        </tr>
+        <tr>
+            <th>指导教师</th>
+            <td><a href="{% url 'piggy:teacher_detail' project.project_group.teacher.id %}">{{ project.project_group.teacher.name }}</a></td>
+        </tr>
+        <tr>
+            <th>项目介绍</th>
+            <td>{{ project.description }}</td>
+        </tr>
+        <tr>
+            <th>最大组数</th>
+            <td>{{ project.max_group_num }}</td>
+        </tr>
+        <tr>
+            <th>每组最大人数</th>
+            <td>{{ project.max_team_member_num }}</td>
+        </tr>
+    </tbody>
+</table>
+{% if flag %}
+    <p><a href="{% url 'piggy:edit_project' project.id %}">Edit Plan</a></p>
+{% endif %}
 {% endblock %}
