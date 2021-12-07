@@ -367,15 +367,16 @@ def register(request):
             new.username = context['draft']['username']
             new.password = context['draft']['password1']
             new.save()
-            context = {}
             
             if context['draft']['role'] == 'student':
                 context['uu'] = get_object_or_404(Student, username=context['draft']['username'])
                 context['role'] = 'Student'
-            elif context['draft']['role'] == 'Professor':
+            elif context['draft']['role'] == 'professor':
                 context['uu'] = get_object_or_404(Teacher, username=context['draft']['username'])
                 context['role'] = 'Professor'
-                
+            context['draft'] = {}
+            context['message'].append('Register Successfully!')
+            
     return render(
         request,
         'piggy/register.html',
