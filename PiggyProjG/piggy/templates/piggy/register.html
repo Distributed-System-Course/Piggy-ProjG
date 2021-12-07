@@ -126,19 +126,25 @@
                         <label for="floatingPassword">Confirm Password</label>
                     </div>
 
-                    <div>
-                        {% if draft.role == 'student' %}
-                            <input type="radio" name="role" id="studentChoice" value="student" checked/>
-                            <label for="studentChoice">Student</label>
-                            <input type="radio" name="role" id="professorChoice" value="professor" />
-                            <label for="professorChoice">Professor</label>
-                        {% else %}
-                            <input type="radio" name="role" id="studentChoice" value="student"/>
-                            <label for="studentChoice">Student</label>
-                            <input type="radio" name="role" id="professorChoice" value="professor" checked/>
-                            <label for="professorChoice">Professor</label>
-                        {% endif %}
-                    </div>
+                    {% if draft.role == 'student' %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" ype="radio" name="role" id="studentChoice" value="student" checked/>
+                            <label class="form-check-label" for="studentChoice">Student</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="role" id="professorChoice" value="professor" />
+                            <label class="form-check-label" for="professorChoice">Professor</label>
+                        </div>
+                    {% else %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="role" id="studentChoice" value="student"/>
+                            <label class="form-check-label" for="studentChoice">Student</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="role" id="professorChoice" value="professor" checked/>
+                            <label class="form-check-label" for="professorChoice">Professor</label>
+                        </div>
+                    {% endif %}
 
                     <div class="d-grid">
                         <button class="btn btn-primary btn-register text-uppercase fw-bold" type="submit">Register</button>

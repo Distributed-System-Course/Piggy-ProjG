@@ -22,23 +22,23 @@
         body {
             background: hsl(213, 13%, 87%);
             background: linear-gradient(to right, #e0e2e5, #dde1e3);
-          }
+        }
           
-          .btn-login {
+        .btn-login {
             font-size: 0.9rem;
             letter-spacing: 0.05rem;
             padding: 0.75rem 1rem;
-          }
-          
-          .btn-google {
+        }
+        
+        .btn-google {
             color: white !important;
             background-color: #ea4335;
-          }
-          
-          .btn-facebook {
+        }
+        
+        .btn-facebook {
             color: white !important;
             background-color: #3b5998;
-          }
+        }
     </style>
   </head>
 
@@ -102,9 +102,9 @@
                     <h4 class="card-title text-center mb-4 fw-light fs-4">Sign In</h4>
                     <form action="{% url 'piggy:login' %}" method="post">
                         {% csrf_token %}
-                            {% if msg %}
+                        {% if msg %}
                             <p><strong>{{ msg }}</strong></p>
-                            {% endif %}
+                        {% endif %}
                     <div class="form-floating mb-3">
                         <input type="text" name="username" class="form-control" id="floatingInput" placeholder="Username">
                         <label for="floatingInput">Username</label>
@@ -115,17 +115,17 @@
                         <label for="floatingPassword">Password</label>
                     </div>
 
-                    <div>
-                        <input type="radio" name="role" id="studentChoice" value="student" checked/>
-                        <label for="studentChoice">Student</label>
-                        <input type="radio" name="role" id="professorChoice" value="professor" />
-                        <label for="professorChoice">Professor</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="role" id="studentChoice" value="student" checked/>
+                        <label class="form-check-label" for="studentChoice">Student</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="role" id="professorChoice" value="professor" />
+                        <label class="form-check-label" for="professorChoice">Professor</label>
                     </div>
                     <div class="form-check mb-3">
                         <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
-                        <label class="form-check-label" for="rememberPasswordCheck">
-                          Remember password
-                        </label>
+                        <label class="form-check-label" for="rememberPasswordCheck">Remember password</label>
                     </div>
                     <div class="d-grid">
                         <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Sign in</button>
