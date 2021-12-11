@@ -1,12 +1,18 @@
 {% extends "piggy/base_generic.html" %}
 
 {% block title %}
-    <title> Browser - Piggy </title>
+    <title> Projects Search - Piggy </title>
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'piggy:browser' %}" method="post">
-{% csrf_token %}
+
+{% if draft.q %}
+    <h1>Project search results for '{{draft.q}}'</h1>
+{% else %}
+    <h1>Project search</h1>
+{% endif %}
+
+<form action="{% url 'piggy:search_projects' %}" method="get">
 <fieldset>
     <legend>Search Project</legend>
     {% if message %}
@@ -14,15 +20,24 @@
             <p><strong>{{ msg }}</strong></p>
         {% endfor %}
     {% endif %}
-    <p>
-        Keyword:<input type="text" name="keyword" value="{{ draft.keyword }}">
-        <button type="submit">Submit</button>
-    </p>
-    {% if result != '' %}
-        {% for r in result %}
-            <p><a href="{% url 'piggy:project_detail' r.id %}">Project id: {{ r.id }}, Project Name: {{ r.name }}</a></p>
-        {% endfor %}
+    
+    {% if draft.keyword %}
+        <label for="keyword">Keyword</label>
+        <input name="q" type="text" name="keyword" placeholder="" required />
+    {% else %}
+        <label for="keyword">Keyword</label>
+        <input name="q" type="text" name="keyword" placeholder="{{ draft.q }}" required />
     {% endif %}
-</fieldset>
+        <button type="submit">Search</button>
+    </fieldset>
 </form>
-{% endblock content %}}
+
+<ul>
+  {% for proj in object_list %}
+    <li>
+        <p><a href="{% url 'piggy:project_detail' proj.id %}">Project id: {{ proj.id }}. Project Name: {{ proj.name }}</a></p>
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock content %}

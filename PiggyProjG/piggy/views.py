@@ -1,10 +1,13 @@
 # from django.core.checks import messages
+from django.db.models.query import QuerySet
+from django.db.models import Q
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template import loader
 from django.utils import timezone
 from django.http import HttpResponse
 from django.contrib import messages
+from django.views.generic import ListView
 import re
 
 from .models import *
@@ -642,26 +645,33 @@ def add_project(request, plan_id):
         context,
     )
     
+
+# class SearchProjectsView(ListView):
+#     model = Project
+#     template_name = 'piggy/search_projects.html'
     
+#     def get_queryset(self) -> QuerySet[Project]:
+#         query = self.request.GET.get('q')
+#         object_list = Project.objects.filter(
+#             Q(name__icontains=query) | Q(description__icontains=query)
+#         )
+#         return object_list
+
+
 def search_projects(request):
     context = get_user_context(request)
     
     context['draft'] = {}
     context['message'] = []
+    context['object_list'] = {}
     
-    if request.method == 'POST':
-        context['draft']['keyword'] = request.POST['keyword']
-        if len(context['draft']['keyword']) == 0:
-            context['message'].append('Keyword can\'t be empty!')
-        elif len(context['draft']['keyword']) > 10:
-            context['message'].append('Keyword is too long!')
-    
-    if context['message'] == []:
-        context['result'] = []
-        matchers = Project.objects.filter(name=context['draft']['keyword'])
-        for m in matchers:
-            context['result'].append(m)
-        
+    if request.method == 'GET':
+        query = request.GET.get('q', '')
+        context['draft']['q'] = query
+        if len(query) > 0:
+            context['object_list'] = Project.objects.filter(
+                Q(name__icontains=query) | Q(description__icontains=query)
+            )
     
     return render(
         request,
