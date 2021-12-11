@@ -1,37 +1,47 @@
-{% extends "piggy/base_generic.html" %}
+{% extends "piggy/base_generic_new.html" %}
 
 {% block title %}
     <title> Add Plan - Piggy </title>
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'piggy:add_plan' %}" method="post">
-{% csrf_token %}
-<fieldset>
-    <legend>Add Plan</legend>
-    {% if message %}
-        {% for msg in message %}
-            <p><strong>{{ msg }}</strong></p>
-        {% endfor %}
-    {% endif %}
-    <table>
-        <tr>
-            <td>Plan Name:</td>
-            <td><input type="text" name="plan_name" value="{{ draft.name }}"></td>
-        </tr>
-        <tr>
-            <td>Professor:</td>
-            <td><a href="{% url 'piggy:teacher_detail' uu.id %}">{{ uu.name }}</a></td>
-        </tr>
-        <tr>
-            <td>Description:</td>
-            <td><input type="text" name="plan_description" value="{{ draft.description }}"></td>
-        </tr>
-    </table>
-    <div>
-        <button type="submit">Submit</button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">
+            {% block sidebar %} 
+            {% endblock %}
+        </div>
+        <div class="col-sm-8">
+            <div class="container-fluid p-5 bg-white">
+                <form action="{% url 'piggy:add_plan' %}" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <h1 class="h1">Add Plan</h1>
+                    {% if message %}
+                        {% for msg in message %}
+                            <p><strong>{{ msg }}</strong></p>
+                        {% endfor %}
+                    {% endif %}
+                    <table class="table table-hover table-sm align-middle table-light">
+                        <thead></thead>
+                        <tr class="align-middle">
+                            <td>Plan Name:</td>
+                            <td><input class="form-control" type="text" name="plan_name" value="{{ draft.name }}"></td>
+                        </tr>
+                        <tr class="align-middle">
+                            <td>Professor:</td>
+                            <td><a href="{% url 'piggy:teacher_detail' uu.id %}">{{ uu.name }}</a></td>
+                        </tr>
+                        <tr class="align-middle">
+                            <td>Description:</td>
+                            <td><input class="form-control" type="text" name="plan_description" value="{{ draft.description }}"></td>
+                        </tr>
+                    </table>
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                </fieldset>
+                </form>
+            </div>
+          </div>
     </div>
-</fieldset>
-</form>
-  
+</div>
 {% endblock content %}

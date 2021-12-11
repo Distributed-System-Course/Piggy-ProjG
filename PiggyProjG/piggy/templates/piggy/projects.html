@@ -1,26 +1,41 @@
-{% extends "piggy/base_generic.html" %}
+{% extends "piggy/base_generic_new.html" %}
 
 {% block title %}
     <title> Projects - Piggy </title>
 {% endblock %}
 
 {% block content %}
-    <h1 class="h1"> Projects </h1>
-    <!-- Grouped by 'plan's -->
-    {% if all_plans %}
-        {% for plan in all_plans %}
-        <div class="plan_and_projects">
-        <h2><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}<a></h2>
-            <p>Teached by: {{ plan.teacher }}</p>
-        <ul>
-            {% for project in plan.project_set.all %}
-                <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
-            {% endfor %}
-        </ul>
-        </div>
-        {% endfor %}
-    {% else %}
-        <p>No projects are available.</p>
-    {% endif %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="container-fluid p-5">
+                {% block sidebar %} 
     
+                {% endblock %}
+            </div>
+        </div>
+        <div class="col-sm-7">
+            <div class="container-fluid p-5 bg-white">
+                <h1 class="h1"> Projects </h1>
+                <!-- Grouped by 'plan's -->
+                {% if all_plans %}
+                    {% for plan in all_plans %}
+                    <div class="plan_and_projects">
+                    <h2><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}<a></h2>
+                        <p>Teached by: {{ plan.teacher }}</p>
+                    <ul>
+                        {% for project in plan.project_set.all %}
+                            <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No projects are available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

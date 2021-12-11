@@ -1,49 +1,65 @@
-{% extends "piggy/base_generic.html" %}
+{% extends "piggy/base_generic_new.html" %}
 
 {% block title %}
     <title> Edit Profile - Piggy </title>
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'piggy:edit_project' project.id %}" method="post">
-{% csrf_token %}
-<fieldset>
-    <legend>Edit Project</legend>
-    {% if message %}
-        {% for msg in message %}
-            <p><strong>{{ msg }}</strong></p>
-        {% endfor %}
-    {% endif %}
-    <table>
-        <tr>
-            <td>Project Name:</td>
-            <td><input type="text" name="project_name" value="{{ project.name }}"></td>
-        </tr>
-        <tr>
-            <td>Plan:</td>
-            <td><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}</a> </td>
-        </tr>
-        <tr>
-            <td>Teacher:</td>
-            <td><a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher.name }}</a> </td>
-        </tr>
-        <tr>
-            <td>Description:</td>
-            <td><input type="text" name="project_description" value="{{ project.description }}"></td>
-        </tr>
-        <tr>
-            <td>Max Group Num:</td>
-            <td><input type="number" name="project_max_group_num" value="{{ project.max_group_num }}"></td>
-        </tr>
-        <tr>
-            <td>Max Team Member Num:</td>
-            <td><input type="number" name="project_max_team_member_num" value="{{ project.max_team_member_num }}"></td>
-        </tr>
-    </table>
-    <div>
-        <button type="submit">Submit</button>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="container-fluid p-5">
+                {% block sidebar %} 
+    
+                {% endblock %}
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="container-fluid p-5 bg-white">
+                <form action="{% url 'piggy:edit_project' project.id %}" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <h1 class="h1">Edit Project</h1>
+                    {% if message %}
+                        {% for msg in message %}
+                            <p><strong>{{ msg }}</strong></p>
+                        {% endfor %}
+                    {% endif %}
+                    <table class="table table-hover table-sm align-middle table-light">
+                        <thead></thead>
+                        <tr class="align-middle">
+                            <td>Project Name:</td>
+                            <td><input class="form-control" type="text" name="project_name" value="{{ project.name }}"></td>
+                        </tr>
+                        <tr class="align-middle">
+                            <td>Plan:</td>
+                            <td><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}</a> </td>
+                        </tr>
+                        <tr class="align-middle">
+                            <td>Teacher:</td>
+                            <td><a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher.name }}</a> </td>
+                        </tr>
+                        <tr class="align-middle">
+                            <td>Description:</td>
+                            <td><input class="form-control" type="text" name="project_description" value="{{ project.description }}"></td>
+                        </tr>
+                        <tr class="align-middle">
+                            <td>Max Group Num:</td>
+                            <td><input class="form-control" type="number" name="project_max_group_num" value="{{ project.max_group_num }}"></td>
+                        </tr>
+                        <tr class="align-middle">
+                            <td>Max Team Member Num:</td>
+                            <td><input class="form-control" type="number" name="project_max_team_member_num" value="{{ project.max_team_member_num }}"></td>
+                        </tr>
+                    </table>
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <a class="btn btn-danger" class="btn btn-danger" href="{% url 'piggy:del_project' project.id %}">Delete Project</a> 
+                </fieldset>
+                </form>
+            </div>
+        </div>
     </div>
-    <a href="{% url 'piggy:del_project' project.id %}">Delete Project</a> 
-</fieldset>
-</form>
-{% endblock content %}
+</div>
+
+{% endblock %}

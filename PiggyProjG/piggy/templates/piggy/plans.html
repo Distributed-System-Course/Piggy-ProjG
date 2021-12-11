@@ -1,26 +1,45 @@
-{% extends "piggy/base_generic.html" %}
+{% extends "piggy/base_generic_new.html" %}
 
 {% block title %}
     <title> Plans - Piggy </title>
 {% endblock %}
 
 {% block content %}
-    <h1> Plans </h1>
-    <!-- Organized by 'teacher's -->
-    {% if all_plans %}
-        <ul>
-            {% for plan in all_plans %}
-            <li>
-                <a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}</a>
-                created by
-                <a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher.name }}<a>
-            </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No plans are available.</p>
-    {% endif %}
-    {% if role == 'Professor' %}
-      <a href="{% url 'piggy:add_plan' %}">Add Plan</a>
-    {% endif %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="container-fluid p-5">
+                {% block sidebar %} 
+    
+                {% endblock %}
+            </div>
+        </div>
+        <div class="col-sm-7">
+            <div class="container-fluid p-5 bg-white">
+                <h1> Plans </h1>
+                <!-- Organized by 'teacher's -->
+                {% if all_plans %}
+                    <ul>
+                        {% for plan in all_plans %}
+                        <li>
+                            <a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}</a>
+                            created by
+                            <a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher.name }}<a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No plans are available.</p>
+                {% endif %}
+    
+                {% if role == 'Professor' %}
+                    <a href="{% url 'piggy:add_plan' %}">Add Plan</a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

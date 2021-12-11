@@ -1,45 +1,56 @@
-{% extends "piggy/base_generic.html" %}
+{% extends "piggy/base_generic_new.html" %}
 
 {% block title %}
     <title> Add Project - Piggy </title>
 {% endblock %}
 
 {% block content %}
-<form action="{% url 'piggy:add_project' plan.id %}" method="post">
-{% csrf_token %}
-<fieldset>
-    <legend>Add Project</legend>
-    {% if message %}
-      {% for msg in message %}
-        <p><strong>{{ msg }}</strong></p>
-      {% endfor %}
-    {% endif %}
-    <table>
-        <tr>
-            <td>Project name</td>
-            <td><input type="text" name="project_name" value="{{ draft.name }}"></td>
-        </tr>
-        <tr>
-            <td>Belongs to</td>
-            <td><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}</a></td>
-        </tr>
-        <tr>
-            <td>Description</td>
-            <td><input type="text" name="project_description" value="{{ draft.description}}"></td>
-        </tr>
-        <tr>
-            <td>Max groups</td>
-            <td><input type="number" name="project_max_group_num" value="{{ draft.max_group_num }}"></td>
-        </tr>
-        <tr>
-            <td>Max team members</td>
-            <td><input type="number" name="project_max_team_member_num" value="{{ draft.max_team_member_num }}"></td>
-        </tr>
-    </table>
-    <div>
-        <button type="submit">Submit</button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">
+            {% block sidebar %} 
+            {% endblock %}
+        </div>
+        <div class="col-sm-8">
+            <div class="container-fluid p-5 bg-white">
+                <form action="{% url 'piggy:add_project' plan.id %}" method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <h1 class="h1">Add Project</h1>
+                    {% if message %}
+                        {% for msg in message %}
+                            <p><strong>{{ msg }}</strong></p>
+                        {% endfor %}
+                    {% endif %}
+                    <table class="table table-hover table-sm align-middle table-light">
+                        <thead></thead>
+                        <tr class="align-middle">
+                            <td>Project name</td>
+                            <td><input class="form-control" type="text" name="project_name" value="{{ draft.name }}"></td>
+                        </tr>
+                        <tr class="align-middle">
+                            <td>Belongs to</td>
+                            <td><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}</a></td>
+                        </tr>
+                        <tr class="align-middle">
+                            <td>Description</td>
+                            <td><input class="form-control" type="text" name="project_description" value="{{ draft.description}}"></td>
+                        </tr>
+                        <tr class="align-middle">
+                            <td>Max groups</td>
+                            <td><input class="form-control" type="number" name="project_max_group_num" value="{{ draft.max_group_num }}"></td>
+                        </tr>
+                        <tr class="align-middle">
+                            <td>Max team members</td>
+                            <td><input class="form-control" type="number" name="project_max_team_member_num" value="{{ draft.max_team_member_num }}"></td>
+                        </tr>
+                    </table>
+                    <button class="btn btn-primary" type="submit">Submit</button>
+                    <a href="{% url 'piggy:edit_plan' plan.id %}">Back to edit plan</a> 
+                </fieldset>
+                </form>
+            </div>
+        </div>
     </div>
-    <a href="{% url 'piggy:edit_plan' plan.id %}">Back to edit plan</a> 
-</fieldset>
-</form>
+</div>
 {% endblock content %}

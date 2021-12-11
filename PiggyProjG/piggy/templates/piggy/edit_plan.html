@@ -1,74 +1,94 @@
-{% extends "piggy/base_generic.html" %}
+{% extends "piggy/base_generic_new.html" %}
 
 {% block title %}
     <title> Edit Plan - Piggy </title>
 {% endblock %}
 
 {% block content %}
-  <form action="{% url 'piggy:edit_plan' plan.id %}" method="post">
-    {% csrf_token %}
-    <fieldset>
-        <legend>Edit Plan</legend>
-        {% if msg %}
-            <p><strong>{{ msg }}</strong></p>
-        {% endif %}
-        <table>
-            <tr>
-                <td>Plan Name:</td>
-                <td><input type="text" name="plan_name" value="{{ plan.name }}"></td>
-            </tr>
-            <tr>
-                <td>Professor:</td>
-                <td><a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher }}</a></td>
-            </tr>
-            <tr>
-                <td>Status:</td>
-                <td>
-                    <select name="plan_status">
-                        {% if plan.is_expired %}
-                            <option value="True">Expired</option>
-                            <option value="False">Running</option>
-                        {% else %}
-                            <option value="False">Running</option>
-                            <option value="True">Expired</option>
-                        {% endif %}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Description</td>
-                <td><input type="text" name="plan_description" value="{{ plan.description }}"></td>
-            </tr>
-            <tr>
-                <td>Included projects:</td>
-                <td>
-                    <ul>
-                        {% for project in plan.project_set.all %}
-                            <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a> <br></li>
-                            - {{ project.description }} | 
-                            <a href="{% url 'piggy:del_project' project.id %}">Delete project</a>
-                        {% endfor %}
-                    </ul>
-                    <p><a href="{% url 'piggy:add_project' plan.id %}">Add project</a></p>
-                </td>
-            </tr>
-            <tr>
-                <td>Included teams:</td>
-                <td>
-                    {% for team in teams %}
-                        <a href="{% url 'piggy:team_detail' team.id %}">{{ team.name }}</a> | 
-                        <a href="{% url 'piggy:kick_out_team' plan.id team.id %}">Kick out</a>
-                        <br>
-                    {% endfor %}
-                </td>
-            </tr>
-        </table>
-        <div>
-            <button type="=submit">Submit</button>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="container-fluid p-5">
+                {% block sidebar %} 
+    
+                {% endblock %}
+            </div>
         </div>
-        <a href="{% url 'piggy:del_plan' plan.id %}">Delete Plan</a><br>
-        <a href="{% url 'piggy:plan_detail' plan.id %}">Back to view plan</a> 
-    </fieldset>
-  </form>
-  
-{% endblock content %}
+        <div class="col-sm-8">
+            <div class="container-fluid p-5 bg-white">
+                <form action="{% url 'piggy:edit_plan' plan.id %}" method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                        <h1 class="h1">Edit Plan</h1>
+                        {% if msg %}
+                            <p><strong>{{ msg }}</strong></p>
+                        {% endif %}
+                        <table class="table table-hover table-sm align-middle table-light">
+                            <thead></thead>
+                            <tr class="align-middle">
+                                <td>Plan Name:</td>
+                                <td><input type="text" class="form-control" name="plan_name" value="{{ plan.name }}"></td>
+                            </tr>
+                            <tr class="align-middle">
+                                <td>Professor:</td>
+                                <td><a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher }}</a></td>
+                            </tr>
+                            <tr class="align-middle">
+                                <td>Status:</td>
+                                <td>
+                                    <select name="plan_status">
+                                        {% if plan.is_expired %}
+                                            <option value="True">Expired</option>
+                                            <option value="False">Running</option>
+                                        {% else %}
+                                            <option value="False">Running</option>
+                                            <option value="True">Expired</option>
+                                        {% endif %}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr class="align-middle">
+                                <td>Description</td>
+                                <td><input type="text" class="form-control" name="plan_description" value="{{ plan.description }}"></td>
+                            </tr>
+                            <tr class="align-middle">
+                                <td>Included projects:</td>
+                                <td>
+                                    <ul>
+                                        {% for project in plan.project_set.all %}
+                                            <li>
+                                                <a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a>
+                                                <a class="btn btn-outline-danger btn-sm" href="{% url 'piggy:del_project' project.id %}"><i class="bi bi-trash"></i></a>
+                                            </li>
+                                            - {{ project.description }}
+                                            
+                                        {% endfor %}
+                                    </ul>
+                                    <p>
+                                        <a class="btn btn-outline-primary" href="{% url 'piggy:add_project' plan.id %}">Add project</a>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr class="align-middle">
+                                <td>Included teams:</td>
+                                <td>
+                                    {% for team in teams %}
+                                        <a href="{% url 'piggy:team_detail' team.id %}">{{ team.name }}</a> | 
+                                        <a href="{% url 'piggy:kick_out_team' plan.id team.id %}">Kick out</a>
+                                        <br>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </table>
+                        <button class="btn btn-primary" type="=submit">Submit</button>
+                        <a class="btn btn-danger" href="{% url 'piggy:del_plan' plan.id %}">Delete Plan</a>
+                        <a class="btn btn-outline-info" href="{% url 'piggy:plan_detail' plan.id %}">Back to view plan</a> 
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

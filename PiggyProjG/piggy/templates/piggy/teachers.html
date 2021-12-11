@@ -1,18 +1,51 @@
-{% extends "piggy/base_generic.html" %}
+{% extends "piggy/base_generic_new.html" %}
 
 {% block title %}
     <title> Teachers - Piggy </title>
 {% endblock title %}
 
 {% block content %}
-    <h1 class="h1"> Teachers </h1>
-    {% if teachers %}
-        {% for teacher in teachers %}
-        <div class="teacher_block">
-        <h2 class="h2"><a href="{% url 'piggy:teacher_detail' teacher.id %}">{{ teacher.name }}</a></h2>
+{% load static %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="container-fluid p-5">
+                {% block sidebar %} 
+    
+                {% endblock %}
+            </div>
         </div>
-        {% endfor %}
-    {% else %}
-        <p>No teachers</p>
-    {% endif %}
+        <div class="col-sm-7">
+            <!-- <div class="container-fluid p-5 bg-white"> -->
+                <h1 class="h1"> Teachers </h1>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    {% if teachers %}
+                        {% for teacher in teachers %}
+                        <div class="col">
+                            <div class="card h-100" style="width: 14rem;">
+                                {% if forloop.counter == 1 %}
+                                    <img src="{% static 'piggy/image/teacher_female_1.png' %}" class="card-img-top" alt="teacher_female1">
+                                {% elif forloop.counter  == 2 %}
+                                    <img src="{% static 'piggy/image/teacher_female_2.png' %}" class="card-img-top" alt="teacher_female1">
+                                {% else %}
+                                    <img src="{% static 'piggy/image/teacher_male_1.png' %}" class="card-img-top" alt="teacher_female1">
+                                {% endif %}
+                                <div class="card-body">
+                                    <h4 class="card-title">{{ teacher.name }}</h4>
+                                    <p class="card-text">{{ teacher.resume }}</p>
+                                    <a href="{% url 'piggy:teacher_detail' teacher.id %}" class="btn btn-primary">See Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No teachers</p>
+                    {% endif %}
+                </div>
+            <!-- </div> -->
+        </div>
+    </div>
+</div>
+
 {% endblock content %}
