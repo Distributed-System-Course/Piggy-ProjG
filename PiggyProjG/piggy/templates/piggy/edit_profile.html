@@ -1,4 +1,4 @@
-{% extends "piggy/base_generic_new.html" %}
+{% extends "piggy/base_generic_edit_add.html" %}
 
 {% block title %}
     <title> Edit Profile - Piggy </title>
@@ -6,58 +6,44 @@
 
 {% block content %}
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-2">
-            <div class="container-fluid p-5">
-                {% block sidebar %} 
-    
-                {% endblock %}
-            </div>
+<form action="{% url 'piggy:edit_profile' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <h1 class="h1">Edit Profile</h1>
+        {% if msg %}
+            <p><strong>{{ msg }}</strong></p>
+        {% endif %}
+        <table class="table table-hover table-sm align-middle table-light">
+            <thead></thead>
+            <tr class="align-middle">
+                <td>Name</td>
+                <td><input type="text" class="form-control" name="name" value="{{ uu.name }}"/></td>
+            </tr>
+            <tr class="align-middle">
+                <td>Username</td>
+                <td><input type="text" class="form-control" name="username" value="{{ uu.username }}"/></td>
+            </tr>
+            <tr class="align-middle">
+                <td>Password</td>
+                <td><input type="password" class="form-control" name="password1" value="{{ uu.password }}"/></td>
+            </tr>
+            <tr class="align-middle">
+                <td>Confirm password</td>
+                <td><input type="password" class="form-control" name="password2" value="{{ uu.password }}"/></td>
+            </tr>
+            <tr class="align-middle">
+                <td>Email</td>
+                <td><input type="text" class="form-control" name="email" value="{{ uu.email }}"></td>
+            </tr>
+            <tr class="align-middle">
+                <td>Resume</td>
+                <td><input type="text" class="form-control" name="resume" value="{{ uu.resume }}"></td>
+            </tr>
+        </table> 
+        <div>
+            <button class="btn btn-primary" type="submit">Submit</button>
         </div>
-        <div class="col-sm-8">
-            <div class="container-fluid p-5 bg-white">
-                <form action="{% url 'piggy:edit_profile' %}" method="post">
-                    {% csrf_token %}
-                    <fieldset>
-                        <h1 class="h1">Edit Profile</h1>
-                        {% if msg %}
-                            <p><strong>{{ msg }}</strong></p>
-                        {% endif %}
-                        <table class="table table-hover table-sm align-middle table-light">
-                            <thead></thead>
-                            <tr class="align-middle">
-                                <td>Name</td>
-                                <td><input type="text" class="form-control" name="name" value="{{ uu.name }}"/></td>
-                            </tr>
-                            <tr class="align-middle">
-                                <td>Username</td>
-                                <td><input type="text" class="form-control" name="username" value="{{ uu.username }}"/></td>
-                            </tr>
-                            <tr class="align-middle">
-                                <td>Password</td>
-                                <td><input type="password" class="form-control" name="password1" value="{{ uu.password }}"/></td>
-                            </tr>
-                            <tr class="align-middle">
-                                <td>Confirm password</td>
-                                <td><input type="password" class="form-control" name="password2" value="{{ uu.password }}"/></td>
-                            </tr>
-                            <tr class="align-middle">
-                                <td>Email</td>
-                                <td><input type="text" class="form-control" name="email" value="{{ uu.email }}"></td>
-                            </tr>
-                            <tr class="align-middle">
-                                <td>Resume</td>
-                                <td><input type="text" class="form-control" name="resume" value="{{ uu.resume }}"></td>
-                            </tr>
-                        </table> 
-                        <div>
-                            <button class="btn btn-primary" type="submit">Submit</button>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+    </fieldset>
+</form>
+
 {% endblock content %}

@@ -1,47 +1,37 @@
-{% extends "piggy/base_generic_new.html" %}
+{% extends "piggy/base_generic_edit_add.html" %}
 
 {% block title %}
     <title> Add Plan - Piggy </title>
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-2">
-            {% block sidebar %} 
-            {% endblock %}
-        </div>
-        <div class="col-sm-8">
-            <div class="container-fluid p-5 bg-white">
-                <form action="{% url 'piggy:add_plan' %}" method="post">
-                {% csrf_token %}
-                <fieldset>
-                    <h1 class="h1">Add Plan</h1>
-                    {% if message %}
-                        {% for msg in message %}
-                            <p><strong>{{ msg }}</strong></p>
-                        {% endfor %}
-                    {% endif %}
-                    <table class="table table-hover table-sm align-middle table-light">
-                        <thead></thead>
-                        <tr class="align-middle">
-                            <td>Plan Name:</td>
-                            <td><input class="form-control" type="text" name="plan_name" value="{{ draft.name }}"></td>
-                        </tr>
-                        <tr class="align-middle">
-                            <td>Professor:</td>
-                            <td><a href="{% url 'piggy:teacher_detail' uu.id %}">{{ uu.name }}</a></td>
-                        </tr>
-                        <tr class="align-middle">
-                            <td>Description:</td>
-                            <td><input class="form-control" type="text" name="plan_description" value="{{ draft.description }}"></td>
-                        </tr>
-                    </table>
-                    <button class="btn btn-primary" type="submit">Submit</button>
-                </fieldset>
-                </form>
-            </div>
-          </div>
-    </div>
-</div>
+
+<form action="{% url 'piggy:add_plan' %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+        <h1 class="h1">Add Plan</h1>
+        {% if message %}
+            {% for msg in message %}
+                <p><strong>{{ msg }}</strong></p>
+            {% endfor %}
+        {% endif %}
+        <table class="table table-hover table-sm align-middle table-light">
+            <thead></thead>
+            <tr class="align-middle">
+                <td>Plan Name:</td>
+                <td><input class="form-control" type="text" name="plan_name" value="{{ draft.name }}"></td>
+            </tr>
+            <tr class="align-middle">
+                <td>Professor:</td>
+                <td><a href="{% url 'piggy:teacher_detail' uu.id %}">{{ uu.name }}</a></td>
+            </tr>
+            <tr class="align-middle">
+                <td>Description:</td>
+                <td><input class="form-control" type="text" name="plan_description" value="{{ draft.description }}"></td>
+            </tr>
+        </table>
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </fieldset>
+</form>
+
 {% endblock content %}
