@@ -122,7 +122,7 @@ def create_team(request, plan_id):
     if 'role' in context and context['role'] == 'Student':
         # User must login first, and only student can create team
         # By creating a team under a plan, one also joins in this plan
-        # For each plan, students can only jpin one team 
+        # For each plan, students can only join one team 
         # So we must see whether this student is already in a team or not
         already_exist = False
         teams = Team.objects.filter(project_group__id=plan_id)
@@ -149,6 +149,57 @@ def create_team(request, plan_id):
     return render(
         request,
         'piggy/create_team.html',
+        context,
+    )
+
+
+def join_team(request, team_id):
+    context = get_user_context(request)
+    the_team = get_object_or_404(Team, pk=team_id)
+    if 'role' in context and context['role'] == 'Student':
+        # User must login first, and only student can join team
+        # For each plan, students can only join one team 
+        # So we must see whether this student is already in a team or not
+        already_exist = False
+        teams = Team.objects.filter(project_group__id=the_team.project_group.id)
+        for team in teams:
+            if context['uu'] in team.members.all():
+                already_exist = True
+                context['err_msg'] = 'You are already in a team which belongs to this plan.'
+                break
+        if not already_exist:
+            the_team.members.add(context['uu'])
+            the_team.save()
+    else:
+        context['err_msg'] = 'Permission denied.'
+    
+    return render(
+        request,
+        'piggy/finish.html',
+        context,
+    )
+
+
+def quit_team(request, team_id):
+    context = get_user_context(request)
+    the_team = get_object_or_404(Team, pk=team_id)
+    if 'role' in context and context['role'] == 'Student':
+        # User must login first, and can only quit from the team they are alreay in
+        # So we must see whether this student is already in a team or not
+        already_exist = False
+        if context['uu'] in the_team.members.all():
+            the_team.members.remove(context['uu'])
+            the_team.save()
+            if len(the_team.members.all()) == 0:
+                the_team.delete()
+        else:
+            context['err_msg'] = 'You don\'t belong to this team.'
+    else:
+        context['err_msg'] = 'Permission denied.'
+    
+    return render(
+        request,
+        'piggy/finish.html',
         context,
     )
 
@@ -215,18 +266,6 @@ def team_detail(request, team_id):
         'piggy/team_detail.html',
         context
     )
-
-
-def join_team(request, team_id):
-    context = get_user_context(request)
-    team = get_object_or_404(Team, pk=team_id)
-    try:
-        if context['is_student']:
-            team.members.objects.add(context['uu'])
-            team.save()
-        return HttpResponse(redirect('piggy:team', team_id))
-    except:
-        return HttpResponse('Permission denied.')
 
 
 def team_wish(request, team_id):
