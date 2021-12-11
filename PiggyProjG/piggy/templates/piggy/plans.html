@@ -12,7 +12,7 @@
             {% for plan in all_plans %}
             <li>
                 <a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}</a>
-                From
+                created by
                 <a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher.name }}<a>
             </li>
             {% endfor %}
