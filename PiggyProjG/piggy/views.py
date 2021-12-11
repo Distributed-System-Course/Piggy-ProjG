@@ -415,29 +415,30 @@ def edit_profile(request):
         post_password2 = request.POST['password2']
         post_email = request.POST['email']
         post_resume = request.POST['resume']
+        context['message'] = []
         
         if len(post_name) > 150 or len(post_name) == 0:
             if len(post_name) > 150:
-                context['msg'] = 'Name is too long!'
+                context['message'].append('Name is too long!')
             else:
-                context['msg'] = 'Name can\'t be empty'
+                context['message'].append('Name can\'t be empty')
 
-        elif len(post_username) > 150 or len(post_username) == 0:
+        if len(post_username) > 150 or len(post_username) == 0:
             if len(post_username) > 150:
-                context['msg'] = 'Username is too long!'
+                context['message'].append('Username is too long!')
             else:
-                context['msg'] = 'Username can\'t be empty!'
+                context['message'].append('Username can\'t be empty!')
 
-        else:
+        if len(context['message']) == 0:
             if role == 'Student':
                 matches = Student.objects.filter(username=post_username)
             elif role == 'Professor':
                 matches = Teacher.objects.filter(username=post_username)
 
             if len(matches) != 0 and context['uu'].username != post_username:
-                context['msg'] = 'Username already exist.'
+                context['message'].append('Username already exist.')
 
-            else:
+            if len(context['message']) == 0:
                 if post_password1 == post_password2 and 0 < len(post_password1) <= 128:
                     context['uu'].name = post_name
                     context['uu'].username = post_username
@@ -446,15 +447,15 @@ def edit_profile(request):
                     context['uu'].resume = post_resume
                     context['uu'].save()
                     request.session['username'] = post_username
-                    context['msg'] = 'Infomation updated!'
+                    context['message'].append('Infomation updated!')
 
                 else:
                     if len(post_password1) == 0:
-                        context['msg'] = 'Password can\'t be empty!'
+                        context['message'].append('Password can\'t be empty!')
                     elif len(post_password1) > 128:
-                        context['msg'] = 'Password is too long!'
+                        context['message'].append('Password is too long!')
                     else:
-                        context['msg'] = 'Passwords don\'t match!'
+                        context['message'].append('Passwords don\'t match!')
 
     return render(
         request,
@@ -467,6 +468,7 @@ def edit_plan(request, plan_id):
     context = get_user_context(request)
     
     context['plan'] = get_object_or_404(Plan, pk=plan_id)
+    context['message'] = []
     
     if context['role'] == 'Professor' and context['plan'].teacher.id == context['uu'].id:
         if request.method == 'POST':
@@ -476,21 +478,23 @@ def edit_plan(request, plan_id):
             
             if len(post_name) > 150 or len(post_name) == 0:
                 if len(post_name) > 150:
-                    context['msg'] = 'Name is too long!'
+                    context['message'].append('Name is too long!')
                 else:
-                    context['msg'] = 'Name can\'t be empty'
-            elif len(post_description) > 150 or len(post_description) == 0:
+                    context['message'].append('Name can\'t be empty')
+                    
+            if len(post_description) > 150 or len(post_description) == 0:
                 if len(post_description) > 150:
-                    context['msg'] = 'Description is too long!'
+                    context['message'].append('Description is too long!')
                 else:
-                    context['msg'] = 'Descrption can\'t be empty'
-            else:
+                    context['message'].append('Descrption can\'t be empty')
+            
+            if len(context['message']) == 0:
                 context['plan'].name = post_name
                 context['plan'].description = post_description
                 context['plan'].is_expired = post_status
                 context['plan'].save()
                 del context['plan']
-                context['msg'] = 'Infomation updated!'
+                context['message'].append('Infomation updated!')
         else:
             context['teams'] = Team.objects.filter(project_group_id=plan_id)
             

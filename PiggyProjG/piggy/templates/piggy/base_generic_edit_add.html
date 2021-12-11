@@ -36,46 +36,46 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'piggy:index' %}">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'piggy:plans' %}">Plans</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'piggy:projects' %}">Projects</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'piggy:teachers' %}">Teachers</a>
-        </li>
-        <!-- <li class="nav-item"><a class="nav-link" href="{% url 'piggy:search_projects' %}">Search Project</a></li> -->
-        <li class="nav-itme">
-            <a href="{% url 'piggy:search_projects' %}">
-                <button class="btn btn-primary" type="button">Search</button></a>
-        </li>
-    </ul>
-    <ul class="navbar-nav navbar-right">
-        {% if uu %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'piggy:dashboard' %}"
-                ><span class="glyphicon glyphicon-user"></span> {{ uu.name}}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'piggy:logout' %}"
-                ><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-        </li>
-        {% else %}
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'piggy:login' %}"
-                ><span class="glyphicon glyphicon-log-in"></span>Login</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href=" {% url 'piggy:register' %}"
-                ><span class="glyphicon glyphicon-user"></span>Register</a >
-        </li>
-        {% endif %}
-    </ul>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'piggy:index' %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'piggy:plans' %}">Plans</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'piggy:projects' %}">Projects</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'piggy:teachers' %}">Teachers</a>
+            </li>
+            <!-- <li class="nav-item"><a class="nav-link" href="{% url 'piggy:search_projects' %}">Search Project</a></li> -->
+            <li class="nav-itme">
+                <a href="{% url 'piggy:search_projects' %}">
+                    <button class="btn btn-primary" type="button">Search</button></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav navbar-right">
+            {% if uu %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'piggy:dashboard' %}"
+                    ><span class="glyphicon glyphicon-user"></span> {{ uu.name}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'piggy:logout' %}"
+                    ><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'piggy:login' %}"
+                    ><span class="glyphicon glyphicon-log-in"></span>Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href=" {% url 'piggy:register' %}"
+                    ><span class="glyphicon glyphicon-user"></span>Register</a >
+            </li>
+            {% endif %}
+        </ul>
     </div>
 </div>
 </nav>

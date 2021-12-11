@@ -1,59 +1,92 @@
-{% extends "piggy/base_generic.html" %}
+{% extends "piggy/base_generic_new.html" %}
 
 {% block title %}
-    <title>Man - Piggy</title>
+    <title>Dashboard - Piggy</title>
 {% endblock %}
 
 {% block content %}
-    <h1>Hi, {{ uu.name }}</h1>
-    <h2>Profile</h2>
-    <table>
-        <tr>
-            <td>Name</td>
-            <td>{{ uu.name }}</td>
-        </tr>
-        <tr>
-            <td>Username</td>
-            <td>{{ uu.username }}</td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td>{{ uu.password }}</td>
-        </tr>
-        <tr>
-            <td>Role</td>
-            <td>{{ role }}</td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>{{ uu.email }}</td>
-        </tr>
-        <tr>
-            <td>Resume</td>
-            <td>{{ uu.resume}}</td>
-        </tr>
-    </table>
-    
-    <form>
-        {% csrf_token %}
-        <div>
-            <a href="{% url 'piggy:edit_profile' %}">Edit Profile</a>
+<div class="container-fluid">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="container-fluid p-5">
+
+            </div>
         </div>
-    </form>
+        <div class="col-sm-8">
+            <div class="container-fluid p-5 bg-white">
+                <h1 class="h1">Hi, {{ uu.name }}!</h1>
+                <br>
+                <div class="d-grid gap-2">
+                    <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapseProfile" role="button" aria-expanded="true" aria-controls="collapseProfile">
+                        <h2 class="h2 text-center">Profile</h2>
+                    </a>
+                </div>
+                <div class="collapse show" id="collapseProfile">
+                    <div class="card card-body">
+                        <table class="table table-borderless align-middle table-hover">
+                            <thead></thead> 
+                            <tr>
+                                <td class="h5">Name</td>
+                                <td>{{ uu.name }}</td>
+                            </tr>
+                            <tr>
+                                <td class="h5">Username</td>
+                                <td>{{ uu.username }}</td>
+                            </tr>
+                            <tr>
+                                <td class="h5">Password</td>
+                                <td>{{ uu.password }}</td>
+                            </tr>
+                            <tr>
+                                <td class="h5">Role</td>
+                                <td>{{ role }}</td>
+                            </tr>
+                            <tr>
+                                <td class="h5">Email</td>
+                                <td>{{ uu.email }}</td>
+                            </tr>
+                            <tr>
+                                <td class="h5">Resume</td>
+                                <td>{{ uu.resume}}</td>
+                            </tr>
+                        </table>
+                        
+                        <form>
+                            <a class="btn btn-primary" href="{% url 'piggy:edit_profile' %}">Edit Profile</a>
+                        </form>
+                    </div>
+                </div>
+                <br>
 
-    <h2> Directed Plans and Projects</h2>
-
-    {% if all_plans %}
-        {% for plan in all_plans %}
-            <h3><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}<a></h2>
-            <ul>
-            {% for project in plan.project_set.all %}
-                <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
-            {% endfor %}
-            </ul>
-        {% endfor %}
-    {% else %}
-        <p>No projects are available.</p>
-    {% endif %}
+                <div class="d-grid gap-2">
+                    <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapsePlanProject" role="button" aria-expanded="true" aria-controls="collapsePlanProject">
+                        <h2 class="h2 text-center"> Directed Plans and Projects</h2>
+                    </a>
+                </div>
+                <div class="collapse show" id="collapsePlanProject">
+                    <div class="card card-body">
+                        {% if all_plans %}
+                            {% for plan in all_plans %}
+                                <h3><a class="list-group-item list-group-item-action active" aria-current="true" href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}<a></h2>
+                                <div class="list-group">
+                                    {% for project in plan.project_set.all %}
+                                        <a class="list-group-item list-group-item-action fw-bold" href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a>
+                                    {% endfor %}
+                                    <a class="btn btn-outline-success" href="{% url 'piggy:add_project' plan.id %}"><i class="bi bi-plus-lg"></i></a>
+                                </div>
+                                <br>
+                            {% endfor %}
+                        {% else %}
+                            <p>No projects are available.</p>
+                        {% endif %}
+                        <br>
+                        <a class="btn btn-success" href="{% url 'piggy:add_plan' %}">Add Plan</a>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </div>
+</div>
 
 {% endblock %}

@@ -7,40 +7,50 @@
 {% block content %}
 
 <form action="{% url 'piggy:add_project' plan.id %}" method="post">
-{% csrf_token %}
-<fieldset>
-    <h1 class="h1">Add Project</h1>
-    {% if message %}
-        {% for msg in message %}
-            <p><strong>{{ msg }}</strong></p>
-        {% endfor %}
-    {% endif %}
-    <table class="table table-hover table-sm align-middle table-light">
-        <thead></thead>
-        <tr class="align-middle">
-            <td>Project name</td>
-            <td><input class="form-control" type="text" name="project_name" value="{{ draft.name }}"></td>
-        </tr>
-        <tr class="align-middle">
-            <td>Belongs to</td>
-            <td><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}</a></td>
-        </tr>
-        <tr class="align-middle">
-            <td>Description</td>
-            <td><input class="form-control" type="text" name="project_description" value="{{ draft.description}}"></td>
-        </tr>
-        <tr class="align-middle">
-            <td>Max groups</td>
-            <td><input class="form-control" type="number" name="project_max_group_num" value="{{ draft.max_group_num }}"></td>
-        </tr>
-        <tr class="align-middle">
-            <td>Max team members</td>
-            <td><input class="form-control" type="number" name="project_max_team_member_num" value="{{ draft.max_team_member_num }}"></td>
-        </tr>
-    </table>
-    <button class="btn btn-primary" type="submit">Submit</button>
-    <a href="{% url 'piggy:edit_plan' plan.id %}">Back to edit plan</a> 
-</fieldset>
+    {% csrf_token %}
+    <fieldset>
+        <h1 class="h1">Add Project</h1>
+        {% if message %}
+            {% for msg in message %}
+                {% if 'Successfully' not in msg %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill"></i><strong> {{ msg }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% else %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="bi bi-check-circle-fill"></i><strong> {{ msg }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        <table class="table table-hover table-sm align-middle table-light">
+            <thead></thead>
+            <tr class="align-middle">
+                <td>Project name</td>
+                <td><input class="form-control" type="text" name="project_name" value="{{ draft.name }}"></td>
+            </tr>
+            <tr class="align-middle">
+                <td>Belongs to</td>
+                <td><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}</a></td>
+            </tr>
+            <tr class="align-middle">
+                <td>Description</td>
+                <td><input class="form-control" type="text" name="project_description" value="{{ draft.description}}"></td>
+            </tr>
+            <tr class="align-middle">
+                <td>Max groups</td>
+                <td><input class="form-control" type="number" name="project_max_group_num" value="{{ draft.max_group_num }}"></td>
+            </tr>
+            <tr class="align-middle">
+                <td>Max team members</td>
+                <td><input class="form-control" type="number" name="project_max_team_member_num" value="{{ draft.max_team_member_num }}"></td>
+            </tr>
+        </table>
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <a href="{% url 'piggy:edit_plan' plan.id %}">Back to edit plan</a> 
+    </fieldset>
 </form>
 
 {% endblock content %}
