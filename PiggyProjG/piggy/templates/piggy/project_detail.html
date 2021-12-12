@@ -1,36 +1,37 @@
-{% extends "piggy/base_generic.html" %}
+{% extends "piggy/base_generic_no_content.html" %}
 
 {% block title %}
     <title>{{ project.name }} - Project's details</title>
 {% endblock %}
 
 {% block content %}
-<h1> {{ project.name }} </h1>
-<table>
+<h1 class="h1"> {{ project.name }} </h1>
+<table class="table table-hover align-middle">
+    <thead></thead>
     <tbody>
         <tr>
-            <th>所属项目组</th>
+            <th class="h5">所属项目组</th>
             <td><a href="{% url 'piggy:plan_detail' project.project_group.id %}">{{ project.project_group.name }}</a></td>
         </tr>
         <tr>
-            <th>指导教师</th>
+            <th class="h5">指导教师</th>
             <td><a href="{% url 'piggy:teacher_detail' project.project_group.teacher.id %}">{{ project.project_group.teacher.name }}</a></td>
         </tr>
         <tr>
-            <th>项目介绍</th>
+            <th class="h5">项目介绍</th>
             <td>{{ project.description }}</td>
         </tr>
         <tr>
-            <th>最大组数</th>
+            <th class="h5">最大组数</th>
             <td>{{ project.max_group_num }}</td>
         </tr>
         <tr>
-            <th>每组最大人数</th>
+            <th class="h5">每组最大人数</th>
             <td>{{ project.max_team_member_num }}</td>
         </tr>
     </tbody>
 </table>
 {% if flag %}
-    <p><a href="{% url 'piggy:edit_project' project.id %}">Edit Project</a></p>
+    <p><a class="btn btn-primary" href="{% url 'piggy:edit_project' project.id %}">Edit Project</a></p>
 {% endif %}
 {% endblock %}
