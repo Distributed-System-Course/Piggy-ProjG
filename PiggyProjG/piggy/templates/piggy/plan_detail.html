@@ -11,7 +11,7 @@
         <tbody>
             <tr>
                 <th class="h5">Professor:</th>
-                <td><a class="btn btn-outline-info" href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher }}</a></td>
+                <td>{{ plan.teacher }} <a href="{% url 'piggy:teacher_detail' plan.teacher.id %}"><i class="bi bi-info-circle-fill"></i></a></td>
             </tr>
             <tr>
                 <th class="h5">Status:</th>
