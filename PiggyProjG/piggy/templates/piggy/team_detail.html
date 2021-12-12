@@ -1,0 +1,32 @@
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title> {{ team.name }} </title>
+{% endblock title %}
+
+{% block content %}
+    <h1> {{ team.name }} </h1>
+    <!-- <p> {{ team.name }} belongs to {{ team.project_group }}</p> -->
+    <h3> Chosen Project </h3>
+        <p> {{ team.name }} has project 
+            <a href="{% url 'piggy:project_detail' team.project.id %}" >{{ team.project.name }}</a>
+            in 
+            <a href="{% url 'piggy:plan_detail' team.project_group.id %}"> {{ team.project_group.name }} </a>
+            directed by Prof 
+            <a href="{% url 'piggy:teacher_detail' team.project_group.teacher.id %}">{{ team.project_group.teacher.name }}</a>
+        </p>
+    <a href="{% url 'piggy:team_wish' team.id %}"><h3> Team Wishes </h3></a>
+
+    <h3> Team Member </h3>
+        <p> {{ team.name }} has team members below:</p>
+        <ul>
+            {% for member in team.members.all %}
+                <li> {{ member }} </li>
+            {% endfor %}
+        </ul>
+    {% if uu %}
+        {% if is_student %}
+        <a href="{% url 'piggy:join_team' team.id %}">Join Team</a>
+        {% endif %}
+    {% endif %}
+{% endblock content %}

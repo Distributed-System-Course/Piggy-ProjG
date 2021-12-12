@@ -1,0 +1,12 @@
+.row {
+    margin-top: 20px;
+}
+
+.sidebar-nav {
+    padding: 0;
+    list-style: none;
+}
+
+th, td {
+    padding: 5px;
+}

@@ -1,0 +1,46 @@
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title> Edit Profile - Piggy </title>
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'piggy:edit_profile' %}" method="post">
+{% csrf_token %}
+<fieldset>
+    <legend>Edit Profile</legend>
+    {% if msg %}
+        <p><strong>{{ msg }}</strong></p>
+    {% endif %}
+    <table>
+        <tr>
+            <td>Name</td>
+            <td><input type="text" name="name" value="{{ uu.name }}"/></td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td><input type="text" name="username" value="{{ uu.username }}"/></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="password" name="password1" value="{{ uu.password }}"/></td>
+        </tr>
+        <tr>
+            <td>Confirm password</td>
+            <td><input type="password" name="password2" value="{{ uu.password }}"/></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="text" name="email" value="{{ uu.email }}"></td>
+        </tr>
+        <tr>
+            <td>Resume</td>
+            <td><input type="text" name="resume" value="{{ uu.resume }}"></td>
+        </tr>
+    </table> 
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</fieldset>
+</form>
+{% endblock content %}

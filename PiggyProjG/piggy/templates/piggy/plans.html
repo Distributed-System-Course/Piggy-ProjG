@@ -1,0 +1,26 @@
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title> All Plans - Piggy </title>
+{% endblock %}
+
+{% block content %}
+    <h1> All Plans </h1>
+    <!-- Organized by 'teacher's -->
+    {% if all_plans %}
+        <ul>
+            {% for plan in all_plans %}
+            <li>
+                <a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}</a>
+                created by
+                <a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher.name }}<a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No plans are available.</p>
+    {% endif %}
+    {% if role == 'Professor' %}
+      <a href="{% url 'piggy:add_plan' %}">Add Plan</a>
+    {% endif %}
+{% endblock %}

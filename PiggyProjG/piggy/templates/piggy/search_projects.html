@@ -1,0 +1,43 @@
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title> Projects Search - Piggy </title>
+{% endblock %}
+
+{% block content %}
+
+{% if draft.q %}
+    <h1>Project search results for '{{draft.q}}'</h1>
+{% else %}
+    <h1>Project search</h1>
+{% endif %}
+
+<form action="{% url 'piggy:search_projects' %}" method="get">
+<fieldset>
+    <legend>Search Project</legend>
+    {% if message %}
+        {% for msg in message %}
+            <p><strong>{{ msg }}</strong></p>
+        {% endfor %}
+    {% endif %}
+    
+    {% if draft.keyword %}
+        <label for="keyword">Keyword</label>
+        <input name="q" type="text" name="keyword" placeholder="" required />
+    {% else %}
+        <label for="keyword">Keyword</label>
+        <input name="q" type="text" name="keyword" placeholder="{{ draft.q }}" required />
+    {% endif %}
+        <button type="submit">Search</button>
+    </fieldset>
+</form>
+
+<ul>
+  {% for proj in object_list %}
+    <li>
+        <p><a href="{% url 'piggy:project_detail' proj.id %}">Project id: {{ proj.id }}. Project Name: {{ proj.name }}</a></p>
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock content %}

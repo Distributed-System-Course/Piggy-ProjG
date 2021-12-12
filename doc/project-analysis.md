@@ -52,3 +52,8 @@ Piggy-ProjG 是一个网络应用程序，它使教授可以在线发布多个�
 ### 学生选择项目
 
 ![学生选择项目](./assets/student-wish.svg)
+
+
+Reference Link: 
+1. [Writing your first Django app, part 1](https://docs.djangoproject.com/en/3.2/intro/tutorial01/)
+2. [Django Web Framework (Python)](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django)

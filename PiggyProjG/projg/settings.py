@@ -25,13 +25,15 @@ SECRET_KEY = 'django-insecure-v1md-yi4(*i(&$obwkrlhm=x)$&(nlvejimqs&q-w*_f!j*xuf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'hello.apps.HelloConfig',
     'piggy.apps.PiggyConfig',
     'django.contrib.admin',
     'django.contrib.auth',

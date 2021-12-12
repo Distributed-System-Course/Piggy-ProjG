@@ -1,0 +1,45 @@
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title>{{ plan.name }} - Create a team</title>
+{% endblock %}
+
+{% block content %}
+
+{% if err_msg %}
+    <h1>Oops!</h1>
+    <p><strong>{{ err_msg }}</strong></p>
+{% else %}
+    <h1>Creating a team</h1>
+    {% if msg %}
+        <p><strong>{{ msg }}</strong></p>
+    {% endif %}
+    <!-- Team Creation Form -->
+    <form action="{% url 'piggy:create_team' plan.id %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <table>
+                <tr>
+                    <td>Team name</td>
+                    <td><input type="text" name="team_name"/></td>
+                </tr>
+                <tr>
+                    <td><label>Default project</label></td>
+                    <td>
+                        <select name="default_project_id">
+                            {% for choice in choices.all %}
+                                <option value="{{choice.id}}">{{choice.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+        </fieldset>
+    </form>
+{% endif %}
+
+{% endblock %}
+

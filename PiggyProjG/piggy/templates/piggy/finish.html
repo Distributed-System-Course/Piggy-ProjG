@@ -1,0 +1,16 @@
+{% extends "piggy/base_generic.html" %}
+
+{% block title %}
+    <title>Oops!</title>
+{% endblock %}
+
+{% block content %}
+
+    {% if err_msg %}
+    <h1>Oops!</h1>
+    <p><strong>{{ err_msg }}</strong></p>
+    {% else %}
+    <h1>Success!</h1>
+    {% endif %}
+
+{% endblock %}
