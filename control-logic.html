@@ -1,0 +1,263 @@
+<!DOCTYPE HTML>
+<html lang="zh-Hans" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>程序控制逻辑 - Piggy ProjG</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/css/custom-style.css">
+        <link rel="stylesheet" href="theme/css/custom-font.css">
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="project-guidelines.html"><strong aria-hidden="true">1.</strong> 项目要求</a></li><li class="chapter-item expanded "><a href="project-analysis.html"><strong aria-hidden="true">2.</strong> 项目分析</a></li><li class="chapter-item expanded "><a href="database-design.html"><strong aria-hidden="true">3.</strong> 数据库设计</a></li><li class="chapter-item expanded "><a href="control-logic.html" class="active"><strong aria-hidden="true">4.</strong> 程序控制逻辑</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Piggy ProjG</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="程序控制逻辑"><a class="header" href="#程序控制逻辑">程序控制逻辑</a></h1>
+<h2 id="web-接口"><a class="header" href="#web-接口">Web 接口</a></h2>
+<p>用户和 Web 程序之间通过 HTTP 请求进行交互。程序为各种用户会使用到的功能，设计了对应的 URL 链接。</p>
+<p>用户访问对应的 URL 时，运行程序的服务器将会解析对应的 URL，并执行对应的程序（在 Django 中称作 view）。服务器会返回对应的 HTTP 响应，一般情况下为一个 HTTP 页面，亦即用户所使用的应用界面。</p>
+<h3 id="项目计划相关"><a class="header" href="#项目计划相关">项目计划相关</a></h3>
+<pre><code class="language-python">    # plans, a.k.a. project groups
+    path('plans/', views.plans, name='plans'),
+    path('plan/add/', views.add_plan, name='add_plan'),
+    path('plan/&lt;int:plan_id&gt;/', views.plan_detail, name='plan_detail'),
+    path('plan/&lt;int:plan_id&gt;/create_team/', views.create_team, name='create_team'),
+    path('plan/&lt;int:plan_id&gt;/start/', views.start_plan, name='start_plan'),
+    path('plan/&lt;int:plan_id&gt;/stop/', views.stop_plan, name='stop_plan'),
+    path('plan/&lt;int:plan_id&gt;/edit/', views.edit_plan, name='edit_plan'),
+    path('plan/&lt;int:plan_id&gt;/del/', views.del_plan, name='del_plan'),
+    path('plan/&lt;int:plan_id&gt;/add_project/', views.add_project, name='add_project'),
+    path('plan/&lt;int:plan_id&gt;/kick/&lt;int:team_id&gt;/', views.kick_out_team, name='kick_out_team'),
+</code></pre>
+<table><thead><tr><th>URL 模板</th><th>URL 名称</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>plans/</code></td><td><code>plans</code></td><td>查看所有计划</td></tr>
+<tr><td><code>plan/add/</code></td><td><code>add_plan</code></td><td>添加一个计划（仅教师）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/</code></td><td><code>plan_detail</code></td><td>计划详情</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/create_team/</code></td><td><code>create_team</code></td><td>创建小组（仅学生）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/start/</code></td><td><code>start_plan</code></td><td>启动计划（仅教师）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/stop/</code></td><td><code>stop_plan</code></td><td>停止计划（仅教师）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/edit/</code></td><td><code>edit_plan</code></td><td>编辑计划（仅教师）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/del/</code></td><td><code>del_plan</code></td><td>删除计划（仅教师）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/add_project/</code></td><td><code>add_project</code></td><td>添加项目（仅教师）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/kick/&lt;int:team_id&gt;/</code></td><td><code>kick_out_team</code></td><td>移除计划中小组（仅教师）</td></tr>
+</tbody></table>
+<p>注：创建小组的同时，该学生亦加入该小组，因此要求该学生未参与同计划下的其他项目。</p>
+<h3 id="项目相关"><a class="header" href="#项目相关">项目相关</a></h3>
+<pre><code class="language-python">    path('projects/', views.projects, name='projects'),
+    path('projects/search/', views.search_projects, name='search_projects'),
+    path('project/&lt;int:project_id&gt;/', views.project_detail, name='project_detail'),
+    path('project/&lt;int:project_id&gt;/del/', views.del_project, name='del_project'),
+    path('project/&lt;int:project_id&gt;/edit/', views.edit_project, name='edit_project'),
+</code></pre>
+<table><thead><tr><th>URL 模板</th><th>URL 名称</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>projects/</code></td><td><code>projects</code></td><td>查看所有项目</td></tr>
+<tr><td><code>projects/search/</code></td><td><code>search_projects</code></td><td>搜索项目</td></tr>
+<tr><td><code>project/&lt;int:project_id&gt;/</code></td><td><code>project_detail</code></td><td>项目详情页</td></tr>
+<tr><td><code>project/&lt;int:project_id&gt;/del/</code></td><td><code>del_project</code></td><td>删除项目（仅教师）</td></tr>
+<tr><td><code>project/&lt;int:project_id&gt;/edit/</code></td><td><code>edit_project</code></td><td>编辑项目（仅教师）</td></tr>
+</tbody></table>
+<h3 id="教师相关"><a class="header" href="#教师相关">教师相关</a></h3>
+<pre><code class="language-python">    path('teachers/', views.teachers, name='teachers'),
+    path('teacher/&lt;int:teacher_id&gt;/', views.teacher_detail, name='teacher_detail'),
+</code></pre>
+<table><thead><tr><th>URL 模板</th><th>URL 名称</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>teachers/</code></td><td><code>teachers</code></td><td>所有教师</td></tr>
+<tr><td><code>teacher/&lt;int:teacher_id&gt;/</code></td><td><code>teacher_detail</code></td><td>教师详情页</td></tr>
+</tbody></table>
+<h3 id="小组相关"><a class="header" href="#小组相关">小组相关</a></h3>
+<pre><code class="language-python">    path('team/&lt;int:team_id&gt;/', views.team_detail, name='team_detail'),
+    path('team/&lt;int:team_id&gt;/wish/', views.team_wish, name='team_wish'),
+    path('team/&lt;int:team_id&gt;/join/', views.join_team, name='join_team'),
+    path('team/&lt;int:team_id&gt;/quit/', views.quit_team, name='quit_team'),
+</code></pre>
+<table><thead><tr><th>URL 模板</th><th>URL 名称</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>team/&lt;int:team_id&gt;/</code></td><td><code>team_detail</code></td><td>小组详情页</td></tr>
+<tr><td><code>team/&lt;int:team_id&gt;/wish/</code></td><td><code>team_wish</code></td><td>小组志愿填写页（仅小组中成员）</td></tr>
+<tr><td><code>team/&lt;int:team_id&gt;/join/</code></td><td><code>join_team</code></td><td>加入小组（仅学生）</td></tr>
+<tr><td><code>team/&lt;int:team_id&gt;/quit/</code></td><td><code>quit_team</code></td><td>退出小组（仅小组中成员）</td></tr>
+</tbody></table>
+<p>注：加入计划下的小组中即视作该学生处于该计划下。某一小组中最后一名成员退出时，小组将自动删除。</p>
+<h3 id="注册与登录相关"><a class="header" href="#注册与登录相关">注册与登录相关</a></h3>
+<pre><code class="language-python">    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
+    path('register/', views.register, name='register'),
+</code></pre>
+<table><thead><tr><th>URL 模板</th><th>URL 名称</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>login/</code></td><td><code>login</code></td><td>用户登入</td></tr>
+<tr><td><code>logout/</code></td><td><code>logout</code></td><td>用户登出</td></tr>
+<tr><td><code>register/</code></td><td><code>register</code></td><td>用户注册</td></tr>
+</tbody></table>
+<h2 id="样式设计"><a class="header" href="#样式设计">样式设计</a></h2>
+<p>使用基础 HTML 标签描述出来的界面不够直观，使用 Bootstrap 为界面应用样式。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="database-design.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="database-design.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

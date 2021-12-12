@@ -1,0 +1,484 @@
+<!DOCTYPE HTML>
+<html lang="zh-Hans" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Piggy ProjG</title>
+        <meta name="robots" content="noindex" />
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/css/custom-style.css">
+        <link rel="stylesheet" href="theme/css/custom-font.css">
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="project-guidelines.html"><strong aria-hidden="true">1.</strong> 项目要求</a></li><li class="chapter-item expanded "><a href="project-analysis.html"><strong aria-hidden="true">2.</strong> 项目分析</a></li><li class="chapter-item expanded "><a href="database-design.html"><strong aria-hidden="true">3.</strong> 数据库设计</a></li><li class="chapter-item expanded "><a href="control-logic.html"><strong aria-hidden="true">4.</strong> 程序控制逻辑</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Piggy ProjG</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="project-guidelines"><a class="header" href="#project-guidelines">Project Guidelines</a></h1>
+<p>报告中英文都可以，内容总体按照软件工程的报告要求，主要内容包括：</p>
+<ol>
+<li>概述，简要说明在 ××× 背景下，基于 ××× 技术或者架构，实现 ××× 系统，具备 ××× 功能，具有 ××× 意义；</li>
+<li>需求分析，分析不同角色客户的不同需求；</li>
+<li>系统架构及功能，此处按照 C4 的 4 层设计，以图表形式依次说明，一定既要有图还要有相应的解释或者说明；</li>
+<li>测试；</li>
+<li>运行结果展示及使用说明；</li>
+<li>存在的问题及改进；</li>
+<li>附录：相关领域或者类似项目的一些研究。</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="项目分析"><a class="header" href="#项目分析">项目分析</a></h1>
+<p>Piggy-ProjG 是一个网络应用程序，它使教授可以在线发布多个项目，学生可以从中选择他们感兴趣的任何项目。</p>
+<p>为了详细说明这一点，教授应该描述这些项目并决定每个项目和每个小组的最大学生人数。并且学生可以选择一个以上自己感兴趣的项目，并按照对这个项目感兴趣（或愿意做）的程度来安排。最后，系统应该将分组结果呈现给教授和学生。</p>
+<p>该应用程序应该以网页的形式处理上述所有内容，这意味着用户应该可以通过任何现代浏览器访问该应用程序。</p>
+<h2 id="开发工具"><a class="header" href="#开发工具">开发工具</a></h2>
+<p>该项目使用 Python 编程语言上的 Django 框架进行应用的开发。</p>
+<h2 id="web-程序的特点"><a class="header" href="#web-程序的特点">Web 程序的特点</a></h2>
+<p>相较于传统应用，用户使用浏览器访问某一网站以使用 Web 应用，过程中通过 HTTP 请求完成数据的查询、修改。</p>
+<p>应用程序本身不过是对数据访问、修改操作的封装与简化。传统的客户端程序通过调用图形库，在用户使用的操作系统上绘制出界面。如果是多用户同时使用、涉及到共享数据的场景，则可以将程序设计为访问远程的数据库。远程的数据库需要能够同时接受来自多个客户端的连接。</p>
+<p>Web 程序通过 HTML 标记语言描述界面，借助浏览器显示出用以和用户进行信息交互的界面。用户本地并未运行程序本身，而是通过访问特定的 URL 完成数据的下载与上传。类似的，提供 Web 程序的服务器和数据库管理系统不一定运行在同一台机器上。</p>
+<h2 id="用例分析"><a class="header" href="#用例分析">用例分析</a></h2>
+<p>简单的用例分析如下：</p>
+<p><img src="assets/brief-use-cases.svg" alt="系统用例简图" /></p>
+<h3 id="发布项目"><a class="header" href="#发布项目">发布项目</a></h3>
+<p>教授在发布一个项目时，应填写项目名称和项目介绍，并设置项目要求的最高人数和组数、指定项目对小组能力的指标的偏好要求。</p>
+<h3 id="选择项目"><a class="header" href="#选择项目">选择项目</a></h3>
+<p>学生在选择项目时，分为“分组”阶段与“选项目”阶段。</p>
+<p>“分组”阶段介绍如下：</p>
+<ul>
+<li>“分组”阶段：学生可以首先进行自由组队，学生和教授都可以查看现有的分组情况。每个学生都可以选择创建新的小组、加入现有的小组，或者退出当前所在的小组；教授可以选择向小组中添加学生、或从小组中移除学生。当某组中唯一的成员选择退出小组或被移除时，该小组自动解散。每个小组有人数上限；</li>
+<li>教授可以选择随时停止“分组”阶段，此时学生无法再进行小组的创建、加入或退出。不符合人数要求的小组（如有）将由教授进行手动调整。调整后的结果视为最终结果。</li>
+</ul>
+<p>“选项目”阶段介绍如下：</p>
+<ul>
+<li>教授确定好分组情况后，小组成员可以按照一定的优先级选择若干自己意向中的项目，称为“填写志愿”。每个成员都可以为小组“填写志愿”，新提交的“志愿”将覆盖旧有的“志愿”；</li>
+<li>教授可以选择随时停止“选项目”阶段，此时小组无法再对“志愿”进行修改，同时，系统将会根据小组的某种评价指标和“志愿”优先级匹配项目；当某一小组的所有“志愿”均无法被满足时，则随机为其分配某一可选的项目。教授可以修改系统分配后的结果，也可以确定最终结果；该过程中，学生和教授随时都可以查看当前的项目分配情况。</li>
+</ul>
+<h3 id="账户管理"><a class="header" href="#账户管理">账户管理</a></h3>
+<p>系统支持用户进行注册。用户可以注册成为“教授”或“学生”。学生可以通过教授提供的“邀请码”加入到教授的课程中。</p>
+<p>登录时，用户选择登录身份——“教授”或“学生”。登录成功后，系统将展示对应的页面：</p>
+<ul>
+<li>教授端：可以查看所教授的课程，以及课程下的各个项目以及分组情况；</li>
+<li>学生端：可以查看所加入的课程，以及对应课程下可选的项目，以及对应课程中的分组情况。</li>
+</ul>
+<h2 id="模块协作"><a class="header" href="#模块协作">模块协作</a></h2>
+<h3 id="教授发布项目"><a class="header" href="#教授发布项目">教授发布项目</a></h3>
+<p><img src="./assets/project-publish.svg" alt="教授发布项目" /></p>
+<h3 id="学生组队"><a class="header" href="#学生组队">学生组队</a></h3>
+<p><img src="./assets/student-make-team.svg" alt="学生组队" /></p>
+<h3 id="学生选择项目"><a class="header" href="#学生选择项目">学生选择项目</a></h3>
+<p><img src="./assets/student-wish.svg" alt="学生选择项目" /></p>
+<h2 id="参考链接"><a class="header" href="#参考链接">参考链接</a></h2>
+<ul>
+<li><a href="https://docs.djangoproject.com/en/3.2/intro/tutorial01/">Writing your first Django app, part 1</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django">Django Web Framework (Python)</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="数据库设计"><a class="header" href="#数据库设计">数据库设计</a></h1>
+<h2 id="需求分析"><a class="header" href="#需求分析">需求分析</a></h2>
+<p>​<strong>信息管理</strong>：项目组队系统主要是完成对学生信息管理、教师信息管理、学生组队管理、项目分发管理、项目匹配管理等。</p>
+<p><strong>注册、登录</strong>：用户可以注册成为学生和教师，通过唯一的用户名来登录。没有教师或同学的用户名是相同的。</p>
+<p>​<strong>发布计划、项目</strong>：教师首先面向特定学生发布项目计划（一个项目计划中包括一批不同的项目），教师可对其发布的计划，以及计划中的所有项目进行增删改查等操作。</p>
+<p><strong>组队</strong>：​学生首先按照一定要求进行组队，组队完成后以小组为单位进行项目志愿的填报，学生仅能对项目信息进行查询。</p>
+<p>注：在数据库中存储时，学生、教师、项目以及队伍都具有有一个用于索引的 ID 号。</p>
+<ul>
+<li>教师（Teacher）：教师编号、教师用户名、姓名、电话号码、电子邮箱、密码；</li>
+<li>学生（Student）：学生编号、学生用户名、姓名、密码、成绩；</li>
+<li>计划（Plan）：计划编号、计划名称、指导老师、包含项目；</li>
+<li>项目（Project）：项目编号、项目名称、项目简介、项目的人数要求；</li>
+<li>小组/小队（Team）：小组编号、小组名称、小组成员、所属项目组、选择的项目；</li>
+</ul>
+<h2 id="概念设计"><a class="header" href="#概念设计">概念设计</a></h2>
+<p>在设计项目组对系统数据库时，依据对系统做出的数据和功能的需求分析，确定要存储的有关对象的信息和各个对象的基本属性信息，还需要确定这些对象之间的相互关系。设计出概念模型如下：</p>
+<p><img src="./assets/ER-diagram.svg" alt="数据库 ER 图" /></p>
+<h2 id="逻辑结构设计"><a class="header" href="#逻辑结构设计">逻辑结构设计</a></h2>
+<p>​逻辑结构设计是根据设计完成的概念模型，按照“实体和联系可以转换成关系”的转换规则，转换生成关系数据库管理系统支持的数据库表的数据结构。然后根据关系数据理论，对关系模式进行优化。根据以上设计的资产管理系统的概念模型和实际应用中的需要，为系统设计出的各数据表的数据结构和完整性约束条件如表所示。</p>
+<ul>
+<li>教师（Teacher）：教师编号、教师用户名、姓名、电话号码、电子邮箱、密码；</li>
+<li>学生（Student）：学生编号、学生用户名、姓名、密码、成绩；</li>
+<li>计划（Plan）：计划编号、计划名称、指导老师、包含项目；</li>
+<li>项目（Project）：项目编号、项目名称、项目简介、项目的人数要求；</li>
+<li>小组/小队（Team）：小组编号、小组名称、小组成员、所属项目组、选择的项目；</li>
+</ul>
+<p>由于小组志愿数量不定，因此单独设计一个表。</p>
+<ul>
+<li>小组志愿（Team Wish）：小组编号、选择的项目、优先级</li>
+</ul>
+<p>小组和学生是多对多的关系，因此建立“小组成员”表存储所属关系：</p>
+<ul>
+<li>小组成员（Team Members）：小组编号、学生编号</li>
+</ul>
+<h2 id="数据定义"><a class="header" href="#数据定义">数据定义</a></h2>
+<p>定义 Django 中可用的数据模型，即从 <code>django.db.models.Model</code> 类继承。</p>
+<pre><code class="language-python">from django.db import models
+</code></pre>
+<h3 id="教师"><a class="header" href="#教师">教师</a></h3>
+<p>定义教师（Teacher）类</p>
+<pre><code class="language-python">class Teacher(models.Model):
+    username = models.CharField(max_length=150)
+    password = models.CharField(max_length=128)
+    name = models.CharField(max_length=150)
+    email = models.CharField(max_length=150)
+    resume = models.CharField(max_length=150)
+</code></pre>
+<ul>
+<li><code>username</code>：用户名</li>
+<li><code>password</code>：密码</li>
+<li><code>name</code>：教师姓名</li>
+<li><code>email</code>：电子邮箱</li>
+<li><code>resume</code>：教师简历</li>
+</ul>
+<h3 id="学生"><a class="header" href="#学生">学生</a></h3>
+<p>定义学生（Student）类</p>
+<pre><code class="language-python">class Student(models.Model):
+    username = models.CharField(max_length=150)
+    password = models.CharField(max_length=128)
+    name = models.CharField(max_length=150)
+    rank = models.IntegerField(default=0)
+    email = models.CharField(max_length=150)
+    resume = models.CharField(max_length=150)
+</code></pre>
+<ul>
+<li><code>username</code>：用户名</li>
+<li><code>password</code>：密码</li>
+<li><code>name</code>：学生姓名</li>
+<li><code>rank</code>：学生能力等级</li>
+<li><code>email</code>：学生电子邮箱</li>
+<li><code>resume</code>：学生简历</li>
+</ul>
+<blockquote>
+<p>事实上可以使用一个用户（User）表记录教师和学生的公共属性，并用另外的表记录身份信息和附加信息。</p>
+</blockquote>
+<h3 id="项目计划"><a class="header" href="#项目计划">项目计划</a></h3>
+<p>项目计划（Plan），也称项目组（Project Group）。项目组仅归属于一位教师。</p>
+<p>当项目尚未“过期（expired）”时，学生才能在该项目下组队和选择项目。</p>
+<pre><code class="language-python">class Plan(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    name = models.CharField(max_length=150)
+    is_expired = models.BooleanField(default=False)
+    description = models.CharField(max_length=500)
+</code></pre>
+<ul>
+<li><code>teacher</code>：所属的<a href="database-design.html#%E6%95%99%E5%B8%88">教师</a>（外键）；当教师被删除时，所有的计划也需要被删除，在 Django 中使用 <code>on_delete=models.CASCADE</code> 描述该字段</li>
+<li><code>is_expired</code>：标记项目计划是否“过期”</li>
+<li><code>name</code>：项目计划名称</li>
+<li><code>description</code>：项目计划描述</li>
+</ul>
+<h3 id="项目"><a class="header" href="#项目">项目</a></h3>
+<p>一个项目组下可以包含多个项目。每个项目仅能属于一个项目组。</p>
+<pre><code class="language-python">class Project(models.Model):
+    project_group = models.ForeignKey(Plan, on_delete=models.CASCADE)
+    name = models.CharField(max_length=150)
+    description = models.CharField(max_length=500)
+    max_group_num = models.IntegerField(default=5)
+    max_team_member_num = models.IntegerField(default=5)
+</code></pre>
+<ul>
+<li><code>project_group</code>：所属的<a href="database-design.html#%E9%A1%B9%E7%9B%AE%E8%AE%A1%E5%88%92">项目计划</a>（外键）；当项目计划被删除时，所有的项目也需要被删除，在 Django 中使用 <code>on_delete=models.CASCADE</code> 描述该字段</li>
+<li><code>name</code>：项目名称</li>
+<li><code>description</code>：项目描述</li>
+</ul>
+<!--
+- `max_group_num`：项目中最大组数
+- `max_team_member_num`：项目中每组最大人数
+-->
+<h3 id="小组"><a class="header" href="#小组">小组</a></h3>
+<p>小组（Group），也称队伍（Team）。一个项目计划下可以有多个小组。一个小组中可以有多个成员。</p>
+<p>当项目被删除、或者所属的项目计划被删除时，小组也将被删除。</p>
+<pre><code class="language-python">class Team(models.Model):
+    # plan to which this team belong
+    project_group = models.ForeignKey(Plan, on_delete=models.CASCADE)
+    name = models.CharField(max_length=150)
+    # assigned project
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    members = models.ManyToManyField(Student)
+</code></pre>
+<ul>
+<li><code>project_group</code>：所属的<a href="database-design.html#%E9%A1%B9%E7%9B%AE%E8%AE%A1%E5%88%92">项目计划</a>（外键）；当项目计划被删除时，所有的小组也需要被删除，在 Django 中使用 <code>on_delete=models.CASCADE</code> 描述该字段</li>
+<li><code>name</code>：小组名称</li>
+<li><code>project</code>：小组所选<a href="database-design.html#%E9%A1%B9%E7%9B%AE">项目</a>（外键）</li>
+<li><code>members</code>：小组中的<a href="database-design.html#%E5%AD%A6%E7%94%9F">学生</a>成员（多对多字段，将被 Django 转化为连接表的形式）</li>
+</ul>
+<h3 id="小组志愿"><a class="header" href="#小组志愿">小组志愿</a></h3>
+<pre><code class="language-python">class TeamWish(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    # wished project ...
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    # ... with priority
+    priority = models.IntegerField()
+</code></pre>
+<ul>
+<li><code>priority</code>：志愿优先级</li>
+<li><code>project</code>：小组志愿<a href="database-design.html#%E9%A1%B9%E7%9B%AE">项目</a>（外键）</li>
+<li><code>team</code>：该条志愿对应的<a href="database-design.html#%E5%B0%8F%E7%BB%84">小组</a>（外键）</li>
+</ul>
+<blockquote>
+<p>创建数据库的 SQL 语句此处略去。详情可查看 <a href="./assets/init.sql">init.sql</a>。</p>
+</blockquote>
+<h2 id="物理结构设计"><a class="header" href="#物理结构设计">物理结构设计</a></h2>
+<h3 id="索引"><a class="header" href="#索引">索引</a></h3>
+<p>实际应用时，主要通过 ID 来区分各个用户、项目、项目计划等，因此为这些表上的 ID 列建立索引。</p>
+<pre><code class="language-sql">CREATE INDEX &quot;project_project_group_id&quot; ON &quot;project&quot; (&quot;project_group_id&quot;);
+
+CREATE INDEX &quot;team_project_id&quot; ON &quot;team&quot; (&quot;project_id&quot;);
+CREATE INDEX &quot;team_project_group_id&quot; ON &quot;team&quot; (&quot;project_group_id&quot;);
+
+CREATE UNIQUE INDEX &quot;team_members_team_id_student_id_uniq&quot; 
+    ON &quot;team_members&quot; (&quot;team_id&quot;, &quot;student_id&quot;);
+CREATE INDEX &quot;team_members_team_id&quot; ON &quot;team_members&quot; (&quot;team_id&quot;);
+CREATE INDEX &quot;team_members_student_id&quot; ON &quot;team_members&quot; (&quot;student_id&quot;);
+
+CREATE INDEX &quot;teamwish_project_id&quot; ON &quot;teamwish&quot; (&quot;project_id&quot;);
+CREATE INDEX &quot;teamwish_team_id&quot; ON &quot;teamwish&quot; (&quot;team_id&quot;);
+
+CREATE INDEX &quot;plan_teacher_id&quot; ON &quot;plan&quot; (&quot;teacher_id&quot;);
+</code></pre>
+<h3 id="触发器"><a class="header" href="#触发器">触发器</a></h3>
+<p>需要设置触发器的地方为上述设计中标记为“级联删除”的外键字段。</p>
+<p>但在 Django 中，其将数据库的中的数据为了 ORM 对象，需要级联删除的操作并非通过触发器实现，而是通过程序代码中的逻辑来进行。</p>
+<h3 id="角色"><a class="header" href="#角色">角色</a></h3>
+<p>类似的，该程序中未在数据库管理系统（DBMS）中建立用户，而是通过判断当前使用程序的用户的身份，在程序逻辑上限制用户的访问。由于用户无法修改 Web 程序背后的逻辑，因此该法仍具有一定的安全性。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="程序控制逻辑"><a class="header" href="#程序控制逻辑">程序控制逻辑</a></h1>
+<h2 id="web-接口"><a class="header" href="#web-接口">Web 接口</a></h2>
+<p>用户和 Web 程序之间通过 HTTP 请求进行交互。程序为各种用户会使用到的功能，设计了对应的 URL 链接。</p>
+<p>用户访问对应的 URL 时，运行程序的服务器将会解析对应的 URL，并执行对应的程序（在 Django 中称作 view）。服务器会返回对应的 HTTP 响应，一般情况下为一个 HTTP 页面，亦即用户所使用的应用界面。</p>
+<h3 id="项目计划相关"><a class="header" href="#项目计划相关">项目计划相关</a></h3>
+<pre><code class="language-python">    # plans, a.k.a. project groups
+    path('plans/', views.plans, name='plans'),
+    path('plan/add/', views.add_plan, name='add_plan'),
+    path('plan/&lt;int:plan_id&gt;/', views.plan_detail, name='plan_detail'),
+    path('plan/&lt;int:plan_id&gt;/create_team/', views.create_team, name='create_team'),
+    path('plan/&lt;int:plan_id&gt;/start/', views.start_plan, name='start_plan'),
+    path('plan/&lt;int:plan_id&gt;/stop/', views.stop_plan, name='stop_plan'),
+    path('plan/&lt;int:plan_id&gt;/edit/', views.edit_plan, name='edit_plan'),
+    path('plan/&lt;int:plan_id&gt;/del/', views.del_plan, name='del_plan'),
+    path('plan/&lt;int:plan_id&gt;/add_project/', views.add_project, name='add_project'),
+    path('plan/&lt;int:plan_id&gt;/kick/&lt;int:team_id&gt;/', views.kick_out_team, name='kick_out_team'),
+</code></pre>
+<table><thead><tr><th>URL 模板</th><th>URL 名称</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>plans/</code></td><td><code>plans</code></td><td>查看所有计划</td></tr>
+<tr><td><code>plan/add/</code></td><td><code>add_plan</code></td><td>添加一个计划（仅教师）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/</code></td><td><code>plan_detail</code></td><td>计划详情</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/create_team/</code></td><td><code>create_team</code></td><td>创建小组（仅学生）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/start/</code></td><td><code>start_plan</code></td><td>启动计划（仅教师）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/stop/</code></td><td><code>stop_plan</code></td><td>停止计划（仅教师）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/edit/</code></td><td><code>edit_plan</code></td><td>编辑计划（仅教师）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/del/</code></td><td><code>del_plan</code></td><td>删除计划（仅教师）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/add_project/</code></td><td><code>add_project</code></td><td>添加项目（仅教师）</td></tr>
+<tr><td><code>plan/&lt;int:plan_id&gt;/kick/&lt;int:team_id&gt;/</code></td><td><code>kick_out_team</code></td><td>移除计划中小组（仅教师）</td></tr>
+</tbody></table>
+<p>注：创建小组的同时，该学生亦加入该小组，因此要求该学生未参与同计划下的其他项目。</p>
+<h3 id="项目相关"><a class="header" href="#项目相关">项目相关</a></h3>
+<pre><code class="language-python">    path('projects/', views.projects, name='projects'),
+    path('projects/search/', views.search_projects, name='search_projects'),
+    path('project/&lt;int:project_id&gt;/', views.project_detail, name='project_detail'),
+    path('project/&lt;int:project_id&gt;/del/', views.del_project, name='del_project'),
+    path('project/&lt;int:project_id&gt;/edit/', views.edit_project, name='edit_project'),
+</code></pre>
+<table><thead><tr><th>URL 模板</th><th>URL 名称</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>projects/</code></td><td><code>projects</code></td><td>查看所有项目</td></tr>
+<tr><td><code>projects/search/</code></td><td><code>search_projects</code></td><td>搜索项目</td></tr>
+<tr><td><code>project/&lt;int:project_id&gt;/</code></td><td><code>project_detail</code></td><td>项目详情页</td></tr>
+<tr><td><code>project/&lt;int:project_id&gt;/del/</code></td><td><code>del_project</code></td><td>删除项目（仅教师）</td></tr>
+<tr><td><code>project/&lt;int:project_id&gt;/edit/</code></td><td><code>edit_project</code></td><td>编辑项目（仅教师）</td></tr>
+</tbody></table>
+<h3 id="教师相关"><a class="header" href="#教师相关">教师相关</a></h3>
+<pre><code class="language-python">    path('teachers/', views.teachers, name='teachers'),
+    path('teacher/&lt;int:teacher_id&gt;/', views.teacher_detail, name='teacher_detail'),
+</code></pre>
+<table><thead><tr><th>URL 模板</th><th>URL 名称</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>teachers/</code></td><td><code>teachers</code></td><td>所有教师</td></tr>
+<tr><td><code>teacher/&lt;int:teacher_id&gt;/</code></td><td><code>teacher_detail</code></td><td>教师详情页</td></tr>
+</tbody></table>
+<h3 id="小组相关"><a class="header" href="#小组相关">小组相关</a></h3>
+<pre><code class="language-python">    path('team/&lt;int:team_id&gt;/', views.team_detail, name='team_detail'),
+    path('team/&lt;int:team_id&gt;/wish/', views.team_wish, name='team_wish'),
+    path('team/&lt;int:team_id&gt;/join/', views.join_team, name='join_team'),
+    path('team/&lt;int:team_id&gt;/quit/', views.quit_team, name='quit_team'),
+</code></pre>
+<table><thead><tr><th>URL 模板</th><th>URL 名称</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>team/&lt;int:team_id&gt;/</code></td><td><code>team_detail</code></td><td>小组详情页</td></tr>
+<tr><td><code>team/&lt;int:team_id&gt;/wish/</code></td><td><code>team_wish</code></td><td>小组志愿填写页（仅小组中成员）</td></tr>
+<tr><td><code>team/&lt;int:team_id&gt;/join/</code></td><td><code>join_team</code></td><td>加入小组（仅学生）</td></tr>
+<tr><td><code>team/&lt;int:team_id&gt;/quit/</code></td><td><code>quit_team</code></td><td>退出小组（仅小组中成员）</td></tr>
+</tbody></table>
+<p>注：加入计划下的小组中即视作该学生处于该计划下。某一小组中最后一名成员退出时，小组将自动删除。</p>
+<h3 id="注册与登录相关"><a class="header" href="#注册与登录相关">注册与登录相关</a></h3>
+<pre><code class="language-python">    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
+    path('register/', views.register, name='register'),
+</code></pre>
+<table><thead><tr><th>URL 模板</th><th>URL 名称</th><th>说明</th></tr></thead><tbody>
+<tr><td><code>login/</code></td><td><code>login</code></td><td>用户登入</td></tr>
+<tr><td><code>logout/</code></td><td><code>logout</code></td><td>用户登出</td></tr>
+<tr><td><code>register/</code></td><td><code>register</code></td><td>用户注册</td></tr>
+</tbody></table>
+<h2 id="样式设计"><a class="header" href="#样式设计">样式设计</a></h2>
+<p>使用基础 HTML 标签描述出来的界面不够直观，使用 Bootstrap 为界面应用样式。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+    </body>
+</html>

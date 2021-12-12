@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="811px" height="571px" viewBox="-0.5 -0.5 811 571">
+	<defs />
+	<style>
+		text {
+			font-family: "Times New Roman", SimSun, sans-serif;
+			font-size: 12px;
+		}
+	</style>
+	<g>
+		<rect x="70" y="140" width="100" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="120" y="164" fill="#000000" text-anchor="middle">项目</text>
+		</g>
+		<rect x="370" y="140" width="100" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="420" y="164" fill="#000000" text-anchor="middle">项目组（课程）</text>
+		</g>
+		<rect x="670" y="140" width="100" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="720" y="164" fill="#000000" text-anchor="middle">教授</text>
+		</g>
+		<path d="M 570 130 L 630 160 L 570 190 L 510 160 Z" fill="#fff2cc" stroke="#d6b656" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="570" y="164" fill="#000000" text-anchor="middle">参考</text>
+		</g>
+		<path d="M 270 130 L 330 160 L 270 190 L 210 160 Z" fill="#fff2cc" stroke="#d6b656" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="270" y="164" fill="#000000" text-anchor="middle">参考</text>
+		</g>
+		<ellipse cx="114" cy="290" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="114" y="294" fill="#333333" text-anchor="middle">最多组数</text>
+		</g>
+		<ellipse cx="150" cy="60" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="150" y="64" fill="#333333" text-anchor="middle">项目编号</text>
+		</g>
+		<ellipse cx="60" cy="240" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="60" y="244" fill="#333333" text-anchor="middle">项目简介</text>
+		</g>
+		<ellipse cx="50" cy="90" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="50" y="94" fill="#333333" text-anchor="middle">项目名称</text>
+		</g>
+		<path d="M 144.16 79.86 L 126 140" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 68.57 108.57 L 100 140" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 74.54 220.86 L 105 180" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 119.07 180 L 114.91 270" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 210 160 L 170 160" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="169" y="158" fill="#000000" text-anchor="end">N</text>
+		</g>
+		<path d="M 330 160 L 370 160" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="369" y="158" fill="#000000" text-anchor="end">1</text>
+		</g>
+		<path d="M 630 160 L 670 160" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="669" y="158" fill="#000000" text-anchor="end">1</text>
+		</g>
+		<path d="M 510 160 L 470 160" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="469" y="158" fill="#000000" text-anchor="end">N</text>
+		</g>
+		<ellipse cx="354" cy="100" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="354" y="104" fill="#333333" text-anchor="middle">计划名称</text>
+		</g>
+		<ellipse cx="480" cy="100" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="480" y="104" fill="#333333" text-anchor="middle">计划编号</text>
+		</g>
+		<path d="M 373.96 118.34 L 398 140" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 461.43 118.57 L 440 140" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<ellipse cx="640" cy="70" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="640" y="74" fill="#333333" text-anchor="middle">用户名</text>
+		</g>
+		<ellipse cx="700" cy="20" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="700" y="24" fill="#333333" text-anchor="middle">称谓</text>
+		</g>
+		<ellipse cx="760" cy="70" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="760" y="74" fill="#333333" text-anchor="middle">密码</text>
+		</g>
+		<path d="M 702.74 39.97 L 717.14 140" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 728.87 140 L 751.19 89.69" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 656.62 88.86 L 702.22 140" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 290 270 L 350 300 L 290 330 L 230 300 Z" fill="#fff2cc" stroke="#d6b656" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="290" y="304" fill="#000000" text-anchor="middle">参考</text>
+		</g>
+		<rect x="370" y="410" width="100" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="420" y="434" fill="#000000" text-anchor="middle">小组</text>
+		</g>
+		<path d="M 686.57 290 L 683.13 269.96" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 267.33 281.33 L 144.29 180" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="144" y="179" fill="#000000" text-anchor="end">1</text>
+		</g>
+		<path d="M 540 300 L 600 330 L 540 360 L 480 330 Z" fill="#ffe6cc" stroke="#d79b00" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="540" y="334" fill="#000000" text-anchor="middle">包含</text>
+		</g>
+		<rect x="640" y="290" width="100" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="690" y="314" fill="#000000" text-anchor="middle">学生</text>
+		</g>
+		<path d="M 517.5 348.75 L 444 410" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="443" y="408" fill="#000000" text-anchor="end">N</text>
+		</g>
+		<path d="M 587.37 323.68 L 640 316.67" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="639" y="315" fill="#000000" text-anchor="end">N</text>
+		</g>
+		<ellipse cx="620" cy="370" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="620" y="374" fill="#333333" text-anchor="middle">用户名</text>
+		</g>
+		<ellipse cx="670" cy="410" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="670" y="414" fill="#333333" text-anchor="middle">称谓</text>
+		</g>
+		<ellipse cx="747" cy="370" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="747" y="374" fill="#333333" text-anchor="middle">密码</text>
+		</g>
+		<ellipse cx="680" cy="250" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="680" y="254" fill="#333333" text-anchor="middle">能力指标</text>
+		</g>
+		<path d="M 640.85 351.82 L 666.67 330" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 673.81 390.06 L 686 330" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 729.38 351.28 L 709 330" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<ellipse cx="360" cy="500" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="360" y="504" fill="#333333" text-anchor="middle">组名</text>
+		</g>
+		<ellipse cx="480" cy="500" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="480" y="504" fill="#333333" text-anchor="middle">编号</text>
+		</g>
+		<path d="M 376.22 481.08 L 402.86 450" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 463.78 481.08 L 437.14 450" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<rect x="90" y="430" width="100" height="40" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="140" y="454" fill="#000000" text-anchor="middle">志愿选择</text>
+		</g>
+		<ellipse cx="80" cy="520" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="80" y="524" fill="#333333" text-anchor="middle">优先级</text>
+		</g>
+		<path d="M 96.22 501.08 L 122.86 470" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<ellipse cx="420" cy="550" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="420" y="554" fill="#333333" text-anchor="middle">选择的项目</text>
+		</g>
+		<path d="M 420 530 L 420 450" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 420 240 L 480 270 L 420 300 L 360 270 Z" fill="#fff2cc" stroke="#d6b656" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="420" y="274" fill="#000000" text-anchor="middle">参考</text>
+		</g>
+		<path d="M 310 320 L 400 410" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="399" y="408" fill="#000000" text-anchor="end">N</text>
+		</g>
+		<path d="M 420 240 L 420 180" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="419" y="178" fill="#000000" text-anchor="end">1</text>
+		</g>
+		<path d="M 420 300 L 420 410" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="419" y="409" fill="#000000" text-anchor="end">N</text>
+		</g>
+		<ellipse cx="550" cy="440" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="550" y="444" fill="#333333" text-anchor="middle">隶属的项目组</text>
+		</g>
+		<path d="M 470 433.97 L 500.81 436.42" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<path d="M 200 320 L 260 350 L 200 380 L 140 350 Z" fill="#fff2cc" stroke="#d6b656" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="200" y="354" fill="#000000" text-anchor="middle">参考</text>
+		</g>
+		<path d="M 280 380 L 340 410 L 280 440 L 220 410 Z" fill="#fff2cc" stroke="#d6b656" stroke-miterlimit="10" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="280" y="414" fill="#000000" text-anchor="middle">参考</text>
+		</g>
+		<path d="M 326.67 416.67 L 370 422.86" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="369" y="421" fill="#000000" text-anchor="end">1</text>
+		</g>
+		<path d="M 241.82 420.91 L 190 435.71" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="189" y="434" fill="#000000" text-anchor="end">N</text>
+		</g>
+		<path d="M 189.57 325.22 L 128.42 180" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="128" y="178" fill="#000000" text-anchor="end">1</text>
+		</g>
+		<path d="M 186.15 373.08 L 152 430" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="151" y="428" fill="#000000" text-anchor="end">N</text>
+		</g>
+		<ellipse cx="230" cy="100" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="230" y="104" fill="#333333" text-anchor="middle">隶属项目组</text>
+		</g>
+		<path d="M 156.74 140 L 200.53 116.16" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+		<ellipse cx="420" cy="40" rx="50" ry="20" fill="#f5f5f5" stroke="#666666" pointer-events="all" />
+		<g transform="translate(-0.5 -0.5)">
+			<text x="420" y="44" fill="#333333" text-anchor="middle">隶属教师</text>
+		</g>
+		<path d="M 420 60 L 420 140" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke" />
+	</g>
+</svg>
