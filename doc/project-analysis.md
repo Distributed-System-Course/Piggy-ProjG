@@ -6,6 +6,18 @@ Piggy-ProjG 是一个网络应用程序，它使教授可以在线发布多个�
 
 该应用程序应该以网页的形式处理上述所有内容，这意味着用户应该可以通过任何现代浏览器访问该应用程序。
 
+## 开发工具
+
+该项目使用 Python 编程语言上的 Django 框架进行应用的开发。
+
+## Web 程序的特点
+
+相较于传统应用，用户使用浏览器访问某一网站以使用 Web 应用，过程中通过 HTTP 请求完成数据的查询、修改。
+
+应用程序本身不过是对数据访问、修改操作的封装与简化。传统的客户端程序通过调用图形库，在用户使用的操作系统上绘制出界面。如果是多用户同时使用、涉及到共享数据的场景，则可以将程序设计为访问远程的数据库。远程的数据库需要能够同时接受来自多个客户端的连接。
+
+Web 程序通过 HTML 标记语言描述界面，借助浏览器显示出用以和用户进行信息交互的界面。用户本地并未运行程序本身，而是通过访问特定的 URL 完成数据的下载与上传。类似的，提供 Web 程序的服务器和数据库管理系统不一定运行在同一台机器上。
+
 ## 用例分析
 
 简单的用例分析如下：
@@ -54,6 +66,7 @@ Piggy-ProjG 是一个网络应用程序，它使教授可以在线发布多个�
 ![学生选择项目](./assets/student-wish.svg)
 
 
-Reference Link: 
-1. [Writing your first Django app, part 1](https://docs.djangoproject.com/en/3.2/intro/tutorial01/)
-2. [Django Web Framework (Python)](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django)
+## 参考链接
+ 
+- [Writing your first Django app, part 1](https://docs.djangoproject.com/en/3.2/intro/tutorial01/)
+- [Django Web Framework (Python)](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django)
