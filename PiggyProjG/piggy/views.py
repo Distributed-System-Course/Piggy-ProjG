@@ -115,11 +115,12 @@ def plan_detail(request, plan_id):
 def create_team(request, plan_id):
     context = get_user_context(request)
     
-    context['plan'] = get_object_or_404(Plan, pk=plan_id)
+    the_plan = get_object_or_404(Plan, pk=plan_id)
+    context['plan'] = the_plan
     
     context['choices'] = context['plan'].project_set.all()
     
-    if 'role' in context and context['role'] == 'Student':
+    if 'role' in context and context['role'] == 'Student' and not the_plan.is_expired:
         # User must login first, and only student can create team
         # By creating a team under a plan, one also joins in this plan
         # For each plan, students can only join one team 
@@ -156,7 +157,8 @@ def create_team(request, plan_id):
 def join_team(request, team_id):
     context = get_user_context(request)
     the_team = get_object_or_404(Team, pk=team_id)
-    if 'role' in context and context['role'] == 'Student':
+    the_plan = get_object_or_404(Plan, pk=the_team.project_group.id)
+    if 'role' in context and context['role'] == 'Student' and not the_plan.is_expired:
         # User must login first, and only student can join team
         # For each plan, students can only join one team 
         # So we must see whether this student is already in a team or not
@@ -183,7 +185,9 @@ def join_team(request, team_id):
 def quit_team(request, team_id):
     context = get_user_context(request)
     the_team = get_object_or_404(Team, pk=team_id)
-    if 'role' in context and context['role'] == 'Student':
+    the_plan = get_object_or_404(Plan, pk=the_team.project_group.id)
+
+    if 'role' in context and context['role'] == 'Student' and not the_plan.is_expired:
         # User must login first, and can only quit from the team they are alreay in
         # So we must see whether this student is already in a team or not
         already_exist = False
