@@ -1,4 +1,4 @@
-{% extends "piggy/base_generic.html" %}
+{% extends "piggy/base_generic_no_content.html" %}
 
 {% block title %}
     <title>{{ plan.name }} - Create a team</title>
@@ -18,15 +18,16 @@
     <form action="{% url 'piggy:create_team' plan.id %}" method="post">
         {% csrf_token %}
         <fieldset>
-            <table>
-                <tr>
+            <table class="table table-hover table-sm align-middle table-light">
+                <thead></thead>
+                <tr class="h5">
                     <td>Team name</td>
-                    <td><input type="text" name="team_name"/></td>
+                    <td><input class="form-control" type="text" name="team_name"/></td>
                 </tr>
-                <tr>
-                    <td><label>Default project</label></td>
+                <tr class="h5">
+                    <td>Default project</td>
                     <td>
-                        <select name="default_project_id">
+                        <select class="form-control" name="default_project_id">
                             {% for choice in choices.all %}
                                 <option value="{{choice.id}}">{{choice.name}}</option>
                             {% endfor %}
@@ -35,7 +36,7 @@
                 </tr>
             </table>
             <div>
-                <button type="submit">Submit</button>
+                <button class="btn btn-primary" type="submit">Submit</button>
             </div>
         </fieldset>
     </form>

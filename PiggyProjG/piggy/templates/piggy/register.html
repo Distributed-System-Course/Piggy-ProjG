@@ -40,10 +40,20 @@
                     <form action="{% url 'piggy:register' %}" method="post">
                         {% csrf_token %}
                         {% if message %}
-                            {% for msg in message %}
-                                <p><strong>{{ msg }}</strong></p>
-                            {% endfor %}
-                        {% endif %}
+                        {% for msg in message %}
+                            {% if 'Successfully' not in msg %}
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <i class="bi bi-exclamation-triangle-fill"></i><strong> {{ msg }}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% else %}
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <i class="bi bi-check-circle-fill"></i><strong> {{ msg }}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                         <div class="form-floating mb-3">
                             <input type="text" name="name" class="form-control" id="floatingInput" placeholder="Name" value="{{ draft.name }}">
                             <label for="floatingInput">Name</label>

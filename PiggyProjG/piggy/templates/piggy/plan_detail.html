@@ -78,8 +78,9 @@
             </tr>
         </tbody>
     </table>
-    <a class="btn btn-success" href="{% url 'piggy:create_team' plan.id %}">Create a Team</a>
-    
+    {% if role == 'Student' %}
+        <a class="btn btn-success" href="{% url 'piggy:create_team' plan.id %}">Create a Team</a>
+    {% endif %}
     {% if flag %}
         <a class="btn btn-primary" href="{% url 'piggy:edit_plan' plan.id %}">Edit Plan</a>
     {% endif %}

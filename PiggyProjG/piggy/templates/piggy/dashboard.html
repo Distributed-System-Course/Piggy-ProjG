@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <br>
-
+                {% if role == 'Professor' %}
                 <div class="d-grid gap-2">
                     <a class="btn btn-dark" data-bs-toggle="collapse" href="#collapsePlanProject" role="button" aria-expanded="true" aria-controls="collapsePlanProject">
                         <h2 class="h2 text-center"> Directed Plans and Projects</h2>
@@ -84,6 +84,7 @@
                         <a class="btn btn-success" href="{% url 'piggy:add_plan' %}">Add Plan</a>
                     </div>
                 </div>
+                {% endif %}
             </div>
           </div>
     </div>
