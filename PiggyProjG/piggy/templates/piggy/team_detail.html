@@ -44,5 +44,6 @@
     <a class="btn btn-info" href="{% url 'piggy:team_wish' team.id %}">Team Wishes</a>
     {% if role == 'Student' %}
         <a class="btn btn-success" href="{% url 'piggy:join_team' team.id %}">Join Team</a>
+        <a class="btn btn-danger" href="{% url 'piggy:quit_team' team.id %}">Quit Team</a>
     {% endif %}
 {% endblock content %}
