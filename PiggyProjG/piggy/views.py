@@ -10,6 +10,8 @@ from django.contrib import messages
 from django.views.generic import ListView
 import re
 
+import py_eureka_client.eureka_client as eureka_client
+
 from .models import *
 
 def get_user_context(request):
@@ -55,6 +57,33 @@ def stop_plan(request, plan_id):
     temp = get_object_or_404(Plan, pk=plan_id)
     temp.is_expired = True
     temp.save()
+    
+    projects = Project.objects.filter(project_group=temp)
+    teams = Team.objects.filter(project_group_id=plan_id)
+
+    data = dict()
+    data['projects'] = { proj.id: {'max_group_num': proj.max_group_num} for proj in projects }
+    data['wishes'] = []
+
+    for team in teams:
+        team_wishes = TeamWish.objects.filter(team=team).order_by('priority')
+        data['wishes'].append({
+                'team_id': team.id,
+                'choices': [ wish.project.id for wish in team_wishes ]
+            }
+        )
+    
+    print(data)
+
+    try:
+        res = eureka_client.do_service('MyApplication', 'grouping/', data=data, return_type="json")
+        print(res)
+        for team_id in res.keys():
+            the_team = get_object_or_404(Team, pk=team_id)
+            the_team.project = get_object_or_404(Project, pk=res[team_id])
+            the_team.save()
+    except:
+        pass
     
     # return HttpResponseRedirect(request.path_info)
     return HttpResponseRedirect('/plan/' + str(plan_id) + '/')
