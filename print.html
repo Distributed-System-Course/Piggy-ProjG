@@ -78,7 +78,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="project-guidelines.html"><strong aria-hidden="true">1.</strong> 项目要求</a></li><li class="chapter-item expanded "><a href="project-analysis.html"><strong aria-hidden="true">2.</strong> 项目分析</a></li><li class="chapter-item expanded "><a href="database-design.html"><strong aria-hidden="true">3.</strong> 数据库设计</a></li><li class="chapter-item expanded "><a href="control-logic.html"><strong aria-hidden="true">4.</strong> 程序控制逻辑</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="project-guidelines.html"><strong aria-hidden="true">1.</strong> 项目要求</a></li><li class="chapter-item expanded "><a href="project-analysis.html"><strong aria-hidden="true">2.</strong> 项目分析</a></li><li class="chapter-item expanded "><a href="database-design.html"><strong aria-hidden="true">3.</strong> 数据库设计</a></li><li class="chapter-item expanded "><a href="control-logic.html"><strong aria-hidden="true">4.</strong> 程序控制逻辑</a></li><li class="chapter-item expanded "><a href="distributed-arch-design.html"><strong aria-hidden="true">5.</strong> 分布式架构设计</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -435,6 +435,109 @@ CREATE INDEX &quot;plan_teacher_id&quot; ON &quot;plan&quot; (&quot;teacher_id&q
 </tbody></table>
 <h2 id="样式设计"><a class="header" href="#样式设计">样式设计</a></h2>
 <p>使用基础 HTML 标签描述出来的界面不够直观，使用 Bootstrap 为界面应用样式。</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="分布式架构设计"><a class="header" href="#分布式架构设计">分布式架构设计</a></h1>
+<p>为了模拟分布式的系统架构，本项目将其中的“分组”功能设计为一个单独的微服务，运行时将自身注册到 Eureka Server。而项目的主业务程序在使用“分组”功能时，向 Eureka Server 请求“分组”功能。</p>
+<p>具体实现时，主业务程序将“分组”算法所需的数据从数据库中调出，转换为 JSON 格式，经由 Eureka Server 远程调用运行在另一处的“分组”算法程序；这种方式不需要算法程序拥有自己的数据库，实现了功能的解耦；算法程序运行完成后，同样将数据以 JSON 的格式返回，业务程序收到内容后，解析 JSON 为 Python 的字典格式，并根据数据对自身的数据库进行更新。</p>
+<p><img src="./assets/distrib-arch.svg" alt="" /></p>
+<p>Eureka Server 作为注册中心，主业务程序负责提供界面，以及处理和存储用户（学生和教师）上传的数据，而分组算法作为一个单独的微服务发布。</p>
+<h2 id="具体实现"><a class="header" href="#具体实现">具体实现</a></h2>
+<h3 id="eureka-server"><a class="header" href="#eureka-server">Eureka Server</a></h3>
+<p>关于启动 Eureka Server 可以参考 <a href="https://github.com/Distributed-System-Course/Eureka-Server">Distributed-System-Course/Eureka-Server - GitHub</a> 仓库中的代码。启动成功后，Eureka Server 默认运行在 7861 端口，可以被同一网络下的设备访问到。</p>
+<h3 id="微服务"><a class="header" href="#微服务">微服务</a></h3>
+<p>由于项目使用 Django 框架开发的网站，需要使用 Python 完成服务的订阅与调用。幸运的是，有 <a href="https://pypi.org/project/py-eureka-client/">py-eureka-client</a> 可以使用。</p>
+<p>之后，需要将算法程序设计成一个能够处理 HTTP 请求的微服务，这里同样使用 Django 框架进行开发。通过设计相应的 <a href="https://github.com/Distributed-System-Course/Django-Eureka-Microservice-Demo/blob/feat/grouping/services/urls.py">URL 映射</a> 之后，<a href="https://github.com/Distributed-System-Course/Django-Eureka-Microservice-Demo/blob/feat/grouping/services/views.py">Django 应用程序</a> 便能处理 HTTP 请求了。</p>
+<blockquote>
+<p>项目代码参见 <a href="https://github.com/Distributed-System-Course/Django-Eureka-Microservice-Demo">Distributed-System-Course/Django-Eureka-Microservice-Demo - GitHub</a>。</p>
+</blockquote>
+<p>将 <code>grouping/</code> 映射到 <code>grouping</code> 函数上：</p>
+<pre><code class="language-python">urlpatterns = [
+    path('', views.index),
+    path('grouping/', views.grouping),
+]
+</code></pre>
+<p>处理 HTTP 请求的 <code>grouping</code> 函数：</p>
+<pre><code class="language-python">def grouping(request):
+    data = json.loads(request.body)
+    print(data)
+    projects = data['projects']
+    wishes = data['wishes']
+    for wish in wishes:
+        for choice in wish['choices']:
+            choice = str(choice)
+            teams = projects[choice].get('teams', list())
+            if len(teams) &lt; projects[choice]['max_group_num']:
+                teams.append(wish['team_id'])
+                projects[choice]['teams'] = teams
+                break
+    
+    teams = dict()
+    for project_id in projects.keys():
+        for team in projects[project_id].get('teams', list()):
+            teams[team] = project_id
+    
+    return JsonResponse(teams)
+</code></pre>
+<p>之后，假设这个服务所运行在的机器在网络上的 IP 地址为 <code>10.151.102.74</code>，端口号为 <code>8000</code>，于是将这个注册到 Eureka Server：</p>
+<p>假设 Eureka Server 运行在 <code>http://10.151.102.74:8761</code>，则使用下边的 Python 代码进行注册：</p>
+<pre><code class="language-python">import py_eureka_client.eureka_client as eureka_client
+
+eureka_client.init(
+    # Where the Eureka server is:
+    eureka_server=&quot;http://10.151.102.74:8761&quot;,
+    app_name=&quot;MyApplication&quot;,
+    instance_host=&quot;10.151.102.74&quot;,
+    instance_port=8000,
+)
+</code></pre>
+<h3 id="调用服务"><a class="header" href="#调用服务">调用服务</a></h3>
+<p>上述操作将微服务以 <code>MyApplication</code> 的名称注册到了 Eureka Server。之后，需要使用该服务的 Python 程序，在初始化 Eureka Client 之后，只需要通过 <code>do_service</code> 就可以调用服务。例如：</p>
+<pre><code class="language-python">&gt;&gt;&gt; import py_eureka_client.eureka_client as eureka_client
+&gt;&gt;&gt; eureka_client.init(eureka_server=&quot;http://localhost:8761/&quot;, app_name=&quot;User&quot;, instance_host='10.151.102.74')
+&lt;py_eureka_client.eureka_client.EurekaClient object at 0x0000017C16A93310&gt;
+&gt;&gt;&gt; eureka_client.do_service('MyApplication', '')
+'Hello!'
+</code></pre>
+<p>在本项目中，当教师停止计划后，会自动调用分组算法，参见 <a href="https://github.com/Distributed-System-Course/Piggy-ProjG/blob/feat/style/PiggyProjG/piggy/views.py#L56-L89">Piggy-Proj 项目中实际的代码</a>：</p>
+<pre><code class="language-python">def stop_plan(request, plan_id):
+    # 修改项目状态
+    temp = get_object_or_404(Plan, pk=plan_id)
+    temp.is_expired = True
+    temp.save()
+    
+    # 调取数据，存入字典
+    projects = Project.objects.filter(project_group=temp)
+    teams = Team.objects.filter(project_group_id=plan_id)
+
+    data = dict()
+    data['projects'] = { proj.id: {'max_group_num': proj.max_group_num} for proj in projects }
+    data['wishes'] = []
+
+    for team in teams:
+        team_wishes = TeamWish.objects.filter(team=team).order_by('priority')
+        data['wishes'].append({
+                'team_id': team.id,
+                'choices': [ wish.project.id for wish in team_wishes ]
+            }
+        )
+    
+    # 显示调取的数据
+    print(data)
+    
+    # 尝试向 Eureka Server 请求服务
+    try:
+        res = eureka_client.do_service('MyApplication', 'grouping/', data=data, return_type=&quot;json&quot;)
+        # 显示返回的结果
+        print(res)
+        # 处理返回的结果，更新数据库
+        for team_id in res.keys():
+            the_team = get_object_or_404(Team, pk=team_id)
+            the_team.project = get_object_or_404(Project, pk=res[team_id])
+            the_team.save()
+    except:
+        pass
+    
+    return HttpResponseRedirect('/plan/' + str(plan_id) + '/')
+</code></pre>
 
                     </main>
 
