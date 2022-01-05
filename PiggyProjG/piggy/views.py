@@ -58,11 +58,18 @@ def stop_plan(request, plan_id):
     temp.is_expired = True
     temp.save()
     
+    # Packing data
     projects = Project.objects.filter(project_group=temp)
     teams = Team.objects.filter(project_group_id=plan_id)
 
     data = dict()
-    data['projects'] = { proj.id: {'max_group_num': proj.max_group_num} for proj in projects }
+    data['projects'] = [
+        {
+            'id': proj.id,
+            'max_group_num': proj.max_group_num,
+        }
+        for proj in projects
+    ]
     data['wishes'] = []
 
     for team in teams:
@@ -73,11 +80,14 @@ def stop_plan(request, plan_id):
             }
         )
     
-    print(data)
+    # Data packing finished
 
     try:
+        # Get service / Sending data & Get result
         res = eureka_client.do_service('MyApplication', 'grouping/', data=data, return_type="json")
         print(res)
+        # apply grouping result
+        # (ranged for loop ensures that only vaild team-project pair will be taken count into)
         for team_id in res.keys():
             the_team = get_object_or_404(Team, pk=team_id)
             the_team.project = get_object_or_404(Project, pk=res[team_id])
@@ -85,7 +95,6 @@ def stop_plan(request, plan_id):
     except:
         pass
     
-    # return HttpResponseRedirect(request.path_info)
     return HttpResponseRedirect('/plan/' + str(plan_id) + '/')
 
 
