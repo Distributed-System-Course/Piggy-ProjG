@@ -18,6 +18,7 @@ urlpatterns = [
     path('plan/<int:plan_id>/edit/', views.edit_plan, name='edit_plan'),
     path('plan/<int:plan_id>/del/', views.del_plan, name='del_plan'),
     path('plan/<int:plan_id>/add_project/', views.add_project, name='add_project'),
+    path('plan/<int:plan_id>/kick/<int:team_id>/', views.kick_out_team, name='kick_out_team'),
     
     # example: '/projects/'
     path('projects/', views.projects, name='projects'),
@@ -35,16 +36,12 @@ urlpatterns = [
     path('team/<int:team_id>/wish/', views.team_wish, name='team_wish'),
     path('team/<int:team_id>/join/', views.join_team, name='join_team'),
     path('team/<int:team_id>/quit/', views.quit_team, name='quit_team'),
-    path('kick_out_team/<int:plan_id>/<int:team_id>/', views.kick_out_team, name='kick_out_team'),
 
 
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
-    
     path('register/', views.register, name='register'),
     
     path('dashboard/', views.dashboard, name='dashboard'),
-
     path('edit_profile/', views.edit_profile, name='edit_profile'),
-    
 ]
