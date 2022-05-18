@@ -1,12 +1,10 @@
 .row {
     margin-top: 20px;
 }
-
-.sidebar-nav {
-    padding: 0;
-    list-style: none;
+a {
+    text-decoration: none;
 }
 
-th, td {
-    padding: 5px;
+a:hover {
+    text-decoration: underline;
 }

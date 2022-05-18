@@ -3,6 +3,7 @@
 import os
 import sys
 
+import py_eureka_client.eureka_client as eureka_client
 
 def main():
     """Run administrative tasks."""
@@ -18,5 +19,13 @@ def main():
     execute_from_command_line(sys.argv)
 
 
+eureka_server = "http://localhost:8761/"
+
 if __name__ == '__main__':
+    eureka_client.init(
+        eureka_server=eureka_server,
+        app_name="User",
+        instance_host='localhost',
+        instance_port=9000,
+    )
     main()

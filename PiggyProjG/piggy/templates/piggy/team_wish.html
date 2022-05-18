@@ -1,11 +1,13 @@
+{% extends "piggy/base_generic_no_content.html" %}
+
 {% block title %}
-    <title>Team '{{team.name}}''s Wishes</title>
+    <title>Team {{team.name}}'s Wishes</title>
 {% endblock title %}
 
 {% block content %}
-    <h1>Team '{{team.name}}''s Wishes</h1>
+    <h1>Team {{team.name}}'s Wishes</h1>
     <p>Your current choices:</p>
-    <ol style="type: '1';">
+    <ol>
     {% for wish in wishlist %}
         <li>{{wish}}</li>
     {% endfor %}
@@ -16,8 +18,8 @@
         <fieldset>
             <legend>选择志愿</legend>
         {% for i in num_range %}
-            <label>志愿 #{{i}}：</label>
-            <select name="wish{{i}}">
+            <h5 class="h5">志愿 #{{i}}：</h5>
+            <select class="form-select" name="wish{{i}}">
             {% for choice in choices.all %}
                 <option value="{{choice.id}}">{{choice.name}}</option>
             {% endfor %}
@@ -25,7 +27,7 @@
             <br/>
         {% endfor %}
             <p><em>注：数字越小，优先级越大</em></p>
-            <button type="submit">Submit</button>
+            <button class="btn btn-primary" type="submit">Submit</button>
         </fieldset>
     </form>
 {% endblock content %}

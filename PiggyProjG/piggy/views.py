@@ -10,6 +10,8 @@ from django.contrib import messages
 from django.views.generic import ListView
 import re
 
+import py_eureka_client.eureka_client as eureka_client
+
 from .models import *
 
 def get_user_context(request):
@@ -56,7 +58,43 @@ def stop_plan(request, plan_id):
     temp.is_expired = True
     temp.save()
     
-    # return HttpResponseRedirect(request.path_info)
+    # Packing data
+    projects = Project.objects.filter(project_group=temp)
+    teams = Team.objects.filter(project_group_id=plan_id)
+
+    data = dict()
+    data['projects'] = [
+        {
+            'id': proj.id,
+            'max_group_num': proj.max_group_num,
+        }
+        for proj in projects
+    ]
+    data['wishes'] = []
+
+    for team in teams:
+        team_wishes = TeamWish.objects.filter(team=team).order_by('priority')
+        data['wishes'].append({
+                'team_id': team.id,
+                'choices': [ wish.project.id for wish in team_wishes ]
+            }
+        )
+    
+    # Data packing finished
+
+    try:
+        # Get service / Sending data & Get result
+        res = eureka_client.do_service('MyApplication', 'grouping/', data=data, return_type="json")
+        print(res)
+        # apply grouping result
+        # (ranged for loop ensures that only vaild team-project pair will be taken count into)
+        for team_id in res.keys():
+            the_team = get_object_or_404(Team, pk=team_id)
+            the_team.project = get_object_or_404(Project, pk=res[team_id])
+            the_team.save()
+    except:
+        pass
+    
     return HttpResponseRedirect('/plan/' + str(plan_id) + '/')
 
 
@@ -413,15 +451,16 @@ def register(request):
             new.username = context['draft']['username']
             new.password = context['draft']['password1']
             new.save()
-            context = {}
             
             if context['draft']['role'] == 'student':
                 context['uu'] = get_object_or_404(Student, username=context['draft']['username'])
                 context['role'] = 'Student'
-            elif context['draft']['role'] == 'Professor':
+            elif context['draft']['role'] == 'professor':
                 context['uu'] = get_object_or_404(Teacher, username=context['draft']['username'])
                 context['role'] = 'Professor'
-                
+            context['draft'] = {}
+            context['message'].append('Register Successfully!')
+            
     return render(
         request,
         'piggy/register.html',
@@ -457,29 +496,30 @@ def edit_profile(request):
         post_password2 = request.POST['password2']
         post_email = request.POST['email']
         post_resume = request.POST['resume']
+        context['message'] = []
         
         if len(post_name) > 150 or len(post_name) == 0:
             if len(post_name) > 150:
-                context['msg'] = 'Name is too long!'
+                context['message'].append('Name is too long!')
             else:
-                context['msg'] = 'Name can\'t be empty'
+                context['message'].append('Name can\'t be empty')
 
-        elif len(post_username) > 150 or len(post_username) == 0:
+        if len(post_username) > 150 or len(post_username) == 0:
             if len(post_username) > 150:
-                context['msg'] = 'Username is too long!'
+                context['message'].append('Username is too long!')
             else:
-                context['msg'] = 'Username can\'t be empty!'
+                context['message'].append('Username can\'t be empty!')
 
-        else:
+        if len(context['message']) == 0:
             if role == 'Student':
                 matches = Student.objects.filter(username=post_username)
             elif role == 'Professor':
                 matches = Teacher.objects.filter(username=post_username)
 
             if len(matches) != 0 and context['uu'].username != post_username:
-                context['msg'] = 'Username already exist.'
+                context['message'].append('Username already exist.')
 
-            else:
+            if len(context['message']) == 0:
                 if post_password1 == post_password2 and 0 < len(post_password1) <= 128:
                     context['uu'].name = post_name
                     context['uu'].username = post_username
@@ -488,15 +528,15 @@ def edit_profile(request):
                     context['uu'].resume = post_resume
                     context['uu'].save()
                     request.session['username'] = post_username
-                    context['msg'] = 'Infomation updated!'
+                    context['message'].append('Infomation updated!')
 
                 else:
                     if len(post_password1) == 0:
-                        context['msg'] = 'Password can\'t be empty!'
+                        context['message'].append('Password can\'t be empty!')
                     elif len(post_password1) > 128:
-                        context['msg'] = 'Password is too long!'
+                        context['message'].append('Password is too long!')
                     else:
-                        context['msg'] = 'Passwords don\'t match!'
+                        context['message'].append('Passwords don\'t match!')
 
     return render(
         request,
@@ -509,6 +549,7 @@ def edit_plan(request, plan_id):
     context = get_user_context(request)
     
     context['plan'] = get_object_or_404(Plan, pk=plan_id)
+    context['message'] = []
     
     if context['role'] == 'Professor' and context['plan'].teacher.id == context['uu'].id:
         if request.method == 'POST':
@@ -518,21 +559,23 @@ def edit_plan(request, plan_id):
             
             if len(post_name) > 150 or len(post_name) == 0:
                 if len(post_name) > 150:
-                    context['msg'] = 'Name is too long!'
+                    context['message'].append('Name is too long!')
                 else:
-                    context['msg'] = 'Name can\'t be empty'
-            elif len(post_description) > 150 or len(post_description) == 0:
+                    context['message'].append('Name can\'t be empty')
+                    
+            if len(post_description) > 150 or len(post_description) == 0:
                 if len(post_description) > 150:
-                    context['msg'] = 'Description is too long!'
+                    context['message'].append('Description is too long!')
                 else:
-                    context['msg'] = 'Descrption can\'t be empty'
-            else:
+                    context['message'].append('Descrption can\'t be empty')
+            
+            if len(context['message']) == 0:
                 context['plan'].name = post_name
                 context['plan'].description = post_description
                 context['plan'].is_expired = post_status
                 context['plan'].save()
                 del context['plan']
-                context['msg'] = 'Infomation updated!'
+                context['message'].append('Infomation updated!')
         else:
             context['teams'] = Team.objects.filter(project_group_id=plan_id)
             

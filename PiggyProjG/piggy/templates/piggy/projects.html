@@ -1,26 +1,40 @@
-{% extends "piggy/base_generic.html" %}
+{% extends "piggy/base_generic_new.html" %}
 
 {% block title %}
-    <title> All Projects - Piggy </title>
+    <title> Projects - Piggy </title>
 {% endblock %}
 
 {% block content %}
-    <h1> All Projects </h1>
-    <!-- Grouped by 'plan's -->
-    {% if all_plans %}
-        {% for plan in all_plans %}
-        <div class="plan_and_projects">
-        <h2><a href="{% url 'piggy:plan_detail' plan.id %}">{{ plan.name }}<a></h2>
-            <p>Teached by: {{ plan.teacher }}</p>
-        <ul>
-            {% for project in plan.project_set.all %}
-                <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
-            {% endfor %}
-        </ul>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="container-fluid p-5">
+
+            </div>
         </div>
-        {% endfor %}
-    {% else %}
-        <p>No projects are available.</p>
-    {% endif %}
-    
+        <div class="col-sm-7">
+            <div class="container-fluid p-5 bg-white">
+                <h1 class="h1"> Projects </h1>
+                {% if all_plans %}
+                    {% for plan in all_plans %}
+                    <div class="plan_and_projects">
+                        <h2><a class="list-group-item list-group-item-action active" aria-current="true" href="{% url 'piggy:plan_detail' plan.id %}">
+                        {{ plan.name }} <small class="h6">Taught by: {{ plan.teacher }}</small><a></h2>
+                        <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> -->
+                    </div>
+                        <div class="list-group">
+                            {% for project in plan.project_set.all %}
+                                <a class="list-group-item list-group-item-action fw-bold" href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a>
+                            {% endfor %}
+                        </div>
+                    <br>
+                    {% endfor %}
+                {% else %}
+                    <p>No projects are available.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

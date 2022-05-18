@@ -1,50 +1,88 @@
-{% extends "piggy/base_generic.html" %}
+{% extends "piggy/base_generic_no_content.html" %}
 
 {% block title %}
     <title>{{ plan.name }} - Plan's details</title>
 {% endblock %}
 
 {% block content %}
-    <h1> {{ plan.name }} </h1>
-    <p>
-        <strong>Professor:</strong>
-        <a href="{% url 'piggy:teacher_detail' plan.teacher.id %}">{{ plan.teacher }}</a>
-    </p>
-
-    <p>
-        <strong>Status:</strong>
-        {% if plan.is_expired %}
-            Expired
-            {% if flag %}
-                <a href="{% url 'piggy:start_plan' plan.id %}">Start plan</a>
-            {% endif %}
-        {% else %}
-            Running
-            {% if flag %}
-                <a href="{% url 'piggy:stop_plan' plan.id %}">Stop plan</a>
-            {% endif %}
-        {% endif %}
-    </p>
-    <p>Projects in this plan:</p>
-    <ul>
-        {% for project in plan.project_set.all %}
-            <li><a href="{% url 'piggy:project_detail' project.id %}">{{ project.name }}</a></li>
-        {% endfor %}
-    </ul>
-    {% if flag %}
-        <p><a href="{% url 'piggy:add_project' plan.id %}">Add a project</a></p>
+    <h1 class="h1"> {{ plan.name }} </h1>
+    <table class="table table-hover">
+        <thead></thead>
+        <tbody>
+            <tr>
+                <th class="h5">Professor:</th>
+                <td>{{ plan.teacher }} <a href="{% url 'piggy:teacher_detail' plan.teacher.id %}"><i class="bi bi-info-circle-fill"></i></a></td>
+            </tr>
+            <tr>
+                <th class="h5">Status:</th>
+                <td>
+                    {% if plan.is_expired %}
+                        Expired
+                        {% if flag %}
+                            <a href="{% url 'piggy:start_plan' plan.id %}">Start plan</a>
+                        {% endif %}
+                    {% else %}
+                        Running
+                        {% if flag %}
+                            <a href="{% url 'piggy:stop_plan' plan.id %}">Stop plan</a>
+                        {% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th class="h5">Description:</th>
+                <td>{{ plan.description }} </td>
+            </tr>
+            <tr>
+                <th class="h5">
+                    Included Projects
+                    <!-- {% if flag %}
+                        <a class="btn btn-success btn-sm" href="{% url 'piggy:add_project' plan.id %}"><i class="bi bi-plus-lg"></i></a>
+                    {% endif %} -->
+                </th>
+                <td>
+                    <div class="list-group">
+                        {% for project in plan.project_set.all %}
+                            <a class="list-group-item list-group-item-action" href="{% url 'piggy:project_detail' project.id %}">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">
+                                        {{ project.name }}
+                                    </h6>
+                                    <!-- {% if flag %}
+                                        <button type="button" class="btn-close" href="{% url 'piggy:del_project' project.id %}"></button>
+                                    {% endif %} -->
+                                </div>
+                                <p class="mb-1">
+                                    <small>{{ project.description }}</small>
+                                </p>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="h5">Included teams:</td>
+                <td>
+                    <div class="list-group">
+                        {% for team in teams %}
+                            <a class="list-group-item list-group-item-action" href="{% url 'piggy:team_detail' team.id %}">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">
+                                        {{ team.name }}
+                                    </h6>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    {% if role == 'Student' %}
+        <a class="btn btn-success" href="{% url 'piggy:create_team' plan.id %}">Create a Team</a>
     {% endif %}
-    <p>Teams in this plan:</p>
-    <ul>
-        {% for team in teams %}
-            <li><a href="{% url 'piggy:team_detail' team.id %}">{{ team.name }}</a></li>
-        {% endfor %}
-    </ul>
-
-    <p><a href="{% url 'piggy:create_team' plan.id %}">Create a Team</a></p>
-    
     {% if flag %}
-        <p><a href="{% url 'piggy:edit_plan' plan.id %}">Edit Plan</a></p>
+        <a class="btn btn-primary" href="{% url 'piggy:edit_plan' plan.id %}">Edit Plan</a>
     {% endif %}
     
 {% endblock %}
